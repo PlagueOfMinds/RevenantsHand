@@ -8,4 +8,4 @@
 position = Vector2(-150, -112.5)
 sprite_frames = ExtResource("1_16a8n")
 autoplay = "default"
-frame_progress = 0.39038768
+frame_progress = 0.25712463
