@@ -47,6 +47,7 @@ offset_top = 800.0
 offset_right = 604.0
 offset_bottom = 1100.0
 rotation = 3.1415927
+metadata/_edit_use_anchors_ = true
 
 [node name="SubViewport" type="SubViewport" parent="CanvasLayer/EnemyDiceCorner/SubViewportContainer" unique_id=2026893482]
 handle_input_locally = false
@@ -78,6 +79,7 @@ offset_bottom = 801.0
 script = ExtResource("3_kln2b")
 
 [node name="TestDiceRoll" type="Button" parent="CanvasLayer" unique_id=193832773 node_paths=PackedStringArray("diceController", "tokenLayer")]
+visible = false
 offset_left = 439.0
 offset_top = 289.0
 offset_right = 747.0
@@ -86,20 +88,26 @@ script = ExtResource("2_kln2b")
 diceController = NodePath("../PlayerDiceCorner/SubViewportContainer/SubViewport/DiceView/DiceController")
 tokenLayer = NodePath("../DiceTokenLayer")
 
-[node name="CardRow" type="HBoxContainer" parent="." unique_id=1143773701]
+[node name="CardRow" type="HBoxContainer" parent="CanvasLayer" unique_id=1143773701]
 offset_left = 300.0
 offset_top = 500.0
 offset_right = 900.0
 offset_bottom = 800.0
 
-[node name="Card" parent="CardRow" unique_id=786842608 instance=ExtResource("4_rgh2o")]
+[node name="Card" parent="CanvasLayer/CardRow" unique_id=786842608 instance=ExtResource("4_rgh2o")]
 layout_mode = 2
 
-[node name="Card2" parent="CardRow" unique_id=293748996 instance=ExtResource("4_rgh2o")]
+[node name="Card2" parent="CanvasLayer/CardRow" unique_id=293748996 instance=ExtResource("4_rgh2o")]
 layout_mode = 2
 
-[node name="Card3" parent="CardRow" unique_id=1434031668 instance=ExtResource("4_rgh2o")]
+[node name="Card3" parent="CanvasLayer/CardRow" unique_id=1434031668 instance=ExtResource("4_rgh2o")]
 layout_mode = 2
+
+[node name="CardTable" type="TextureRect" parent="CanvasLayer" unique_id=757207352]
+offset_left = 304.0
+offset_top = 500.0
+offset_right = 900.0
+offset_bottom = 800.0
 
 [editable path="CanvasLayer/PlayerDiceCorner/SubViewportContainer/SubViewport/DiceView"]
 [editable path="CanvasLayer/EnemyDiceCorner/SubViewportContainer/SubViewport/DiceView"]
