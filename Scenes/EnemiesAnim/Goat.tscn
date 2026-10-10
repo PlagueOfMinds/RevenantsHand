@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://ccyrmion71ote"]
+
+[ext_resource type="SpriteFrames" uid="uid://y6kaox4l75ml" path="res://Sprites/GoatIdle.tres" id="1_16a8n"]
+
+[node name="Goat" type="Node2D" unique_id=1548354051]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2034757483]
+position = Vector2(-150, -112.5)
+sprite_frames = ExtResource("1_16a8n")
+autoplay = "default"
+frame_progress = 0.39038768

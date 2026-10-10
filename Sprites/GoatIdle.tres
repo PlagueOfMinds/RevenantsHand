@@ -1,0 +1,25 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://y6kaox4l75ml"]
+
+[ext_resource type="Texture2D" uid="uid://dg5l5n1a7ipm1" path="res://Sprites/GoatIdleSpriteSheet.png" id="1_15woe"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_orcog"]
+atlas = ExtResource("1_15woe")
+region = Rect2(0, 0, 2400, 1300)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h54wk"]
+atlas = ExtResource("1_15woe")
+region = Rect2(2400, 0, 2400, 1300)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_orcog")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h54wk")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 2.5
+}]

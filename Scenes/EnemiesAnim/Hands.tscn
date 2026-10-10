@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://bny5dc05ospqp"]
+
+[ext_resource type="SpriteFrames" uid="uid://cdx1d74q8si5a" path="res://Sprites/HandsIdle.tres" id="1_rk3la"]
+
+[node name="Revenant" type="Node2D" unique_id=1548354051]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2034757483]
+position = Vector2(-150, -112.5)
+sprite_frames = ExtResource("1_rk3la")
+autoplay = "default"
