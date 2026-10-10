@@ -78,8 +78,15 @@ public class Player : Combatant
 public class Enemy : Combatant
 {
     private readonly Random rng = new();
+    private Texture2D texture;
 
-    public Enemy(string name, int maxHealth) : base(name, maxHealth) { }
+    protected Enemy(string name, int maxHealth) : base(name, maxHealth) { }
+
+    // Each enemy overrides this with its image, e.g. "res://Art/Enemies/goblin.png"
+    protected virtual string TexturePath => null;
+
+    // Loaded once on first use; null if the enemy has no art yet
+    public Texture2D Texture => texture ??= TexturePath != null ? GD.Load<Texture2D>(TexturePath) : null;
 
     // One move per turn. Default: a random enemy card, powered by the total of all its dice
     public virtual QueuedAction ChooseMove(IReadOnlyList<Card> cards, Combatant opponent)

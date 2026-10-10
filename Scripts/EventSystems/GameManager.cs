@@ -8,7 +8,7 @@ public partial class GameManager : Node
 
     [ExportGroup("Combatants")]
     [Export] private int playerMaxHealth = 30;
-    [Export] private int enemyMaxHealth = 40;
+    private int enemyMaxHealth;
 
     [ExportGroup("Dice")]
     [Export] private DiceController playerDice;
@@ -36,19 +36,33 @@ public partial class GameManager : Node
     public Phase CurrentPhase { get; private set; }
 
     public override void _Ready()
-    {
-        Player = new Player(playerMaxHealth);
-        Enemy = new Enemy("Enemy", enemyMaxHealth);
-        Player.Changed += _ => UpdateHealthLabels();
-        Enemy.Changed += _ => UpdateHealthLabels();
+	{
+		Player = new Player(playerMaxHealth);
+		Player.Changed += OnCombatantChanged;
 
-        rollButton.Pressed += OnRollPressed;
-        lockInButton.Pressed += OnLockInPressed;
+		rollButton.Pressed += OnRollPressed;
+		lockInButton.Pressed += OnLockInPressed;
 
-        UpdateTurnLabel();
-        UpdateHealthLabels();
-        SetPhase(Phase.Roll);
-    }
+		StartBattle(new Goblin()); // test enemy; later your encounter/map system calls StartBattle
+	}
+
+	public void StartBattle(Enemy enemy)
+	{
+		if (Enemy != null) Enemy.Changed -= OnCombatantChanged;
+
+		Enemy = enemy;
+		Enemy.Changed += OnCombatantChanged;
+
+		if (enemyPortrait != null) enemyPortrait.Texture = Enemy.Texture;
+
+		Turn = 1;
+		tokenLayer.ClearTokens();
+		UpdateTurnLabel();
+		UpdateHealthLabels();
+		SetPhase(Phase.Roll);
+	}
+
+	private void OnCombatantChanged(Combatant _) => UpdateHealthLabels();
 
     // Stage 1: player and enemy roll at the same time
     private async void OnRollPressed()
