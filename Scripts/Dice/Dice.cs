@@ -71,4 +71,33 @@ public partial class Dice : RigidBody3D
 
         return roll;
     }
+
+    public int bump(int value)
+    {
+        int currentSide = this.getRoll();
+        int newVal = currentSide + value;
+        if (newVal < 1)
+        {
+            newVal = 1;
+        } else if(newVal > 6)
+        {
+            newVal = 6;
+        }
+
+            // Change our upright side
+            var exclude = new Godot.Collections.Array<Rid>();
+        //foreach (var d in activeDice)
+        //   exclude.Add(d.GetRid());
+
+        var query = PhysicsRayQueryParameters3D.Create(this.GlobalPosition, this.GlobalPosition + Vector3.Down * 100f);
+        query.Exclude = exclude;
+
+        var hit = this.GetWorld3D().DirectSpaceState.IntersectRay(query);
+
+        float floorY = hit.Count > 0 ? ((Vector3)hit["position"]).Y : 0;
+
+        this.Transform = GetUprightTransform(newVal, floorY);
+
+        return newVal;
+    }
 }

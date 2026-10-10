@@ -18,6 +18,7 @@ public partial class Combatant : Node2D
     public int Health { get; private set; } = 30;
     public int Block { get; private set; }
     public bool IsDead => Health <= 0;
+    public int poisonCount = 0;
 
     // This turn's dice, plus a record of every turn's dice
     public int[] Dice { get; private set; } = Array.Empty<int>();
@@ -69,6 +70,12 @@ public partial class Combatant : Node2D
         Block = 0;
         Dice = Array.Empty<int>();
         Changed?.Invoke(this);
+        TakeDamage(poisonCount);
+        if(poisonCount > 0)
+        {
+            poisonCount--;
+        }
+        
     }
     public void SetHealth(int value)
     {
