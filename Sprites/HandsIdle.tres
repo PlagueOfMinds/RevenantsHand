@@ -1,0 +1,25 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://cdx1d74q8si5a"]
+
+[ext_resource type="Texture2D" uid="uid://cpy64nprpgha5" path="res://Sprites/HandsIdleSpriteSheet.png" id="1_t48g7"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kintu"]
+atlas = ExtResource("1_t48g7")
+region = Rect2(0, 0, 2400, 1300)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fgtit"]
+atlas = ExtResource("1_t48g7")
+region = Rect2(2400, 0, 2400, 1300)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kintu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fgtit")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 2.5
+}]

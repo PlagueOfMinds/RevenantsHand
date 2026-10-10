@@ -5,8 +5,7 @@
 [node name="Revenant" type="Node2D" unique_id=1548354051]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2034757483]
-position = Vector2(-300, -225)
-scale = Vector2(1.5, 1.5)
+position = Vector2(-378, -211)
 sprite_frames = ExtResource("1_l6joo")
 autoplay = "default"
-frame_progress = 0.28732345
+frame_progress = 0.78260285
