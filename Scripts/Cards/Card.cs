@@ -9,6 +9,8 @@ public partial class Card : Control
     [Export] public bool IsPlayerCard { get; set; } = true; // uncheck for enemy cards
     [Export] private Control dieSlot;
     [Export] private CanvasItem highlight;
+    public bool disabled = false;
+    public int turnCount = 0;
 
     [Signal] public delegate void DiePlacedEventHandler(Card card, int value);
 
@@ -23,6 +25,7 @@ public partial class Card : Control
         if (GameManager.ImgManager != null)
         {
             gameManager = GameManager.ImgManager;
+            turnCount = gameManager.Turn;
         }
         AddToGroup(GroupName);
         SetHover(false);
@@ -34,6 +37,15 @@ public partial class Card : Control
         {
             gameManager = GameManager.ImgManager;
         }
+        if(disabled)
+        {
+            if(turnCount != gameManager.Turn)
+            {
+                disabled = false;
+                flipInputBlocking();
+            }
+        }
+        turnCount = gameManager.Turn;
     }
 
     public bool CanAccept(DiceToken token) => IsPlayerCard && !IsOccupied;
@@ -43,9 +55,9 @@ public partial class Card : Control
         if (highlight != null) highlight.Visible = on;
     }
 
-    public void PlaceDie(DiceToken token)
+    public virtual void PlaceDie(DiceToken token)
     {
-        if (!CanAccept(token)) return;
+        if (!CanAccept(token) || disabled) return;
 
         PlacedDie = token;
         token.LockInto(dieSlot ?? this);
@@ -58,5 +70,37 @@ public partial class Card : Control
     {
         GD.Print($"{user.Name} used {CardName} with a {value} (no effect yet)");
         return Task.CompletedTask;
+    }
+
+    public void disableSelf()
+    {
+        if(!disabled)
+        {
+            disabled = true;
+            flipInputBlocking();
+        }
+    }
+
+    private void flipInputBlocking()
+    {
+        // When disabled, ignore input events. When enabled, stop/handle input events.
+        MouseFilterEnum targetFilter = disabled ? MouseFilterEnum.Ignore : MouseFilterEnum.Stop;
+
+        SetMouseFilterRecursive(this, targetFilter);
+        GD.Print("Flipped the filter");
+        GD.Print(this.MouseFilter);
+    }
+
+    private static void SetMouseFilterRecursive(Node parent, MouseFilterEnum filter)
+    {
+        if (parent is Control control)
+        {
+            control.MouseFilter = filter;
+        }
+
+        foreach (Node child in parent.GetChildren())
+        {
+            SetMouseFilterRecursive(child, filter);
+        }
     }
 }
