@@ -70,6 +70,11 @@ public partial class Combatant : Node2D
         Dice = Array.Empty<int>();
         Changed?.Invoke(this);
     }
+    public void SetHealth(int value)
+    {
+        Health = Math.Clamp(value, 0, MaxHealth);
+        Changed?.Invoke(this);
+    }
 }
 
 // One card effect waiting to resolve: who used it, against whom, which card, and the die value

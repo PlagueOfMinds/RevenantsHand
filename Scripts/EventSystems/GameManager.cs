@@ -6,12 +6,6 @@ public partial class GameManager : Node
 {
     public enum Phase { Roll, Rolling, Place, Resolve, GameOver }
 
-    [ExportGroup("Combatants")]
-    [Export] private int playerMaxHealth = 30;
-	[ExportGroup("Enemy")]
-	[Export] private Control enemySlot; // where the enemy's sprite appears
-	protected int enemyMaxHealth; // Taken from enemy object
-
     [ExportGroup("Dice")]
     [Export] private DiceController playerDice;
     [Export] private DiceController enemyDice;
@@ -28,9 +22,10 @@ public partial class GameManager : Node
     [Export] private Label playerHealthLabel; // optional
     [Export] private Label enemyHealthLabel;  // optional
     [Export] private float fadedAlpha = 0.35f;
-    [Export] private float actionDelay = 0.6f; // pause between actions so each one is readable
+    [Export] private float actionDelay = 0.6f;      // pause between actions so each one is readable
+    [Export] private float endOfBattleDelay = 2f;   // how long "Victory"/"Defeat" shows before moving on
 
-	[Signal] public delegate void BattleStartedEventHandler(Enemy enemy);
+    [Signal] public delegate void BattleStartedEventHandler(Enemy enemy);
     [Signal] public delegate void GameEndedEventHandler(bool playerWon);
 
     public Player Player { get; private set; }
@@ -39,38 +34,56 @@ public partial class GameManager : Node
     public Phase CurrentPhase { get; private set; }
 
     public override void _Ready()
-	{
-		Player = new Player {MaxHealth = playerMaxHealth};
-		AddChild(Player);
-		Player.Changed += OnCombatantChanged;
+    {
+        if (!Run.IsActive) Run.StartNewRun(); // running Combat directly (F6) still works
 
-		rollButton.Pressed += OnRollPressed;
-		lockInButton.Pressed += OnLockInPressed;
+        Player = new Player { MaxHealth = Run.PlayerMaxHealth };
+        Player.SetHealth(Run.PlayerHealth);
+        AddChild(Player);
+        Player.Changed += OnCombatantChanged;
 
-		Callable.From(() => StartBattle(Encounter.CreateEnemy())).CallDeferred();
-	}
+        rollButton.Pressed += OnRollPressed;
+        lockInButton.Pressed += OnLockInPressed;
 
-	public void StartBattle(Enemy enemy)
-	{
-		if (Enemy != null)
-		{
-			Enemy.Changed -= OnCombatantChanged;
-			Enemy.QueueFree(); // remove the previous enemy and its sprite
-		}
+        Callable.From(() => StartBattle(Encounter.CreateEnemy())).CallDeferred();
+    }
 
-		Enemy = enemy;
-		AddChild(Enemy); // runs Enemy._Ready(): positions it and loads its sprite
-		Enemy.Changed += OnCombatantChanged;
+    public void StartBattle(Enemy enemy)
+    {
+        if (Enemy != null)
+        {
+            Enemy.Changed -= OnCombatantChanged;
+            Enemy.QueueFree(); // remove the previous enemy and its sprite
+        }
 
-		Turn = 1;
-		tokenLayer.ClearTokens();
-		UpdateTurnLabel();
-		UpdateHealthLabels();
-		SetPhase(Phase.Roll);
-		EmitSignal(SignalName.BattleStarted, Enemy);
-	}
+        Enemy = enemy;
+        AddChild(Enemy); // runs Enemy._Ready(): positions it and loads its sprite
+        Enemy.Changed += OnCombatantChanged;
 
-	private void OnCombatantChanged(Combatant _) => UpdateHealthLabels();
+        BuildPlayerCards();
+
+        Turn = 1;
+        tokenLayer.ClearTokens();
+        UpdateTurnLabel();
+        UpdateHealthLabels();
+        SetPhase(Phase.Roll);
+        EmitSignal(SignalName.BattleStarted, Enemy);
+    }
+
+    // Fill the CardRow from the run's deck, left to right
+    private void BuildPlayerCards()
+    {
+        foreach (Node child in playerCardRow.GetChildren())
+        {
+            playerCardRow.RemoveChild(child);
+            child.QueueFree();
+        }
+
+        foreach (string path in Run.Deck)
+            playerCardRow.AddChild(GD.Load<PackedScene>(path).Instantiate<Card>());
+    }
+
+    private void OnCombatantChanged(Combatant _) => UpdateHealthLabels();
 
     // Stage 1: player and enemy roll at the same time
     private async void OnRollPressed()
@@ -139,12 +152,17 @@ public partial class GameManager : Node
         SetPhase(Phase.Roll);
     }
 
-    private void EndGame()
+    private async void EndGame()
     {
         SetPhase(Phase.GameOver);
         bool playerWon = Enemy.IsDead;
         turnLabel.Text = playerWon ? "Victory" : "Defeat";
         EmitSignal(SignalName.GameEnded, playerWon);
+
+        await Wait(endOfBattleDelay);
+
+        if (playerWon) Run.BattleWon(Player.Health);
+        else Run.BattleLost();
     }
 
     private void SetPhase(Phase phase)
@@ -165,14 +183,14 @@ public partial class GameManager : Node
 
     private void UpdateHealthLabels()
     {
-        if (playerHealthLabel != null) playerHealthLabel.Text = Describe(Player);
-        if (enemyHealthLabel != null) enemyHealthLabel.Text = Describe(Enemy);
+        if (playerHealthLabel != null && Player != null) playerHealthLabel.Text = Describe(Player);
+        if (enemyHealthLabel != null && Enemy != null) enemyHealthLabel.Text = Describe(Enemy);
     }
 
     private static string Describe(Combatant c) =>
         c.Block > 0
-            ? $"{c.Name}: {c.Health}/{c.MaxHealth} HP (+{c.Block} block)"
-            : $"{c.Name}: {c.Health}/{c.MaxHealth} HP";
+            ? $"{c.DisplayName}: {c.Health}/{c.MaxHealth} HP (+{c.Block} block)"
+            : $"{c.DisplayName}: {c.Health}/{c.MaxHealth} HP";
 
     private static List<Card> GetCards(Node row)
     {

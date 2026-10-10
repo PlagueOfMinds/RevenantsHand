@@ -1,19 +1,15 @@
-using Godot;
 using System;
 
 // Remembers which enemy the next battle is against, across scene changes
 public static class Encounter
 {
-    public const string CombatScenePath = "res://Scenes/Combat.tscn";
-
-    // Used when the Combat scene is run directly (F6) without choosing an enemy first
+    // Used when the Combat scene is run directly (F6)
     private static Func<Enemy> nextEnemy = () => new Revenant();
 
-    // Call from a map, menu, or event to start a fight
-    public static void Begin(Node caller, Func<Enemy> createEnemy)
+    public static void Begin(Func<Enemy> createEnemy)
     {
         nextEnemy = createEnemy;
-        caller.GetTree().ChangeSceneToFile(CombatScenePath);
+        SceneTransition.Instance.GoTo(Run.CombatScenePath);
     }
 
     public static Enemy CreateEnemy() => nextEnemy();
