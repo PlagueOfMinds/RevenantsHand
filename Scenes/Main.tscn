@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://cg0fph5qdu50j" path="res://Scripts/Dice/DiceTokenLayer.cs" id="3_kln2b"]
 [ext_resource type="Script" uid="uid://vf1rfunok51o" path="res://Scripts/EventSystems/GameManager.cs" id="4_pbw6q"]
 [ext_resource type="PackedScene" uid="uid://bmyv0eseprxua" path="res://Scenes/Card.tscn" id="4_rgh2o"]
+[ext_resource type="SpriteFrames" uid="uid://mn5sjjp3nmyo" path="res://Sprites/PatronIdle.tres" id="6_v1gob"]
 
 [node name="Combat" type="Node2D" unique_id=328123032]
 
@@ -151,15 +152,12 @@ offset_bottom = 800.0
 
 [node name="Card" parent="UILayer/EnemyCardRow" unique_id=1606073539 instance=ExtResource("4_rgh2o")]
 layout_mode = 2
-IsPlayerCard = false
 
 [node name="Card2" parent="UILayer/EnemyCardRow" unique_id=806388132 instance=ExtResource("4_rgh2o")]
 layout_mode = 2
-IsPlayerCard = false
 
 [node name="Card3" parent="UILayer/EnemyCardRow" unique_id=1851607510 instance=ExtResource("4_rgh2o")]
 layout_mode = 2
-IsPlayerCard = false
 
 [node name="CardTable" type="TextureRect" parent="UILayer" unique_id=757207352]
 offset_left = 304.0
@@ -179,6 +177,15 @@ lockInButton = NodePath("../UILayer/NonDiceUI/LockInTurnButton")
 turnLabel = NodePath("../UILayer/NonDiceUI/TurnLabel")
 playerHealthLabel = NodePath("../UILayer/NonDiceUI/PlayerHealthLabel")
 enemyHealthLabel = NodePath("../UILayer/NonDiceUI/EnemyHealthLabel")
+
+[node name="NPC" type="Node" parent="." unique_id=179622713]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="NPC" unique_id=2025443229]
+position = Vector2(641, 249)
+scale = Vector2(0.8, 0.8)
+sprite_frames = ExtResource("6_v1gob")
+autoplay = "default"
+frame_progress = 0.28732345
 
 [editable path="UILayer/PlayerDiceCorner/SubViewportContainer/SubViewport/DiceView"]
 [editable path="UILayer/EnemyDiceCorner/SubViewportContainer/SubViewport/DiceView"]
