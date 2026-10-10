@@ -16,10 +16,24 @@ public partial class Card : Control
     public bool IsOccupied => PlacedDie != null && IsInstanceValid(PlacedDie) && !PlacedDie.IsQueuedForDeletion();
     public int PlacedValue => IsOccupied ? PlacedDie.Value : 0;
 
+    public GameManager gameManager;
+
     public override void _Ready()
     {
+        if (GameManager.ImgManager != null)
+        {
+            gameManager = GameManager.ImgManager;
+        }
         AddToGroup(GroupName);
         SetHover(false);
+    }
+
+    public override void _Process(double delta)
+    {
+        if (gameManager == null && GameManager.ImgManager != null)
+        {
+            gameManager = GameManager.ImgManager;
+        }
     }
 
     public bool CanAccept(DiceToken token) => IsPlayerCard && !IsOccupied;

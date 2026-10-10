@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://cg0fph5qdu50j" path="res://Scripts/Dice/DiceTokenLayer.cs" id="3_kln2b"]
 [ext_resource type="Script" uid="uid://vf1rfunok51o" path="res://Scripts/EventSystems/GameManager.cs" id="4_pbw6q"]
 [ext_resource type="PackedScene" uid="uid://bmyv0eseprxua" path="res://Scenes/Cards/Card.tscn" id="4_rgh2o"]
+[ext_resource type="Texture2D" uid="uid://cvby2cxerjisp" path="res://Tabur/Sprites/BrownBoard.png" id="6_v1gob"]
 
 [node name="Combat" type="Node2D" unique_id=328123032]
 
@@ -12,9 +13,8 @@
 position = Vector2(604, 401)
 zoom = Vector2(0.5, 0.5)
 
-[node name="GameManager" type="Node" parent="." unique_id=1802966013 node_paths=PackedStringArray("enemySlot", "playerDice", "enemyDice", "tokenLayer", "playerCardRow", "enemyCardRow", "rollButton", "lockInButton", "turnLabel", "playerHealthLabel", "enemyHealthLabel")]
+[node name="GameManager" type="Node" parent="." unique_id=1802966013 node_paths=PackedStringArray("playerDice", "enemyDice", "tokenLayer", "playerCardRow", "enemyCardRow", "rollButton", "lockInButton", "turnLabel", "playerHealthLabel", "enemyHealthLabel")]
 script = ExtResource("4_pbw6q")
-enemySlot = NodePath("../UILayer/EnemySpawn")
 playerDice = NodePath("../UILayer/PlayerDiceCorner/SubViewportContainer/SubViewport/DiceView/DiceController")
 enemyDice = NodePath("../UILayer/EnemyDiceCorner/SubViewportContainer/SubViewport/DiceView/DiceController")
 tokenLayer = NodePath("../UILayer/DiceTokenLayer")
@@ -86,6 +86,7 @@ offset_bottom = 798.0
 
 [node name="SubViewport" type="SubViewport" parent="UILayer/PlayerDiceCorner/SubViewportContainer" unique_id=2128464344]
 own_world_3d = true
+transparent_bg = true
 handle_input_locally = false
 size = Vector2i(300, 300)
 render_target_update_mode = 4
@@ -114,10 +115,10 @@ offset_top = 800.0
 offset_right = 600.0
 offset_bottom = 1100.0
 rotation = 3.1415927
-metadata/_edit_use_anchors_ = true
 
 [node name="SubViewport" type="SubViewport" parent="UILayer/EnemyDiceCorner/SubViewportContainer" unique_id=2026893482]
 own_world_3d = true
+transparent_bg = true
 handle_input_locally = false
 size = Vector2i(300, 300)
 render_target_update_mode = 4
@@ -177,10 +178,14 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="CardTable" type="TextureRect" parent="UILayer" unique_id=757207352]
-offset_left = 304.0
+z_index = -10
+offset_left = -7.0
 offset_top = 500.0
-offset_right = 900.0
-offset_bottom = 800.0
+offset_right = 1207.0
+offset_bottom = 922.0
+mouse_filter = 2
+texture = ExtResource("6_v1gob")
+expand_mode = 1
 
 [node name="EnemySpawn" type="Control" parent="UILayer" unique_id=888805681]
 layout_mode = 3

@@ -33,8 +33,11 @@ public partial class GameManager : Node
     public int Turn { get; private set; } = 1;
     public Phase CurrentPhase { get; private set; }
 
+    public static GameManager ImgManager { get; private set; }
+
     public override void _Ready()
     {
+        ImgManager = this;
         if (!Run.IsActive) Run.StartNewRun(); // running Combat directly (F6) still works
 
         Player = new Player { MaxHealth = Run.PlayerMaxHealth };
