@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://ddsp2bxsew3wd"]
 
 [ext_resource type="Script" uid="uid://b7c62xy8hr48i" path="res://Scripts/Dice/DiceController.cs" id="1_cxfit"]
-[ext_resource type="PackedScene" uid="uid://bnw0twbu2gma0" path="res://Scenes/PlayerDice.tscn" id="2_281u6"]
+[ext_resource type="PackedScene" uid="uid://bnw0twbu2gma0" path="res://Scenes/Dice/PlayerDice.tscn" id="2_281u6"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_dgcv6"]
 size = Vector3(7.968979, 1, 5.972229)

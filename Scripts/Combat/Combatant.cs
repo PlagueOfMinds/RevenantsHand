@@ -1,12 +1,21 @@
+using Godot;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
-public abstract class Combatant
+public partial class Combatant : Node2D
 {
-    public string Name { get; }
-    public int MaxHealth { get; }
-    public int Health { get; private set; }
+    private int maxHealth = 30;
+
+    public string DisplayName { get; set; } = "Combatant";
+
+    // Setting MaxHealth also refills Health
+    public int MaxHealth
+    {
+        get => maxHealth;
+        set { maxHealth = value; Health = value; }
+    }
+
+    public int Health { get; private set; } = 30;
     public int Block { get; private set; }
     public bool IsDead => Health <= 0;
 
@@ -17,13 +26,6 @@ public abstract class Combatant
 
     public event Action<Combatant> Changed;
     public event Action<Combatant> Died;
-
-    protected Combatant(string name, int maxHealth)
-    {
-        Name = name;
-        MaxHealth = maxHealth;
-        Health = maxHealth;
-    }
 
     public void SetDice(int[] dice)
     {
@@ -67,34 +69,6 @@ public abstract class Combatant
         Block = 0;
         Dice = Array.Empty<int>();
         Changed?.Invoke(this);
-    }
-}
-
-public class Player : Combatant
-{
-    public Player(int maxHealth) : base("Player", maxHealth) { }
-}
-
-public class Enemy : Combatant
-{
-    private readonly Random rng = new();
-    private Texture2D texture;
-
-    protected Enemy(string name, int maxHealth) : base(name, maxHealth) { }
-
-    // Each enemy overrides this with its image, e.g. "res://Art/Enemies/goblin.png"
-    protected virtual string TexturePath => null;
-
-    // Loaded once on first use; null if the enemy has no art yet
-    public Texture2D Texture => texture ??= TexturePath != null ? GD.Load<Texture2D>(TexturePath) : null;
-
-    // One move per turn. Default: a random enemy card, powered by the total of all its dice
-    public virtual QueuedAction ChooseMove(IReadOnlyList<Card> cards, Combatant opponent)
-    {
-        if (cards.Count == 0 || Dice.Length == 0) return null;
-
-        Card card = cards[rng.Next(cards.Count)];
-        return new QueuedAction(this, opponent, card, Dice.Sum());
     }
 }
 

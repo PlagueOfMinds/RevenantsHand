@@ -1,13 +1,30 @@
 [gd_scene format=3 uid="uid://ccdyy7v7r3imq"]
 
-[ext_resource type="PackedScene" uid="uid://ddsp2bxsew3wd" path="res://Scenes/DiceTray.tscn" id="1_idj7w"]
+[ext_resource type="PackedScene" uid="uid://ddsp2bxsew3wd" path="res://Scenes/Dice/DiceTray.tscn" id="1_idj7w"]
 [ext_resource type="Script" uid="uid://bjwv1qxhm4gqq" path="res://Scripts/Cards/CardTableToggle.cs" id="1_pbw6q"]
 [ext_resource type="Script" uid="uid://cg0fph5qdu50j" path="res://Scripts/Dice/DiceTokenLayer.cs" id="3_kln2b"]
 [ext_resource type="Script" uid="uid://vf1rfunok51o" path="res://Scripts/EventSystems/GameManager.cs" id="4_pbw6q"]
-[ext_resource type="PackedScene" uid="uid://bmyv0eseprxua" path="res://Scenes/Card.tscn" id="4_rgh2o"]
-[ext_resource type="SpriteFrames" uid="uid://mn5sjjp3nmyo" path="res://Sprites/PatronIdle.tres" id="6_v1gob"]
+[ext_resource type="PackedScene" uid="uid://bmyv0eseprxua" path="res://Scenes/Cards/Card.tscn" id="4_rgh2o"]
 
 [node name="Combat" type="Node2D" unique_id=328123032]
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=542988287]
+position = Vector2(604, 401)
+zoom = Vector2(0.5, 0.5)
+
+[node name="GameManager" type="Node" parent="." unique_id=1802966013 node_paths=PackedStringArray("enemySlot", "playerDice", "enemyDice", "tokenLayer", "playerCardRow", "enemyCardRow", "rollButton", "lockInButton", "turnLabel", "playerHealthLabel", "enemyHealthLabel")]
+script = ExtResource("4_pbw6q")
+enemySlot = NodePath("../UILayer/EnemySpawn")
+playerDice = NodePath("../UILayer/PlayerDiceCorner/SubViewportContainer/SubViewport/DiceView/DiceController")
+enemyDice = NodePath("../UILayer/EnemyDiceCorner/SubViewportContainer/SubViewport/DiceView/DiceController")
+tokenLayer = NodePath("../UILayer/DiceTokenLayer")
+playerCardRow = NodePath("../UILayer/PlayerCardRow")
+enemyCardRow = NodePath("../UILayer/EnemyCardRow")
+rollButton = NodePath("../UILayer/NonDiceUI/RollButton")
+lockInButton = NodePath("../UILayer/NonDiceUI/LockInTurnButton")
+turnLabel = NodePath("../UILayer/NonDiceUI/TurnLabel")
+playerHealthLabel = NodePath("../UILayer/NonDiceUI/PlayerHealthLabel")
+enemyHealthLabel = NodePath("../UILayer/NonDiceUI/EnemyHealthLabel")
 
 [node name="UILayer" type="CanvasLayer" parent="." unique_id=1568385355]
 layer = 2
@@ -165,27 +182,12 @@ offset_top = 500.0
 offset_right = 900.0
 offset_bottom = 800.0
 
-[node name="GameManager" type="Node" parent="." unique_id=1802966013 node_paths=PackedStringArray("playerDice", "enemyDice", "tokenLayer", "playerCardRow", "enemyCardRow", "rollButton", "lockInButton", "turnLabel", "playerHealthLabel", "enemyHealthLabel")]
-script = ExtResource("4_pbw6q")
-playerDice = NodePath("../UILayer/PlayerDiceCorner/SubViewportContainer/SubViewport/DiceView/DiceController")
-enemyDice = NodePath("../UILayer/EnemyDiceCorner/SubViewportContainer/SubViewport/DiceView/DiceController")
-tokenLayer = NodePath("../UILayer/DiceTokenLayer")
-playerCardRow = NodePath("../UILayer/PlayerCardRow")
-enemyCardRow = NodePath("../UILayer/EnemyCardRow")
-rollButton = NodePath("../UILayer/NonDiceUI/RollButton")
-lockInButton = NodePath("../UILayer/NonDiceUI/LockInTurnButton")
-turnLabel = NodePath("../UILayer/NonDiceUI/TurnLabel")
-playerHealthLabel = NodePath("../UILayer/NonDiceUI/PlayerHealthLabel")
-enemyHealthLabel = NodePath("../UILayer/NonDiceUI/EnemyHealthLabel")
-
-[node name="NPC" type="Node" parent="." unique_id=179622713]
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="NPC" unique_id=2025443229]
-position = Vector2(641, 249)
-scale = Vector2(0.8, 0.8)
-sprite_frames = ExtResource("6_v1gob")
-autoplay = "default"
-frame_progress = 0.28732345
+[node name="EnemySpawn" type="Control" parent="UILayer" unique_id=888805681]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -2.0
+offset_right = 38.0
+offset_bottom = 40.0
 
 [editable path="UILayer/PlayerDiceCorner/SubViewportContainer/SubViewport/DiceView"]
 [editable path="UILayer/EnemyDiceCorner/SubViewportContainer/SubViewport/DiceView"]

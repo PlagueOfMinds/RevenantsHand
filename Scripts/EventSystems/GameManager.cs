@@ -8,7 +8,9 @@ public partial class GameManager : Node
 
     [ExportGroup("Combatants")]
     [Export] private int playerMaxHealth = 30;
-    private int enemyMaxHealth;
+	[ExportGroup("Enemy")]
+	[Export] private Control enemySlot; // where the enemy's sprite appears
+	protected int enemyMaxHealth; // Taken from enemy object
 
     [ExportGroup("Dice")]
     [Export] private DiceController playerDice;
@@ -28,6 +30,7 @@ public partial class GameManager : Node
     [Export] private float fadedAlpha = 0.35f;
     [Export] private float actionDelay = 0.6f; // pause between actions so each one is readable
 
+	[Signal] public delegate void BattleStartedEventHandler(Enemy enemy);
     [Signal] public delegate void GameEndedEventHandler(bool playerWon);
 
     public Player Player { get; private set; }
@@ -37,29 +40,34 @@ public partial class GameManager : Node
 
     public override void _Ready()
 	{
-		Player = new Player(playerMaxHealth);
+		Player = new Player {MaxHealth = playerMaxHealth};
+		AddChild(Player);
 		Player.Changed += OnCombatantChanged;
 
 		rollButton.Pressed += OnRollPressed;
 		lockInButton.Pressed += OnLockInPressed;
 
-		StartBattle(new Goblin()); // test enemy; later your encounter/map system calls StartBattle
+		Callable.From(() => StartBattle(Encounter.CreateEnemy())).CallDeferred();
 	}
 
 	public void StartBattle(Enemy enemy)
 	{
-		if (Enemy != null) Enemy.Changed -= OnCombatantChanged;
+		if (Enemy != null)
+		{
+			Enemy.Changed -= OnCombatantChanged;
+			Enemy.QueueFree(); // remove the previous enemy and its sprite
+		}
 
 		Enemy = enemy;
+		AddChild(Enemy); // runs Enemy._Ready(): positions it and loads its sprite
 		Enemy.Changed += OnCombatantChanged;
-
-		if (enemyPortrait != null) enemyPortrait.Texture = Enemy.Texture;
 
 		Turn = 1;
 		tokenLayer.ClearTokens();
 		UpdateTurnLabel();
 		UpdateHealthLabels();
 		SetPhase(Phase.Roll);
+		EmitSignal(SignalName.BattleStarted, Enemy);
 	}
 
 	private void OnCombatantChanged(Combatant _) => UpdateHealthLabels();
