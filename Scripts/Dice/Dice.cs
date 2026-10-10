@@ -2,26 +2,32 @@ using Godot;
 
 public partial class Dice : RigidBody3D
 {
-    private Marker3D[] sides = new Marker3D[6];
-	[Export] private Node diceSides;
+    [Export] private Node3D diceSides;
+
+    private Node3D[] sides = new Node3D[6];
 
     public override void _Ready()
     {
         for (int i = 0; i < 6; i++)
-            sides[i] = diceSides.GetNode<Marker3D>($"side{i + 1}");
+        {
+            sides[i] = diceSides.GetNode<Node3D>($"side{i + 1}");
+
+            if (!IsAncestorOf(sides[i]))
+                GD.PushError($"Dice: side{i + 1} is not inside this die, so it won't move with it.");
+        }
     }
 
     public int getRoll()
     {
         int result = 0;
-        float highestZ = float.NegativeInfinity;
+        float highestY = float.NegativeInfinity;
 
         for (int i = 0; i < sides.Length; i++)
         {
-            float z = sides[i].GlobalPosition.Z; // world position, not Position
-            if (z > highestZ)
+            float y = sides[i].GlobalPosition.Y;
+            if (y > highestY)
             {
-                highestZ = z;
+                highestY = y;
                 result = i + 1;
             }
         }

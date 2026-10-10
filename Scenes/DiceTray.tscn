@@ -1,0 +1,78 @@
+[gd_scene format=3 uid="uid://ddsp2bxsew3wd"]
+
+[ext_resource type="Script" uid="uid://b7c62xy8hr48i" path="res://Scripts/Dice/DiceController.cs" id="1_cxfit"]
+[ext_resource type="PackedScene" uid="uid://bnw0twbu2gma0" path="res://Scenes/PlayerDice.tscn" id="2_281u6"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dgcv6"]
+size = Vector3(7.968979, 1, 5.972229)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ojl55"]
+size = Vector3(7.7962646, 5.9022217, 1)
+
+[node name="DiceView" type="Node3D" unique_id=1560289468]
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1530825400]
+transform = Transform3D(-0.9999934, -0.0036646286, 5.415271e-05, 5.261349e-11, 0.014776003, 0.99989086, -0.0036650244, 0.99988425, -0.014775905, 0.008832574, 5.925181, 0)
+
+[node name="Dice Area" type="Node" parent="." unique_id=221627648]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Dice Area" unique_id=895919971]
+transform = Transform3D(0.0027908806, 0, -0.9999961, 0, 1, 0, 0.9999961, 0, 0.0027908806, -0.013144824, 0, 0.0033229045)
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Dice Area/StaticBody3D" unique_id=1905071810]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0062462017, -0.0001654625, -0.07262921)
+shape = SubResource("BoxShape3D_dgcv6")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="Dice Area" unique_id=743022062]
+transform = Transform3D(0.0027908806, 0, -0.9999961, 0, 1, 0, 0.9999961, 0, 0.0027908806, 0.003286206, 0, 0.0032770473)
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Dice Area/StaticBody3D2" unique_id=1715139311]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.099586725, 0.97273827, -3.4645793)
+shape = SubResource("BoxShape3D_ojl55")
+
+[node name="StaticBody3D3" type="StaticBody3D" parent="Dice Area" unique_id=2070922913]
+transform = Transform3D(0.0027908806, 0, -0.9999961, 0, 1, 0, 0.9999961, 0, 0.0027908806, 0.003286206, 0, 0.0032770473)
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Dice Area/StaticBody3D3" unique_id=1184125229]
+transform = Transform3D(-0.014988244, 0, -0.9998878, 0, 1, 0, 0.9998878, 0, -0.014988244, 3.226608, 0.97273827, -0.20846853)
+shape = SubResource("BoxShape3D_ojl55")
+
+[node name="StaticBody3D4" type="StaticBody3D" parent="Dice Area" unique_id=1879344022]
+transform = Transform3D(0.0027908806, 0, -0.9999961, 0, 1, 0, 0.9999961, 0, 0.0027908806, 0.003286206, 0, 0.0032770473)
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Dice Area/StaticBody3D4" unique_id=1150156309]
+transform = Transform3D(-0.99997205, 0, -0.0074907728, 0, 1, 0, 0.0074907728, 0, -0.99997205, -0.2362853, 1.033783, 3.3146174)
+shape = SubResource("BoxShape3D_ojl55")
+
+[node name="StaticBody3D5" type="StaticBody3D" parent="Dice Area" unique_id=1087696137]
+transform = Transform3D(0.0027908806, 0, -0.9999961, 0, 1, 0, 0.9999961, 0, 0.0027908806, 0.003286206, 0, 0.0032770473)
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Dice Area/StaticBody3D5" unique_id=1773320281]
+transform = Transform3D(0.014107791, 0, 0.99990064, 0, 1, 0, -0.99990064, 0, 0.014107791, -4.5159216, 0.96483564, -0.08706869)
+shape = SubResource("BoxShape3D_ojl55")
+
+[node name="DiceController" type="Node3D" parent="." unique_id=1595731048 node_paths=PackedStringArray("diceParent", "spawnPoint", "throwTarget")]
+script = ExtResource("1_cxfit")
+diceScene = ExtResource("2_281u6")
+diceParent = NodePath("..")
+spawnPoint = NodePath("../Spawnpoint")
+throwTarget = NodePath("../ThrowTarget")
+spawnSpacing = 1.0
+throwForceMin = 5.0
+throwForceMax = 10.0
+
+[node name="Spawnpoint" type="Marker3D" parent="." unique_id=1098113751]
+transform = Transform3D(0.9983993, 0, -0.056556314, 0, 1, 0, 0.056556314, 0, 0.9983993, -0.0538435, 2.1747382, -2.5682068)
+
+[node name="ThrowTarget" type="Marker3D" parent="." unique_id=1747469233]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.024188042, -0.06726408, 0)

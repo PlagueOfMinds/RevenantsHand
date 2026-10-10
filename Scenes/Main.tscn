@@ -1,3 +1,40 @@
 [gd_scene format=3 uid="uid://ccdyy7v7r3imq"]
 
+[ext_resource type="PackedScene" uid="uid://ddsp2bxsew3wd" path="res://Scenes/DiceTray.tscn" id="1_idj7w"]
+[ext_resource type="Script" uid="uid://bgnb7iwlnu4u2" path="res://Scripts/Dice/DiceTest.cs" id="2_kln2b"]
+
 [node name="Combat" type="Node2D" unique_id=328123032]
+
+[node name="PlayerDiceCorner" type="Node" parent="." unique_id=146104002]
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="PlayerDiceCorner" unique_id=596663950]
+offset_left = 902.0
+offset_top = 397.0
+offset_right = 1152.0
+offset_bottom = 647.0
+
+[node name="SubViewport" type="SubViewport" parent="PlayerDiceCorner/SubViewportContainer" unique_id=2128464344]
+handle_input_locally = false
+size = Vector2i(250, 250)
+render_target_update_mode = 4
+
+[node name="DiceView" parent="PlayerDiceCorner/SubViewportContainer/SubViewport" unique_id=1560289468 instance=ExtResource("1_idj7w")]
+
+[node name="Camera3D" parent="PlayerDiceCorner/SubViewportContainer/SubViewport/DiceView" index="0" unique_id=1530825400]
+transform = Transform3D(-1.0000001, 8.7422784e-08, 0, 3.8213714e-15, 4.3711392e-08, 1, 8.7422784e-08, 1.0000001, -4.371139e-08, 0.008832574, 5.925181, 0)
+
+[node name="CollisionShape3D" parent="PlayerDiceCorner/SubViewportContainer/SubViewport/DiceView/Dice Area/StaticBody3D5" parent_id_path=PackedInt32Array(1560289468, 1087696137) index="0" unique_id=1773320281]
+transform = Transform3D(0.020659864, 0, 0.9997867, 0, 1, 0, -0.9997867, 0, 0.020659864, -4.451474, 0.918211, -0.033677246)
+
+[node name="Spawnpoint" parent="PlayerDiceCorner/SubViewportContainer/SubViewport/DiceView" index="3" unique_id=1098113751]
+transform = Transform3D(0.99993515, 0, -0.011392221, 0, 1, 0, 0.011392221, 0, 0.99993515, -0.0538435, 2.0997498, -3.164925)
+
+[node name="TestDiceRoll" type="Button" parent="." unique_id=193832773 node_paths=PackedStringArray("diceController")]
+offset_left = 376.0
+offset_top = 289.0
+offset_right = 684.0
+offset_bottom = 416.0
+script = ExtResource("2_kln2b")
+diceController = NodePath("../PlayerDiceCorner/SubViewportContainer/SubViewport/DiceView/DiceController")
+
+[editable path="PlayerDiceCorner/SubViewportContainer/SubViewport/DiceView"]
