@@ -79,11 +79,10 @@ offset_bottom = 801.0
 script = ExtResource("3_kln2b")
 
 [node name="TestDiceRoll" type="Button" parent="CanvasLayer" unique_id=193832773 node_paths=PackedStringArray("diceController", "tokenLayer")]
-visible = false
-offset_left = 439.0
-offset_top = 289.0
-offset_right = 747.0
-offset_bottom = 416.0
+offset_left = 894.0
+offset_top = 370.0
+offset_right = 1202.0
+offset_bottom = 497.0
 script = ExtResource("2_kln2b")
 diceController = NodePath("../PlayerDiceCorner/SubViewportContainer/SubViewport/DiceView/DiceController")
 tokenLayer = NodePath("../DiceTokenLayer")

@@ -1,0 +1,25 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://ccs7bg074wq7j"]
+
+[ext_resource type="Texture2D" uid="uid://cwg83kh6fpmcp" path="res://Sprites/PatronIdleSpritesheet.png" id="1_vlali"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vlali"]
+atlas = ExtResource("1_vlali")
+region = Rect2(0, 0, 2400, 700)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x0tps"]
+atlas = ExtResource("1_vlali")
+region = Rect2(2400, 0, 2400, 700)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vlali")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x0tps")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 2.4
+}]

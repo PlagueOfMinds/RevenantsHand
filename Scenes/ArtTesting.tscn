@@ -1,0 +1,129 @@
+[gd_scene format=3 uid="uid://bjj83xpur0bh4"]
+
+[ext_resource type="PackedScene" uid="uid://ddsp2bxsew3wd" path="res://Scenes/DiceTray.tscn" id="1_lk8je"]
+[ext_resource type="Script" uid="uid://cg0fph5qdu50j" path="res://Scripts/Dice/DiceTokenLayer.cs" id="2_mrqir"]
+[ext_resource type="Script" uid="uid://bgnb7iwlnu4u2" path="res://Scripts/Dice/RollButton.cs" id="3_u3lyv"]
+[ext_resource type="PackedScene" uid="uid://bmyv0eseprxua" path="res://Scenes/Card.tscn" id="4_a53ru"]
+[ext_resource type="SpriteFrames" uid="uid://ccs7bg074wq7j" path="res://Sprites/PatronIdleFrames.tres" id="5_mrqir"]
+
+[node name="Combat" type="Node2D" unique_id=328123032]
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=71100151]
+anchor_mode = 0
+
+[node name="Art" type="Node" parent="." unique_id=467391780]
+
+[node name="NPC" type="Node" parent="Art" unique_id=509455495]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Art/NPC" unique_id=2069644634]
+position = Vector2(1281, 445)
+scale = Vector2(1.6, 1.6)
+sprite_frames = ExtResource("5_mrqir")
+autoplay = "default"
+frame_progress = 0.84980786
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1568385355]
+layer = 2
+scale = Vector2(2, 2)
+transform = Transform2D(2, 0, 0, 2, 0, 0)
+
+[node name="PlayerDiceCorner" type="Node" parent="CanvasLayer" unique_id=146104002]
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="CanvasLayer/PlayerDiceCorner" unique_id=596663950]
+offset_left = 900.0
+offset_top = 498.0
+offset_right = 1200.0
+offset_bottom = 798.0
+
+[node name="SubViewport" type="SubViewport" parent="CanvasLayer/PlayerDiceCorner/SubViewportContainer" unique_id=2128464344]
+handle_input_locally = false
+size = Vector2i(300, 300)
+render_target_update_mode = 4
+
+[node name="DiceView" parent="CanvasLayer/PlayerDiceCorner/SubViewportContainer/SubViewport" unique_id=1560289468 instance=ExtResource("1_lk8je")]
+
+[node name="Camera3D" parent="CanvasLayer/PlayerDiceCorner/SubViewportContainer/SubViewport/DiceView" index="0" unique_id=1530825400]
+transform = Transform3D(-1, 8.742278e-08, 0, 3.821371e-15, 4.371139e-08, 1, 8.742278e-08, 1, -4.371139e-08, 0.092662334, 5.889425, -0.49570286)
+projection = 1
+size = 7.351444
+
+[node name="CollisionShape3D" parent="CanvasLayer/PlayerDiceCorner/SubViewportContainer/SubViewport/DiceView/Dice Area/StaticBody3D5" parent_id_path=PackedInt32Array(1560289468, 1087696137) index="0" unique_id=1773320281]
+transform = Transform3D(0.020659864, 0, 0.9997867, 0, 1, 0, -0.9997867, 0, 0.020659864, -4.451474, 0.918211, -0.033677246)
+
+[node name="DiceController" parent="CanvasLayer/PlayerDiceCorner/SubViewportContainer/SubViewport/DiceView" index="2" unique_id=1595731048 node_paths=PackedStringArray("trayCamera")]
+trayCamera = NodePath("../Camera3D")
+
+[node name="Spawnpoint" parent="CanvasLayer/PlayerDiceCorner/SubViewportContainer/SubViewport/DiceView" index="3" unique_id=1098113751]
+transform = Transform3D(0.99993515, 0, -0.011392221, 0, 1, 0, 0.011392221, 0, 0.99993515, -0.0538435, 2.0997498, -3.164925)
+
+[node name="EnemyDiceCorner" type="Node" parent="CanvasLayer" unique_id=23010041]
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="CanvasLayer/EnemyDiceCorner" unique_id=233132060]
+offset_left = 304.0
+offset_top = 800.0
+offset_right = 604.0
+offset_bottom = 1100.0
+rotation = 3.1415927
+metadata/_edit_use_anchors_ = true
+
+[node name="SubViewport" type="SubViewport" parent="CanvasLayer/EnemyDiceCorner/SubViewportContainer" unique_id=2026893482]
+handle_input_locally = false
+size = Vector2i(300, 300)
+render_target_update_mode = 4
+
+[node name="DiceView" parent="CanvasLayer/EnemyDiceCorner/SubViewportContainer/SubViewport" unique_id=1856272827 instance=ExtResource("1_lk8je")]
+
+[node name="Camera3D" parent="CanvasLayer/EnemyDiceCorner/SubViewportContainer/SubViewport/DiceView" index="0" unique_id=1530825400]
+transform = Transform3D(-1, 8.742278e-08, 0, 3.821371e-15, 4.371139e-08, 1, 8.742278e-08, 1, -4.371139e-08, 0.092662334, 5.889425, -0.49570286)
+projection = 1
+size = 7.351444
+
+[node name="CollisionShape3D" parent="CanvasLayer/EnemyDiceCorner/SubViewportContainer/SubViewport/DiceView/Dice Area/StaticBody3D5" parent_id_path=PackedInt32Array(1856272827, 1087696137) index="0" unique_id=1773320281]
+transform = Transform3D(0.020659864, 0, 0.9997867, 0, 1, 0, -0.9997867, 0, 0.020659864, -4.451474, 0.918211, -0.033677246)
+
+[node name="DiceController" parent="CanvasLayer/EnemyDiceCorner/SubViewportContainer/SubViewport/DiceView" index="2" unique_id=1595731048 node_paths=PackedStringArray("trayCamera")]
+trayCamera = NodePath("../Camera3D")
+
+[node name="Spawnpoint" parent="CanvasLayer/EnemyDiceCorner/SubViewportContainer/SubViewport/DiceView" index="3" unique_id=1098113751]
+transform = Transform3D(0.99993515, 0, -0.011392221, 0, 1, 0, 0.011392221, 0, 0.99993515, -0.0538435, 2.0997498, -3.164925)
+
+[node name="DiceTokenLayer" type="Control" parent="CanvasLayer" unique_id=45258979]
+layout_mode = 3
+anchors_preset = 0
+offset_top = 501.0
+offset_right = 301.0
+offset_bottom = 801.0
+script = ExtResource("2_mrqir")
+
+[node name="TestDiceRoll" type="Button" parent="CanvasLayer" unique_id=193832773 node_paths=PackedStringArray("diceController", "tokenLayer")]
+offset_left = 890.0
+offset_top = 368.0
+offset_right = 1198.0
+offset_bottom = 495.0
+script = ExtResource("3_u3lyv")
+diceController = NodePath("../PlayerDiceCorner/SubViewportContainer/SubViewport/DiceView/DiceController")
+tokenLayer = NodePath("../DiceTokenLayer")
+
+[node name="CardRow" type="HBoxContainer" parent="CanvasLayer" unique_id=1143773701]
+offset_left = 300.0
+offset_top = 500.0
+offset_right = 900.0
+offset_bottom = 800.0
+
+[node name="Card" parent="CanvasLayer/CardRow" unique_id=786842608 instance=ExtResource("4_a53ru")]
+layout_mode = 2
+
+[node name="Card2" parent="CanvasLayer/CardRow" unique_id=293748996 instance=ExtResource("4_a53ru")]
+layout_mode = 2
+
+[node name="Card3" parent="CanvasLayer/CardRow" unique_id=1434031668 instance=ExtResource("4_a53ru")]
+layout_mode = 2
+
+[node name="CardTable" type="TextureRect" parent="CanvasLayer" unique_id=757207352]
+offset_left = 304.0
+offset_top = 500.0
+offset_right = 900.0
+offset_bottom = 800.0
+
+[editable path="CanvasLayer/PlayerDiceCorner/SubViewportContainer/SubViewport/DiceView"]
+[editable path="CanvasLayer/EnemyDiceCorner/SubViewportContainer/SubViewport/DiceView"]
