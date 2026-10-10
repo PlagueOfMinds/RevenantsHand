@@ -38,4 +38,10 @@ public partial class DiceTokenLayer : Control
             if (IsInstanceValid(token)) token.QueueFree();
         tokens.Clear();
     }
+
+    public void SetInteractable(bool on)
+    {
+        foreach (var token in tokens)
+            if (IsInstanceValid(token)) token.Interactable = on;
+    }
 }

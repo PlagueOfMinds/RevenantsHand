@@ -10,6 +10,8 @@ public partial class DiceToken : Control
     private Vector2 dragOffset;
     private Card hoveredCard;
 
+    public bool Interactable { get; set; } = true;
+
     // Call after the token has been added to the tree
     public void Setup(Dice die, Basis cameraBasis, float worldSize, float pixelsPerUnit)
     {
@@ -55,7 +57,7 @@ public partial class DiceToken : Control
 
     public override void _GuiInput(InputEvent @event)
     {
-        if (Locked) return;
+        if (Locked || !Interactable) return;
 
         if (@event is InputEventMouseButton mb && mb.ButtonIndex == MouseButton.Left)
         {

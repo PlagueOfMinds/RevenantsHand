@@ -1,17 +1,20 @@
 using Godot;
+using System.Threading.Tasks;
 
 public partial class Card : Control
 {
     public const string GroupName = "dice_card";
 
     [Export] public string CardName { get; set; } = "Card";
-    [Export] private Control dieSlot;      // plain Control marking where the die sits
-    [Export] private CanvasItem highlight; // optional, shown while a die hovers over the card
+    [Export] public bool IsPlayerCard { get; set; } = true; // uncheck for enemy cards
+    [Export] private Control dieSlot;
+    [Export] private CanvasItem highlight;
 
     [Signal] public delegate void DiePlacedEventHandler(Card card, int value);
 
     public DiceToken PlacedDie { get; private set; }
     public bool IsOccupied => PlacedDie != null && IsInstanceValid(PlacedDie) && !PlacedDie.IsQueuedForDeletion();
+    public int PlacedValue => IsOccupied ? PlacedDie.Value : 0;
 
     public override void _Ready()
     {
@@ -19,7 +22,7 @@ public partial class Card : Control
         SetHover(false);
     }
 
-    public bool CanAccept(DiceToken token) => !IsOccupied;
+    public bool CanAccept(DiceToken token) => IsPlayerCard && !IsOccupied;
 
     public void SetHover(bool on)
     {
@@ -32,15 +35,14 @@ public partial class Card : Control
 
         PlacedDie = token;
         token.LockInto(dieSlot ?? this);
-
-        int value = token.Value;
-        EmitSignal(SignalName.DiePlaced, this, value);
-        ApplyEffect(value);
+        EmitSignal(SignalName.DiePlaced, this, token.Value);
     }
 
-    // Placeholder: override in a subclass or replace with your buff/attack logic
-    protected virtual void ApplyEffect(int value)
+    // The card's effect. Card-type subclasses (AttackCard, DefendCard, HealCard...) override this.
+    // user = whoever played the card, opponent = the other side. A heal card heals user, an attack hits opponent.
+    public virtual Task Resolve(Combatant user, Combatant opponent, int value)
     {
-        GD.Print($"{CardName} activated with a {value}");
+        GD.Print($"{user.Name} used {CardName} with a {value} (no effect yet)");
+        return Task.CompletedTask;
     }
 }
