@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://djsskvuvkn622"
-path="res://.godot/imported/Tree3.png-b01087bc749906dff32c51fd3ab3f5be.ctex"
+uid="uid://xcw4jg07xwvb"
+path="res://.godot/imported/HillTree1.png-c0e03cf2aec467ecd47c653944b74eec.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Tabur/Sprites/Tree3.png"
-dest_files=["res://.godot/imported/Tree3.png-b01087bc749906dff32c51fd3ab3f5be.ctex"]
+source_file="res://Tabur/Sprites/HillTree1.png"
+dest_files=["res://.godot/imported/HillTree1.png-c0e03cf2aec467ecd47c653944b74eec.ctex"]
 
 [params]
 

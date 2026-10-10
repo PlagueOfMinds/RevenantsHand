@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://buuf3bmru7ex1"
-path="res://.godot/imported/ForestBackground.png-5f609de7253a4b9cb4f448115dd35bf8.ctex"
+uid="uid://dx41woo8ekae7"
+path="res://.godot/imported/OrangeSquare.png-2673319b551723260403940cf19fd95b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Tabur/Sprites/ForestBackground.png"
-dest_files=["res://.godot/imported/ForestBackground.png-5f609de7253a4b9cb4f448115dd35bf8.ctex"]
+source_file="res://Tabur/Sprites/OrangeSquare.png"
+dest_files=["res://.godot/imported/OrangeSquare.png-2673319b551723260403940cf19fd95b.ctex"]
 
 [params]
 
