@@ -8,8 +8,12 @@ public partial class RerollCard : Card
     {
         if (!CanAccept(token) || disabled) return;
 
+        int newValue = token.Die.reroll();
+
         GD.Print($"{CardName} rerolled and got: {token.Value}");
-        disableSelf();
+        //disableSelf();
+        // Lose Health
+        gameManager.Player.TakeDamage(1);
     }
 
     public override Task Resolve(Combatant user, Combatant opponent, int value)

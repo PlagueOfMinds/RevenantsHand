@@ -49,4 +49,26 @@ public partial class Dice : RigidBody3D
         float y = floorY.HasValue ? floorY.Value + toSide.Length() : center.Y;
         return new Transform3D(basis, new Vector3(center.X, y, center.Z));
     }
+
+    public int reroll()
+    {
+        int currentSide = this.getRoll();
+        int roll = GD.RandRange(1, 6);
+
+        // Change our upright side
+        var exclude = new Godot.Collections.Array<Rid>();
+        //foreach (var d in activeDice)
+         //   exclude.Add(d.GetRid());
+
+        var query = PhysicsRayQueryParameters3D.Create(this.GlobalPosition, this.GlobalPosition + Vector3.Down * 100f);
+        query.Exclude = exclude;
+
+        var hit = this.GetWorld3D().DirectSpaceState.IntersectRay(query);
+
+        float floorY = hit.Count > 0 ? ((Vector3)hit["position"]).Y : 0;
+
+        this.Transform = GetUprightTransform(roll, floorY);
+
+        return roll;
+    }
 }

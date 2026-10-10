@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bvq7j08jhlggp"]
 
-[ext_resource type="Script" uid="uid://bm4owk0oo2de4" path="res://Scripts/Cards/AttackCard.cs" id="1_fgy4s"]
+[ext_resource type="Script" uid="uid://svyebi1phuc5" path="res://Scripts/Cards/VendettaCard.cs" id="1_fgy4s"]
 
 [node name="Card" type="Control" unique_id=1434031668 node_paths=PackedStringArray("dieSlot", "highlight")]
 custom_minimum_size = Vector2(160, 220)
@@ -19,7 +19,7 @@ grow_vertical = 2
 size_flags_horizontal = 6
 size_flags_vertical = 4
 script = ExtResource("1_fgy4s")
-CardName = "AttackCard"
+CardName = "Vendetta"
 dieSlot = NodePath("DieSlot")
 highlight = NodePath("Highlight")
 
