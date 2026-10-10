@@ -1,0 +1,115 @@
+[gd_scene format=3 uid="uid://ukusdmjgrn3m"]
+
+[ext_resource type="Texture2D" uid="uid://clxfnkt6p2sj0" path="res://Tabur/Sprites/Tree1.png" id="1_fe81a"]
+[ext_resource type="Texture2D" uid="uid://clo7jb8b4lnl5" path="res://Tabur/Sprites/Tree2.png" id="2_ckr0t"]
+[ext_resource type="Texture2D" uid="uid://djsskvuvkn622" path="res://Tabur/Sprites/Tree3.png" id="3_eug4g"]
+[ext_resource type="Texture2D" uid="uid://buuf3bmru7ex1" path="res://Tabur/Sprites/ForestBackground.png" id="4_eug4g"]
+[ext_resource type="Shader" uid="uid://bfaeuwx8bq5a3" path="res://Tabur/Misc/Blur.gdshader" id="5_effge"]
+[ext_resource type="Shader" uid="uid://wl1p78gp7rdu" path="res://Tabur/Misc/Buckshot.gdshader" id="6_musaq"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ldptn"]
+shader = ExtResource("5_effge")
+shader_parameter/strength = 3
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7e3jg"]
+shader = ExtResource("5_effge")
+shader_parameter/strength = 2
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hpbon"]
+shader = ExtResource("5_effge")
+shader_parameter/strength = 3
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_musaq"]
+shader = ExtResource("6_musaq")
+shader_parameter/exposure = 1.0
+shader_parameter/contrast = 0.750000011875
+shader_parameter/saturation = 1.5000000712500001
+shader_parameter/enable_pixelate = false
+shader_parameter/pixel_factor = 2.0
+shader_parameter/enable_posterize = false
+shader_parameter/color_levels = 12.0
+shader_parameter/dither_strength = 0.75
+shader_parameter/chrom_aberration = 4.0
+shader_parameter/vignette_strength = 0.0
+shader_parameter/grain_strength = 0.2
+shader_parameter/tint_color = Vector3(0.95, 1.03, 0.9)
+shader_parameter/tint_strength = 0.15
+shader_parameter/viewport_size_override = Vector2(0, 0)
+
+[node name="TaburArtScene" type="Node3D" unique_id=1080136300]
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1787513564]
+
+[node name="ForestBackground" type="Sprite2D" parent="." unique_id=778537430]
+z_index = -500
+position = Vector2(-426.21112, -129.6573)
+scale = Vector2(1.2083299, 1.1111566)
+texture = ExtResource("4_eug4g")
+
+[node name="ForestBackground2" type="Sprite2D" parent="." unique_id=1684196796]
+z_index = -500
+position = Vector2(364.44037, -130.02423)
+rotation = -3.1415927
+scale = Vector2(1.2083299, -1.1111566)
+texture = ExtResource("4_eug4g")
+
+[node name="FirstBackgroundLayerOfTrees" type="Node2D" parent="." unique_id=1951193469]
+position = Vector2(-318, -106)
+scale = Vector2(0.8125581, 0.7757452)
+
+[node name="Tree1" type="Sprite2D" parent="FirstBackgroundLayerOfTrees" unique_id=703451704]
+z_index = -455
+material = SubResource("ShaderMaterial_ldptn")
+position = Vector2(-221, -36.999985)
+scale = Vector2(1.592048, 1.5122449)
+texture = ExtResource("1_fe81a")
+
+[node name="Tree4" type="Sprite2D" parent="FirstBackgroundLayerOfTrees" unique_id=1127544155]
+z_index = -485
+material = SubResource("ShaderMaterial_ldptn")
+position = Vector2(532.4683, -36.331223)
+scale = Vector2(1.592048, 1.5122449)
+texture = ExtResource("1_fe81a")
+
+[node name="Tree2" type="Sprite2D" parent="FirstBackgroundLayerOfTrees" unique_id=342209314]
+z_index = -465
+material = SubResource("ShaderMaterial_7e3jg")
+position = Vector2(246.21098, -93.19748)
+scale = Vector2(1.8348116, 1.764)
+texture = ExtResource("2_ckr0t")
+
+[node name="Tree6" type="Sprite2D" parent="FirstBackgroundLayerOfTrees" unique_id=2128104962]
+z_index = -495
+material = SubResource("ShaderMaterial_7e3jg")
+position = Vector2(885.46936, -88.458626)
+scale = Vector2(-1.835, 1.764)
+texture = ExtResource("2_ckr0t")
+
+[node name="Tree3" type="Sprite2D" parent="FirstBackgroundLayerOfTrees" unique_id=971437779]
+z_index = -465
+material = SubResource("ShaderMaterial_hpbon")
+position = Vector2(-380, -68)
+rotation = 3.1415927
+scale = Vector2(1.455, -1.702)
+texture = ExtResource("3_eug4g")
+
+[node name="Tree5" type="Sprite2D" parent="FirstBackgroundLayerOfTrees" unique_id=661491398]
+z_index = -465
+material = SubResource("ShaderMaterial_hpbon")
+position = Vector2(1177.6598, -67.92359)
+rotation = 3.1415927
+scale = Vector2(1.455, -1.702)
+texture = ExtResource("3_eug4g")
+
+[node name="FirstLayContrastAdjustment" type="ColorRect" parent="." unique_id=636777348]
+z_index = -400
+material = SubResource("ShaderMaterial_musaq")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -600.0
+offset_top = -400.0
+offset_right = -600.0
+offset_bottom = -400.0
+grow_horizontal = 2
+grow_vertical = 2

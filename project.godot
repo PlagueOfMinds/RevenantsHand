@@ -11,12 +11,14 @@ config_version=5
 [application]
 
 config/name="Revenant's Hand"
-run/main_scene="res://Scenes/Main.tscn"
+run/main_scene="uid://ukusdmjgrn3m"
 config/features=PackedStringArray("4.7", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
 [display]
 
+window/size/viewport_width=1200
+window/size/viewport_height=800
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 
