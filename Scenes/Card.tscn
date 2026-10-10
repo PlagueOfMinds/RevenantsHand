@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://bmyv0eseprxua"]
+
+[ext_resource type="Script" uid="uid://o6uspa7f3g01" path="res://Scripts/Cards/Card.cs" id="1_pnb5n"]
+
+[node name="Card" type="Control" unique_id=1434031668]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_pnb5n")
+
+[node name="Background" type="Panel" parent="." unique_id=1054558964]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="NameLabel" type="Label" parent="." unique_id=1967633287]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="DieSlot" type="Control" parent="." unique_id=1123057120]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Highlight" type="Panel" parent="." unique_id=276623548]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
