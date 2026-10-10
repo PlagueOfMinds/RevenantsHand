@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://ddsp2bxsew3wd" path="res://Scenes/DiceTray.tscn" id="1_idj7w"]
 [ext_resource type="Script" uid="uid://bgnb7iwlnu4u2" path="res://Scripts/Dice/RollButton.cs" id="2_kln2b"]
 [ext_resource type="Script" uid="uid://cg0fph5qdu50j" path="res://Scripts/Dice/DiceTokenLayer.cs" id="3_kln2b"]
+[ext_resource type="PackedScene" uid="uid://bmyv0eseprxua" path="res://Scenes/Card.tscn" id="4_rgh2o"]
 
 [node name="Combat" type="Node2D" unique_id=328123032]
 
@@ -38,12 +39,42 @@ trayCamera = NodePath("../Camera3D")
 [node name="Spawnpoint" parent="CanvasLayer/PlayerDiceCorner/SubViewportContainer/SubViewport/DiceView" index="3" unique_id=1098113751]
 transform = Transform3D(0.99993515, 0, -0.011392221, 0, 1, 0, 0.011392221, 0, 0.99993515, -0.0538435, 2.0997498, -3.164925)
 
+[node name="EnemyDiceCorner" type="Node" parent="CanvasLayer" unique_id=23010041]
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="CanvasLayer/EnemyDiceCorner" unique_id=233132060]
+offset_left = 304.0
+offset_top = 800.0
+offset_right = 604.0
+offset_bottom = 1100.0
+rotation = 3.1415927
+
+[node name="SubViewport" type="SubViewport" parent="CanvasLayer/EnemyDiceCorner/SubViewportContainer" unique_id=2026893482]
+handle_input_locally = false
+size = Vector2i(300, 300)
+render_target_update_mode = 4
+
+[node name="DiceView" parent="CanvasLayer/EnemyDiceCorner/SubViewportContainer/SubViewport" unique_id=1856272827 instance=ExtResource("1_idj7w")]
+
+[node name="Camera3D" parent="CanvasLayer/EnemyDiceCorner/SubViewportContainer/SubViewport/DiceView" index="0" unique_id=1530825400]
+transform = Transform3D(-1, 8.742278e-08, 0, 3.821371e-15, 4.371139e-08, 1, 8.742278e-08, 1, -4.371139e-08, 0.092662334, 5.889425, -0.49570286)
+projection = 1
+size = 7.351444
+
+[node name="CollisionShape3D" parent="CanvasLayer/EnemyDiceCorner/SubViewportContainer/SubViewport/DiceView/Dice Area/StaticBody3D5" parent_id_path=PackedInt32Array(1856272827, 1087696137) index="0" unique_id=1773320281]
+transform = Transform3D(0.020659864, 0, 0.9997867, 0, 1, 0, -0.9997867, 0, 0.020659864, -4.451474, 0.918211, -0.033677246)
+
+[node name="DiceController" parent="CanvasLayer/EnemyDiceCorner/SubViewportContainer/SubViewport/DiceView" index="2" unique_id=1595731048 node_paths=PackedStringArray("trayCamera")]
+trayCamera = NodePath("../Camera3D")
+
+[node name="Spawnpoint" parent="CanvasLayer/EnemyDiceCorner/SubViewportContainer/SubViewport/DiceView" index="3" unique_id=1098113751]
+transform = Transform3D(0.99993515, 0, -0.011392221, 0, 1, 0, 0.011392221, 0, 0.99993515, -0.0538435, 2.0997498, -3.164925)
+
 [node name="DiceTokenLayer" type="Control" parent="CanvasLayer" unique_id=45258979]
 layout_mode = 3
 anchors_preset = 0
-offset_top = 500.0
-offset_right = 1200.0
-offset_bottom = 800.0
+offset_top = 501.0
+offset_right = 301.0
+offset_bottom = 801.0
 script = ExtResource("3_kln2b")
 
 [node name="TestDiceRoll" type="Button" parent="CanvasLayer" unique_id=193832773 node_paths=PackedStringArray("diceController", "tokenLayer")]
@@ -55,12 +86,20 @@ script = ExtResource("2_kln2b")
 diceController = NodePath("../PlayerDiceCorner/SubViewportContainer/SubViewport/DiceView/DiceController")
 tokenLayer = NodePath("../DiceTokenLayer")
 
-[node name="Control" type="Control" parent="." unique_id=822554148]
-layout_mode = 3
-anchors_preset = 0
+[node name="CardRow" type="HBoxContainer" parent="." unique_id=1143773701]
 offset_left = 300.0
 offset_top = 500.0
 offset_right = 900.0
 offset_bottom = 800.0
 
+[node name="Card" parent="CardRow" unique_id=786842608 instance=ExtResource("4_rgh2o")]
+layout_mode = 2
+
+[node name="Card2" parent="CardRow" unique_id=293748996 instance=ExtResource("4_rgh2o")]
+layout_mode = 2
+
+[node name="Card3" parent="CardRow" unique_id=1434031668 instance=ExtResource("4_rgh2o")]
+layout_mode = 2
+
 [editable path="CanvasLayer/PlayerDiceCorner/SubViewportContainer/SubViewport/DiceView"]
+[editable path="CanvasLayer/EnemyDiceCorner/SubViewportContainer/SubViewport/DiceView"]
