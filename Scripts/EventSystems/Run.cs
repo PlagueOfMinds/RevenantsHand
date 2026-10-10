@@ -7,8 +7,8 @@ using System.Linq;
 public static class Run
 {
     // ---- Scenes (use right-click > Copy Path in the FileSystem dock) ----
-    public const string CombatScenePath = "res://Scenes/Combat.tscn";
-    public const string RewardScenePath = "res://Scenes/RewardScreen.tscn";
+    public const string CombatScenePath = "res://Scenes/BigScenes/Main.tscn";
+    public const string RewardScenePath = "res://Scenes/BigScenes/RewardScreen.tscn";
 
     // ---- Run setup ----
     public const int StartingMaxHealth = 30;

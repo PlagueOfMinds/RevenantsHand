@@ -1,104 +1,120 @@
 using Godot;
-using System;
 using System.Collections.Generic;
 
 public partial class RewardScreen : Control
 {
-    [Export] private Container offerRow;  // the Revenant's offered cards
-    [Export] private Container deckRow;   // your current cards
-    [Export] private Button swapButton;
+    [Export] private Container pairRow;    // one column per deck slot: offer / swap / your card
     [Export] private Button skipButton;
-    [Export] private Label promptLabel;   // optional
+    [Export] private Label promptLabel;    // optional
+    [Export] private int columnSeparation = 16;
 
-    private readonly List<string> offers = new();
-    private readonly List<Card> offerCards = new();
-    private readonly List<Card> deckCards = new();
-    private int selectedOffer = -1;
-    private int selectedDeck = -1;
+    private const string DefaultPrompt = "The Revenant offers a trade. Swap one card, or keep your hand.";
+
+    private readonly List<Button> swapButtons = new();
+    private bool finished;
 
     public override void _Ready()
     {
         if (!Run.IsActive) Run.StartNewRun(); // lets you test this scene on its own (F6)
 
-        offers.AddRange(Run.RollOffers());
-        foreach (string path in offers) offerCards.Add(AddCard(offerRow, path, OnOfferClicked));
-        foreach (string path in Run.Deck) deckCards.Add(AddCard(deckRow, path, OnDeckClicked));
+        List<string> offers = Run.RollOffers();
 
-        swapButton.Pressed += OnSwapPressed;
-        skipButton.Pressed += OnSkipPressed;
-        UpdateUi();
+        // Offer i is paired with deck slot i
+        for (int i = 0; i < Run.Deck.Count; i++)
+        {
+            string offerPath = i < offers.Count ? offers[i] : null;
+            pairRow.AddChild(BuildColumn(i, offerPath));
+        }
+
+        skipButton.Pressed += Finish;
+        SetPrompt(DefaultPrompt);
     }
 
-    private Card AddCard(Container row, string path, Action<Card> onClick)
+    private Control BuildColumn(int deckIndex, string offerPath)
+    {
+        var column = new VBoxContainer
+        {
+            Alignment = BoxContainer.AlignmentMode.Center,
+            SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
+        };
+        column.AddThemeConstantOverride("separation", columnSeparation);
+
+        Card yourCard = LoadCard(Run.Deck[deckIndex]);
+
+        if (offerPath == null)
+        {
+            // Nothing offered for this slot: invisible placeholders keep the columns lined up
+            column.AddChild(new Control { CustomMinimumSize = yourCard.CustomMinimumSize });
+            column.AddChild(new Button
+            {
+                Text = "Swap",
+                Disabled = true,
+                Modulate = new Color(1f, 1f, 1f, 0f),
+                SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
+            });
+            column.AddChild(yourCard);
+            return column;
+        }
+
+        Card offeredCard = LoadCard(offerPath);
+
+        var swap = new Button { Text = "Swap", SizeFlagsHorizontal = SizeFlags.ShrinkCenter };
+        swap.Pressed += () => OnSwapPressed(deckIndex, offerPath);
+        swap.MouseEntered += () =>
+        {
+            offeredCard.SetHover(true);
+            yourCard.SetHover(true);
+            SetPrompt($"Swap {yourCard.CardName} for {offeredCard.CardName}?");
+        };
+        swap.MouseExited += () =>
+        {
+            offeredCard.SetHover(false);
+            yourCard.SetHover(false);
+            SetPrompt(DefaultPrompt);
+        };
+        swapButtons.Add(swap);
+
+        column.AddChild(offeredCard);
+        column.AddChild(swap);
+        column.AddChild(yourCard);
+        return column;
+    }
+
+    private Card LoadCard(string path)
     {
         Card card = GD.Load<PackedScene>(path).Instantiate<Card>();
-        row.AddChild(card);
-
-        // Children ignore the mouse so the click reaches the card itself
-        IgnoreMouse(card);
-        card.MouseFilter = MouseFilterEnum.Stop;
-        card.GuiInput += e =>
-        {
-            if (e is InputEventMouseButton { Pressed: true, ButtonIndex: MouseButton.Left })
-                onClick(card);
-        };
+        IgnoreMouse(card); // cards are display-only here; only the buttons take clicks
         return card;
     }
 
-    private void OnOfferClicked(Card card)
+    private void OnSwapPressed(int deckIndex, string offerPath)
     {
-        int i = offerCards.IndexOf(card);
-        selectedOffer = selectedOffer == i ? -1 : i; // click again to deselect
-        UpdateUi();
+        if (finished) return;
+        Run.SwapCard(deckIndex, offerPath); // new card takes the old card's slot
+        Finish();
     }
 
-    private void OnDeckClicked(Card card)
+    // Swap or skip: lock the screen and move on to the next fight
+    private void Finish()
     {
-        int i = deckCards.IndexOf(card);
-        selectedDeck = selectedDeck == i ? -1 : i;
-        UpdateUi();
-    }
+        if (finished) return;
+        finished = true;
 
-    private void UpdateUi()
-    {
-        for (int i = 0; i < offerCards.Count; i++) offerCards[i].SetHover(i == selectedOffer);
-        for (int i = 0; i < deckCards.Count; i++) deckCards[i].SetHover(i == selectedDeck);
-
-        swapButton.Disabled = selectedOffer < 0 || selectedDeck < 0;
-
-        if (promptLabel == null) return;
-        if (offerCards.Count == 0)
-            promptLabel.Text = "The Revenant has nothing to offer.";
-        else if (selectedOffer < 0)
-            promptLabel.Text = "Choose a card the Revenant offers.";
-        else if (selectedDeck < 0)
-            promptLabel.Text = "Choose one of your cards to give up.";
-        else
-            promptLabel.Text = $"Swap {deckCards[selectedDeck].CardName} for {offerCards[selectedOffer].CardName}?";
-    }
-
-    private void OnSwapPressed()
-    {
-        if (selectedOffer < 0 || selectedDeck < 0) return;
-        Run.SwapCard(selectedDeck, offers[selectedOffer]);
-        Continue();
-    }
-
-    private void OnSkipPressed() => Continue();
-
-    private void Continue()
-    {
-        swapButton.Disabled = true;
+        foreach (Button button in swapButtons) button.Disabled = true;
         skipButton.Disabled = true;
+
         Run.ContinueFromReward();
     }
 
-    private static void IgnoreMouse(Node node)
+    private void SetPrompt(string text)
     {
-        foreach (Node child in node.GetChildren())
-        {
-            if (child is Control control) control.MouseFilter = MouseFilterEnum.Ignore;
-            IgnoreMouse(child);
-        }
+        if (promptLabel != null) promptLabel.Text = text;
+    }
+
+    private static void IgnoreMouse(Control control)
+    {
+        control.MouseFilter = MouseFilterEnum.Ignore;
+        foreach (Node child in control.GetChildren())
+            if (child is Control c) IgnoreMouse(c);
     }
 }
