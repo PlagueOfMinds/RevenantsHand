@@ -1,10 +1,9 @@
 [gd_scene format=3 uid="uid://ccdyy7v7r3imq"]
 
-[ext_resource type="PackedScene" uid="uid://ddsp2bxsew3wd" path="res://Scenes/Dice/DiceTray.tscn" id="1_idj7w"]
-[ext_resource type="Script" uid="uid://bjwv1qxhm4gqq" path="res://Scripts/Cards/CardTableToggle.cs" id="1_pbw6q"]
-[ext_resource type="Script" uid="uid://cg0fph5qdu50j" path="res://Scripts/Dice/DiceTokenLayer.cs" id="3_kln2b"]
-[ext_resource type="Script" uid="uid://vf1rfunok51o" path="res://Scripts/EventSystems/GameManager.cs" id="4_pbw6q"]
-[ext_resource type="PackedScene" uid="uid://bmyv0eseprxua" path="res://Scenes/Cards/Card.tscn" id="4_rgh2o"]
+[ext_resource type="Script" uid="uid://vf1rfunok51o" path="res://Scripts/EventSystems/GameManager.cs" id="1_c7w63"]
+[ext_resource type="Script" uid="uid://bjwv1qxhm4gqq" path="res://Scripts/Cards/CardTableToggle.cs" id="2_65qb0"]
+[ext_resource type="PackedScene" uid="uid://ddsp2bxsew3wd" path="res://Scenes/Dice/DiceTray.tscn" id="3_8vdos"]
+[ext_resource type="Script" uid="uid://cg0fph5qdu50j" path="res://Scripts/Dice/DiceTokenLayer.cs" id="4_52gy2"]
 
 [node name="Combat" type="Node2D" unique_id=328123032]
 
@@ -12,9 +11,8 @@
 position = Vector2(604, 401)
 zoom = Vector2(0.5, 0.5)
 
-[node name="GameManager" type="Node" parent="." unique_id=1802966013 node_paths=PackedStringArray("enemySlot", "playerDice", "enemyDice", "tokenLayer", "playerCardRow", "enemyCardRow", "rollButton", "lockInButton", "turnLabel", "playerHealthLabel", "enemyHealthLabel")]
-script = ExtResource("4_pbw6q")
-enemySlot = NodePath("../UILayer/EnemySpawn")
+[node name="GameManager" type="Node" parent="." unique_id=1802966013 node_paths=PackedStringArray("playerDice", "enemyDice", "tokenLayer", "playerCardRow", "enemyCardRow", "rollButton", "lockInButton", "turnLabel", "playerHealthLabel", "enemyHealthLabel")]
+script = ExtResource("1_c7w63")
 playerDice = NodePath("../UILayer/PlayerDiceCorner/SubViewportContainer/SubViewport/DiceView/DiceController")
 enemyDice = NodePath("../UILayer/EnemyDiceCorner/SubViewportContainer/SubViewport/DiceView/DiceController")
 tokenLayer = NodePath("../UILayer/DiceTokenLayer")
@@ -70,7 +68,7 @@ offset_bottom = 476.8
 offset_top = 425.0
 offset_right = 200.0
 offset_bottom = 500.0
-script = ExtResource("1_pbw6q")
+script = ExtResource("2_65qb0")
 playerCardRow = NodePath("../../PlayerCardRow")
 enemyCardRow = NodePath("../../EnemyCardRow")
 playerHealthLabel = NodePath("../PlayerHealthLabel")
@@ -90,7 +88,7 @@ handle_input_locally = false
 size = Vector2i(300, 300)
 render_target_update_mode = 4
 
-[node name="DiceView" parent="UILayer/PlayerDiceCorner/SubViewportContainer/SubViewport" unique_id=1560289468 instance=ExtResource("1_idj7w")]
+[node name="DiceView" parent="UILayer/PlayerDiceCorner/SubViewportContainer/SubViewport" unique_id=1560289468 instance=ExtResource("3_8vdos")]
 
 [node name="Camera3D" parent="UILayer/PlayerDiceCorner/SubViewportContainer/SubViewport/DiceView" index="0" unique_id=1530825400]
 transform = Transform3D(-1, 8.742278e-08, 0, 3.821371e-15, 4.371139e-08, 1, 8.742278e-08, 1, -4.371139e-08, 0.092662334, 5.889425, -0.49570286)
@@ -122,7 +120,7 @@ handle_input_locally = false
 size = Vector2i(300, 300)
 render_target_update_mode = 4
 
-[node name="DiceView" parent="UILayer/EnemyDiceCorner/SubViewportContainer/SubViewport" unique_id=1856272827 instance=ExtResource("1_idj7w")]
+[node name="DiceView" parent="UILayer/EnemyDiceCorner/SubViewportContainer/SubViewport" unique_id=1856272827 instance=ExtResource("3_8vdos")]
 
 [node name="Camera3D" parent="UILayer/EnemyDiceCorner/SubViewportContainer/SubViewport/DiceView" index="0" unique_id=1530825400]
 transform = Transform3D(-1, 8.742278e-08, 0, 3.821371e-15, 4.371139e-08, 1, 8.742278e-08, 1, -4.371139e-08, 0.092662334, 5.889425, -0.49570286)
@@ -138,49 +136,35 @@ trayCamera = NodePath("../Camera3D")
 [node name="Spawnpoint" parent="UILayer/EnemyDiceCorner/SubViewportContainer/SubViewport/DiceView" index="3" unique_id=1098113751]
 transform = Transform3D(0.99993515, 0, -0.011392221, 0, 1, 0, 0.011392221, 0, 0.99993515, -0.0538435, 2.0997498, -3.164925)
 
-[node name="DiceTokenLayer" type="Control" parent="UILayer" unique_id=45258979]
-layout_mode = 3
-anchors_preset = 0
-offset_top = 501.0
-offset_right = 301.0
-offset_bottom = 801.0
-script = ExtResource("3_kln2b")
+[node name="CardTable" type="TextureRect" parent="UILayer" unique_id=757207352]
+z_index = -1
+offset_left = 304.0
+offset_top = 500.0
+offset_right = 900.0
+offset_bottom = 800.0
+mouse_filter = 2
 
 [node name="PlayerCardRow" type="HBoxContainer" parent="UILayer" unique_id=1143773701]
 offset_left = 300.0
 offset_top = 500.0
 offset_right = 900.0
 offset_bottom = 800.0
-
-[node name="Card" parent="UILayer/PlayerCardRow" unique_id=786842608 instance=ExtResource("4_rgh2o")]
-layout_mode = 2
-
-[node name="Card2" parent="UILayer/PlayerCardRow" unique_id=293748996 instance=ExtResource("4_rgh2o")]
-layout_mode = 2
-
-[node name="Card3" parent="UILayer/PlayerCardRow" unique_id=1434031668 instance=ExtResource("4_rgh2o")]
-layout_mode = 2
+mouse_filter = 2
 
 [node name="EnemyCardRow" type="HBoxContainer" parent="UILayer" unique_id=1028220568]
 offset_left = 300.0
 offset_top = 500.0
 offset_right = 900.0
 offset_bottom = 800.0
+mouse_filter = 2
 
-[node name="Card" parent="UILayer/EnemyCardRow" unique_id=1606073539 instance=ExtResource("4_rgh2o")]
-layout_mode = 2
-
-[node name="Card2" parent="UILayer/EnemyCardRow" unique_id=806388132 instance=ExtResource("4_rgh2o")]
-layout_mode = 2
-
-[node name="Card3" parent="UILayer/EnemyCardRow" unique_id=1851607510 instance=ExtResource("4_rgh2o")]
-layout_mode = 2
-
-[node name="CardTable" type="TextureRect" parent="UILayer" unique_id=757207352]
-offset_left = 304.0
-offset_top = 500.0
-offset_right = 900.0
-offset_bottom = 800.0
+[node name="DiceTokenLayer" type="Control" parent="UILayer" unique_id=45258979]
+layout_mode = 3
+anchors_preset = 0
+offset_top = 501.0
+offset_right = 301.0
+offset_bottom = 801.0
+script = ExtResource("4_52gy2")
 
 [node name="EnemySpawn" type="Control" parent="UILayer" unique_id=888805681]
 layout_mode = 3

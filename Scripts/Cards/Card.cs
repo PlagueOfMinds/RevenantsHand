@@ -15,6 +15,7 @@ public partial class Card : Control
     public DiceToken PlacedDie { get; private set; }
     public bool IsOccupied => PlacedDie != null && IsInstanceValid(PlacedDie) && !PlacedDie.IsQueuedForDeletion();
     public int PlacedValue => IsOccupied ? PlacedDie.Value : 0;
+    public Control DieSlot => dieSlot ?? this;
 
     public override void _Ready()
     {
@@ -22,7 +23,7 @@ public partial class Card : Control
         SetHover(false);
     }
 
-    public bool CanAccept(DiceToken token) => IsPlayerCard && !IsOccupied;
+    public bool CanAccept(DiceToken token) => IsPlayerCard;
 
     public void SetHover(bool on)
     {
@@ -31,12 +32,14 @@ public partial class Card : Control
 
     public void PlaceDie(DiceToken token)
     {
-        if (!CanAccept(token)) return;
+        if (!CanAccept(token) || (IsOccupied && PlacedDie != token)) return;
 
         PlacedDie = token;
-        token.LockInto(dieSlot ?? this);
+        token.AttachTo(this);
         EmitSignal(SignalName.DiePlaced, this, token.Value);
     }
+
+    public void ReleaseDie() => PlacedDie = null;
 
     // The card's effect. Card-type subclasses (AttackCard, DefendCard, HealCard...) override this.
     // user = whoever played the card, opponent = the other side. A heal card heals user, an attack hits opponent.
