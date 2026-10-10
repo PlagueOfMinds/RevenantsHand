@@ -5,7 +5,8 @@
 [node name="Goat" type="Node2D" unique_id=1548354051]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2034757483]
-position = Vector2(-150, -112.5)
+position = Vector2(-350, -132)
+scale = Vector2(0.8, 0.8)
 sprite_frames = ExtResource("1_16a8n")
 autoplay = "default"
-frame_progress = 0.25712463
+frame_progress = 0.2921475
