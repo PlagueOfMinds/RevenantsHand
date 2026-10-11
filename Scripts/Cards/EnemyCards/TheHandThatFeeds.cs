@@ -6,7 +6,7 @@ public partial class TheHandThatFeeds : Card
 {
 	public override CardEffect Effect => CardEffect.Heal;
 	public override bool AcceptsValue(int dieValue) => dieValue % 2 == 0;
-	public override int GetAmount(int dieValue) => dieValue * 2;
+	public override int GetAmount(int dieValue) => dieValue;
 
 	public override Task Resolve(Combatant user, Combatant opponent, int value)
 	{

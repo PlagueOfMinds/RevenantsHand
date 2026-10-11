@@ -6,7 +6,7 @@ public partial class OnThisQuietNight : Card
 {
 	public override CardEffect Effect => CardEffect.Damage;
 	public override bool AcceptsValue(int dieValue) => dieValue == 6;
-	public override int GetAmount(int dieValue) => 12;
+	public override int GetAmount(int dieValue) => 10;
 
 	public override Task Resolve(Combatant user, Combatant opponent, int value)
 	{

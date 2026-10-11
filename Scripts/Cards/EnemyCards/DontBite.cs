@@ -10,7 +10,7 @@ public partial class DontBite : Card
 	{
 		if(value%2 == 1)
 		{
-			gameManager.Player.AddPoison(value);
+			gameManager.Player.AddPoison(value-1);
 		}
 		
 		return Task.CompletedTask;
