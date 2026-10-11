@@ -9,8 +9,20 @@ public partial class ThrashCard : Card
         if (!CanAccept(token) || disabled) return;
 
         gameManager.Enemy.TakeDamage(token.Value);
-        // Get rid of the dice
-        token.QueueFree();
+
+
+        var controller = gameManager.getPlayerDice();
+        var layer = gameManager.getDiceTokenLayer();
+
+        // Grab what we need BEFORE anything gets freed
+        Dice oldDie = token.Die; // use whatever your DiceToken calls its die reference
+
+        // Defer so we don't modify the list or free nodes mid-drag-handler
+        Callable.From(() =>
+        {
+            layer.RemoveToken(token);
+            controller.RemoveDie(oldDie);
+        }).CallDeferred();
     }
 
     public override Task Resolve(Combatant user, Combatant opponent, int value)

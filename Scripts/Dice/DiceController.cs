@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Threading.Tasks;
 
 public partial class DiceController : Node3D
@@ -91,6 +92,74 @@ public partial class DiceController : Node3D
 		await StraightenDice();
 
 		return activeDice.ToArray();
+    }
+
+    private void ThrowDie(Dice dice, Vector3 position)
+    {
+        dice.GlobalPosition = position;
+        dice.GlobalRotation = new Vector3(
+            rng.RandfRange(0f, Mathf.Tau),
+            rng.RandfRange(0f, Mathf.Tau),
+            rng.RandfRange(0f, Mathf.Tau));
+
+        Vector3 toTarget = throwTarget.GlobalPosition - dice.GlobalPosition;
+        toTarget.Y = 0f;
+        Vector3 spread = new Vector3(
+            rng.RandfRange(-throwSpread, throwSpread), 0f,
+            rng.RandfRange(-throwSpread, throwSpread));
+        Vector3 dir = (toTarget.Normalized() + spread).Normalized();
+        dice.LinearVelocity = dir * rng.RandfRange(throwForceMin, throwForceMax);
+
+        Vector3 spinAxis = new Vector3(
+            rng.RandfRange(-1f, 1f),
+            rng.RandfRange(-1f, 1f),
+            rng.RandfRange(-1f, 1f)).Normalized();
+        dice.AngularVelocity = spinAxis * rng.RandfRange(spinForceMin, spinForceMax);
+    }
+
+    public async Task<Dice> createNewDice()
+    {
+        var dice = diceScene.Instantiate<Dice>();
+        diceParent.AddChild(dice);
+        ThrowDie(dice, spawnPoint.GlobalPosition);
+        activeDice.Add(dice);
+
+        // Wait for THIS die to settle
+        float timer = 0f;
+        while (timer < settleTime)
+        {
+            await ToSignal(GetTree(), SceneTree.SignalName.PhysicsFrame);
+
+            if (!IsInstanceValid(dice)) return null;
+
+            bool moving = dice.LinearVelocity.Length() > settleThreshold ||
+                          dice.AngularVelocity.Length() > settleThreshold;
+            timer = moving ? 0f : timer + (float)GetPhysicsProcessDeltaTime();
+        }
+
+        int result = dice.getRoll();
+        Transform3D target = dice.GetUprightTransform(result, FindFloorY(dice));
+        await StraightenOne(dice, target);
+
+        return dice;
+    }
+
+    private async Task StraightenOne(Dice die, Transform3D target)
+    {
+        die.Freeze = true;
+
+        if (straightenTime <= 0f)
+        {
+            die.GlobalTransform = target;
+            return;
+        }
+
+        Tween tween = CreateTween();
+        tween.TweenProperty(die, "global_transform", target, straightenTime)
+            .SetTrans(Tween.TransitionType.Quad)
+            .SetEase(Tween.EaseType.Out);
+
+        await ToSignal(tween, Tween.SignalName.Finished);
     }
 
     public override void _PhysicsProcess(double delta)
@@ -186,4 +255,11 @@ public partial class DiceController : Node3D
 		var hit = die.GetWorld3D().DirectSpaceState.IntersectRay(query);
 		return hit.Count > 0 ? ((Vector3)hit["position"]).Y : null;
 	}
+
+
+    public void RemoveDie(Dice die)
+    {
+        activeDice.Remove(die);
+        if (IsInstanceValid(die)) die.QueueFree();
+    }
 }
