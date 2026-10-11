@@ -33,7 +33,10 @@ public partial class GameManager : Node
     public int Turn { get; private set; } = 1;
     public Phase CurrentPhase { get; private set; }
 
+    // The GameManager of the current Combat scene (null outside combat)
     public static GameManager ImgManager { get; private set; }
+
+    private bool BattleOver => Player.IsDead || Enemy.IsDead;
 
     public override void _Ready()
     {
@@ -51,6 +54,12 @@ public partial class GameManager : Node
         Callable.From(() => StartBattle(Encounter.CreateEnemy())).CallDeferred();
     }
 
+    public override void _ExitTree()
+    {
+        // Don't leave a reference to a freed GameManager for cards in other scenes
+        if (ImgManager == this) ImgManager = null;
+    }
+
     public void StartBattle(Enemy enemy)
     {
         if (Enemy != null)
@@ -64,6 +73,7 @@ public partial class GameManager : Node
         Enemy.Changed += OnCombatantChanged;
 
         BuildPlayerCards();
+        BuildEnemyCards();
 
         Turn = 1;
         tokenLayer.ClearTokens();
@@ -86,9 +96,26 @@ public partial class GameManager : Node
             playerCardRow.AddChild(GD.Load<PackedScene>(path).Instantiate<Card>());
     }
 
+    // Fill the EnemyCardRow from the current enemy's own cards
+    private void BuildEnemyCards()
+    {
+        foreach (Node child in enemyCardRow.GetChildren())
+        {
+            enemyCardRow.RemoveChild(child);
+            child.QueueFree();
+        }
+
+        foreach (string path in Enemy.CardScenePaths)
+        {
+            Card card = GD.Load<PackedScene>(path).Instantiate<Card>();
+            card.IsPlayerCard = false;
+            enemyCardRow.AddChild(card);
+        }
+    }
+
     private void OnCombatantChanged(Combatant _) => UpdateHealthLabels();
 
-    // Stage 1: player and enemy roll at the same time
+    // Stage 1: player and enemy roll their 3D dice at the same time
     private async void OnRollPressed()
     {
         if (CurrentPhase != Phase.Roll) return;
@@ -99,49 +126,71 @@ public partial class GameManager : Node
         await Task.WhenAll(playerRoll, enemyRoll);
 
         Player.SetDice(playerDice.LastResults);
-        Enemy.SetDice(enemyDice.LastResults);
+        Enemy.SetDice(enemyDice.LastResults); // what the enemy's 3D dice landed on
         tokenLayer.CreateTokens(playerRoll.Result, playerDice);
 
         // Stage 2: player drags dice onto cards
         SetPhase(Phase.Place);
     }
 
-    // Stages 3-5: lock in, build the queue, execute it, advance the turn
+    // Stages 3-5: lock in, then each side acts and takes its poison at the end of its turn
     private async void OnLockInPressed()
     {
         if (CurrentPhase != Phase.Place) return;
         SetPhase(Phase.Resolve);
 
-        var queue = new List<QueuedAction>();
-
-        // Player: every card with a die on it, left to right by position in the CardRow
+        // Player's turn: cards left to right, then poison
+        var playerActions = new List<QueuedAction>();
         foreach (Card card in GetCards(playerCardRow))
         {
             if (card.IsOccupied)
-                queue.Add(new QueuedAction(Player, Enemy, card, card.PlacedValue));
+                playerActions.Add(new QueuedAction(Player, Enemy, card, card.PlacedValue));
         }
 
-        // Enemy: a single move
-        QueuedAction enemyMove = Enemy.ChooseMove(GetCards(enemyCardRow), Player);
-        if (enemyMove != null) queue.Add(enemyMove);
+        await ResolveActions(playerActions);
+        await EndOfTurnPoison(Player);
+        Player.EndOwnTurn();
 
-        foreach (QueuedAction action in queue)
+        // Enemy's turn: the shared AI plans now, after seeing what the player did
+        if (!BattleOver)
         {
-            if (Player.IsDead || Enemy.IsDead) break;
-
-            action.Card.SetHover(true);
-            await action.Card.Resolve(action.User, action.Opponent, action.Value);
-            await Wait(actionDelay);
-            action.Card.SetHover(false);
+            List<QueuedAction> enemyActions = Enemy.ChooseMoves(GetCards(enemyCardRow), Player);
+            await ResolveActions(enemyActions);
+            await EndOfTurnPoison(Enemy);
+            Enemy.EndOwnTurn();
         }
 
-        if (Player.IsDead || Enemy.IsDead)
+        if (BattleOver)
         {
             EndGame();
             return;
         }
 
         NextTurn();
+    }
+
+    private async Task ResolveActions(IEnumerable<QueuedAction> actions)
+    {
+        foreach (QueuedAction action in actions)
+        {
+            if (BattleOver) return;
+            if (!action.Card.CanUse(action.User, action.Opponent) || !action.Card.AcceptsValue(action.Value)) continue;
+
+            action.Card.SetHover(true);
+            Audio.Instance.PlaySfx(action.Card.ResolveSound);
+            await action.Card.Resolve(action.User, action.Opponent, action.Value);
+            await Wait(actionDelay);
+            action.Card.SetHover(false);
+        }
+    }
+
+    private async Task EndOfTurnPoison(Combatant combatant)
+    {
+        if (BattleOver || combatant.Poison <= 0) return;
+
+        int dealt = combatant.TickPoison();
+        GD.Print($"{combatant.DisplayName} takes {dealt} poison damage");
+        await Wait(actionDelay); // pause so the health change is readable
     }
 
     private void NextTurn()
@@ -190,10 +239,12 @@ public partial class GameManager : Node
         if (enemyHealthLabel != null && Enemy != null) enemyHealthLabel.Text = Describe(Enemy);
     }
 
-    private static string Describe(Combatant c) =>
-        c.Block > 0
-            ? $"{c.DisplayName}: {c.Health}/{c.MaxHealth} HP (+{c.Block} block)"
-            : $"{c.DisplayName}: {c.Health}/{c.MaxHealth} HP";
+    private static string Describe(Combatant c)
+    {
+        string text = $"{c.DisplayName}: {c.Health}/{c.MaxHealth} HP";
+        if (c.Poison > 0) text += $" ({c.Poison} poison)";
+        return text;
+    }
 
     private static List<Card> GetCards(Node row)
     {

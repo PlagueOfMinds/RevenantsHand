@@ -1,12 +1,8 @@
 using Godot;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 
 public partial class Enemy : Combatant
 {
-    private readonly Random rng = new();
-
     // Each enemy overrides this with its scene (any root type)
     protected virtual string SpriteScenePath => null;
 
@@ -16,7 +12,16 @@ public partial class Enemy : Combatant
     // Animation to start on spawn; null leaves the scene's own autoplay setting alone
     protected virtual string IdleAnimation => null;
 
-    public Node Visual { get; private set; }          // the instanced scene
+    // This enemy's cards, left to right (the same scene can appear more than once)
+    public virtual string[] CardScenePaths => System.Array.Empty<string>();
+
+    // How many cards this enemy plays per turn (default: as many as it can)
+    protected virtual int MaxMovesPerTurn => int.MaxValue;
+
+    // How this enemy weighs damage, healing and poison
+    protected virtual AiProfile AiProfile => AiProfile.Default;
+
+    public Node Visual { get; private set; }             // the instanced scene
     public AnimatedSprite2D Sprite { get; private set; } // first AnimatedSprite2D inside it, if any
 
     public override void _Ready()
@@ -46,14 +51,9 @@ public partial class Enemy : Combatant
         return true;
     }
 
-    // One move per turn. Default: a random enemy card, powered by the total of all its dice
-    public virtual QueuedAction ChooseMove(IReadOnlyList<Card> cards, Combatant opponent)
-    {
-        if (cards.Count == 0 || Dice.Length == 0) return null;
-
-        Card card = cards[rng.Next(cards.Count)];
-        return new QueuedAction(this, opponent, card, Dice.Sum());
-    }
+    // Shared AI for every enemy, tuned by its AiProfile
+    public virtual List<QueuedAction> ChooseMoves(IReadOnlyList<Card> cards, Combatant opponent) =>
+        EnemyAI.PlanTurn(this, opponent, cards, MaxMovesPerTurn, AiProfile);
 
     private static AnimatedSprite2D FindSprite(Node node)
     {

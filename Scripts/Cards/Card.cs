@@ -1,5 +1,12 @@
 using Godot;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+
+// What a card does, so the enemy AI (and later, tooltips) can reason about it
+public enum CardEffect { None, Damage, Heal, Poison }
+
+// One effect a card produces for a given die
+public readonly record struct CardOutcome(CardEffect Effect, int Amount);
 
 public partial class Card : Control
 {
@@ -9,6 +16,7 @@ public partial class Card : Control
     [Export] public bool IsPlayerCard { get; set; } = true; // uncheck for enemy cards
     [Export] private Control dieSlot;
     [Export] private CanvasItem highlight;
+    [Export] public AudioStream ResolveSound { get; set; }
     public bool disabled = false;
     public int turnCount = 0;
 
@@ -21,6 +29,29 @@ public partial class Card : Control
 
     public GameManager gameManager;
 
+    // ---- What the card does: override these in each card subclass ----
+
+    // Simple cards: one kind of effect...
+    public virtual CardEffect Effect => CardEffect.None;
+
+    // ...with this strength for a die value X (e.g. X-2, 2X, or a fixed 12)
+    public virtual int GetAmount(int dieValue) => dieValue;
+
+    // Which die values the card takes (e.g. "4 or greater", "odd", "only 6")
+    public virtual bool AcceptsValue(int dieValue) => true;
+
+    // Conditions on the battle (e.g. "only if took 10 or more last turn")
+    public virtual bool CanUse(Combatant user, Combatant opponent) => true;
+
+    // Everything the card does for a die value. Override for cards with several effects.
+    public virtual IEnumerable<CardOutcome> GetEffects(int dieValue)
+    {
+        if (Effect == CardEffect.None) yield break;
+
+        int amount = GetAmount(dieValue);
+        if (amount > 0) yield return new CardOutcome(Effect, amount);
+    }
+
     public override void _Ready()
     {
         if (GameManager.ImgManager != null)
@@ -32,7 +63,8 @@ public partial class Card : Control
         SetHover(false);
     }
 
-    public bool CanAccept(DiceToken token) => IsPlayerCard;
+    // Player cards take dice that meet their value condition
+    public bool CanAccept(DiceToken token) => IsPlayerCard && AcceptsValue(token.Value);
 
     public void SetHover(bool on)
     {
@@ -49,17 +81,24 @@ public partial class Card : Control
 
     public void ReleaseDie() => PlacedDie = null;
 
-    // The card's effect. Card-type subclasses (AttackCard, DefendCard, HealCard...) override this.
-    // user = whoever played the card, opponent = the other side. A heal card heals user, an attack hits opponent.
+    // Applies every effect from GetEffects. user = whoever played the card, opponent = the other side.
     public virtual Task Resolve(Combatant user, Combatant opponent, int value)
     {
-        GD.Print($"{user.Name} used {CardName} with a {value} (no effect yet)");
+        foreach (CardOutcome outcome in GetEffects(value))
+        {
+            switch (outcome.Effect)
+            {
+                case CardEffect.Damage: opponent.TakeDamage(outcome.Amount); break;
+                case CardEffect.Heal:   user.Heal(outcome.Amount);           break;
+                case CardEffect.Poison: opponent.AddPoison(outcome.Amount);  break;
+            }
+        }
         return Task.CompletedTask;
     }
 
     public void disableSelf()
     {
-        if(!disabled)
+        if (!disabled)
         {
             disabled = true;
             flipInputBlocking();
@@ -68,24 +107,16 @@ public partial class Card : Control
 
     private void flipInputBlocking()
     {
-        // When disabled, ignore input events. When enabled, stop/handle input events.
         MouseFilterEnum targetFilter = disabled ? MouseFilterEnum.Ignore : MouseFilterEnum.Stop;
-
         SetMouseFilterRecursive(this, targetFilter);
-        GD.Print("Flipped the filter");
-        GD.Print(this.MouseFilter);
     }
 
     private static void SetMouseFilterRecursive(Node parent, MouseFilterEnum filter)
     {
         if (parent is Control control)
-        {
             control.MouseFilter = filter;
-        }
 
         foreach (Node child in parent.GetChildren())
-        {
             SetMouseFilterRecursive(child, filter);
-        }
     }
 }
