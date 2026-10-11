@@ -29,6 +29,27 @@ public partial class Card : Control
 
     public GameManager gameManager;
 
+    private Tween hoverTween;
+    private bool hovering;
+    private const float HoverScale = 1.05f;
+    private const float MaxTilt = 0.08f; // radians (~8 degrees)
+
+    public void SetHover(bool on)
+    {
+        if (highlight != null) highlight.Visible = on;
+        hovering = on;
+
+        hoverTween?.Kill();
+        hoverTween = CreateTween()
+            .SetParallel()
+            .SetTrans(Tween.TransitionType.Back)
+            .SetEase(Tween.EaseType.Out);
+
+        hoverTween.TweenProperty(this, "scale", on ? Vector2.One * HoverScale : Vector2.One, 0.15);
+        if (!on)
+            hoverTween.TweenProperty(this, "rotation", 0f, 0.2);
+    }
+
     // ---- What the card does: override these in each card subclass ----
 
     // Simple cards: one kind of effect...
@@ -54,6 +75,10 @@ public partial class Card : Control
 
     public override void _Ready()
     {
+        PivotOffset = Size / 2;
+        Resized += () => PivotOffset = Size / 2;
+
+
         if (GameManager.ImgManager != null)
         {
             gameManager = GameManager.ImgManager;
@@ -65,6 +90,15 @@ public partial class Card : Control
 
     public override void _Process(double delta)
     {
+        if (hovering)
+        {
+            Vector2 half = Size / 2;
+            Vector2 offset = (GetLocalMousePosition() - half) / half; // roughly -1..1
+            float target = Mathf.Clamp(offset.X, -1f, 1f) * MaxTilt;
+            Rotation = Mathf.Lerp(Rotation, target, 10f * (float)delta);
+        }
+
+
         if (gameManager != null && turnCount != gameManager.Turn)
         {
             turnCount = gameManager.Turn;
@@ -80,10 +114,12 @@ public partial class Card : Control
     // Player cards take dice that meet their value condition
     public bool CanAccept(DiceToken token) => IsPlayerCard && AcceptsValue(token.Value);
 
+    /*
     public void SetHover(bool on)
     {
         if (highlight != null) highlight.Visible = on;
     }
+    */
 
     public virtual void PlaceDie(DiceToken token)
     {
