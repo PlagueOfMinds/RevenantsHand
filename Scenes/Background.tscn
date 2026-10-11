@@ -38,10 +38,6 @@ turbulence_noise_strength = 0.2
 
 [node name="Background" type="Node2D" unique_id=2110014799]
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=1787513564]
-anchor_mode = 0
-zoom = Vector2(0.5, 0.5)
-
 [node name="Background" type="Sprite2D" parent="." unique_id=502720059]
 z_index = -500
 position = Vector2(1209, 693.00006)

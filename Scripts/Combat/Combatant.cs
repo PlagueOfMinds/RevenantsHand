@@ -52,7 +52,7 @@ public partial class Combatant : Node2D
         Health = Math.Max(0, Health - dealt);
         damageTakenSinceLastTurnT += amount;
         int lost = Math.Min(amount, Health);
-        Health -= lost;
+
         Changed?.Invoke(this);
         if (IsDead) Died?.Invoke(this);
         return lost;

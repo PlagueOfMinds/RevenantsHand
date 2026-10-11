@@ -9,21 +9,6 @@
 
 [node name="Combat" type="Node2D" unique_id=328123032]
 
-[node name="Background" parent="." unique_id=1080136300 instance=ExtResource("3_65qb0")]
-position = Vector2(-600, -400)
-
-[node name="FogParticle" parent="Background" index="2" unique_id=438821775]
-position = Vector2(-220, 989)
-
-[node name="FogParticle2" parent="Background" index="3" unique_id=1887850826]
-position = Vector2(2521, 989)
-
-[node name="FogParticle3" parent="Background" index="4" unique_id=1507680156]
-position = Vector2(-220, 1093)
-
-[node name="FogParticle4" parent="Background" index="5" unique_id=529869307]
-position = Vector2(2521, 1093)
-
 [node name="Camera2D" type="Camera2D" parent="." unique_id=542988287]
 position = Vector2(604, 401)
 zoom = Vector2(0.5, 0.5)
@@ -193,6 +178,9 @@ offset_left = -2.0
 offset_right = 38.0
 offset_bottom = 40.0
 
-[editable path="Background"]
+[node name="Background" parent="." unique_id=2110014799 instance=ExtResource("3_65qb0")]
+position = Vector2(-615, -392)
+scale = Vector2(1.01, 1)
+
 [editable path="UILayer/PlayerDiceCorner/SubViewportContainer/SubViewport/DiceView"]
 [editable path="UILayer/EnemyDiceCorner/SubViewportContainer/SubViewport/DiceView"]

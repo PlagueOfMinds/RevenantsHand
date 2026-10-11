@@ -8,12 +8,32 @@ public partial class RerollCard : Card
     {
         if (!CanAccept(token) || disabled) return;
 
-        int newValue = token.Die.reroll();
+        var controller = gameManager.getPlayerDice();
+        var layer = gameManager.getDiceTokenLayer();
 
-        GD.Print($"{CardName} rerolled and got: {token.Value}");
-        //disableSelf();
+        // Grab what we need BEFORE anything gets freed
+        Dice oldDie = token.Die; // use whatever your DiceToken calls its die reference
+
+        // Defer so we don't modify the list or free nodes mid-drag-handler
+        Callable.From(() =>
+        {
+            layer.RemoveToken(token);
+            controller.RemoveDie(oldDie);
+        }).CallDeferred();
+
+        taskReroll();
+        
+
         // Lose Health
         gameManager.Player.TakeDamage(1);
+    }
+
+    public async Task taskReroll()
+    {
+        // Make a new one
+        Dice die = await gameManager.getPlayerDice().createNewDice();
+        // Add it to the layer
+        gameManager.getDiceTokenLayer().createSingleToken(die, gameManager.getPlayerDice());
     }
 
     public override Task Resolve(Combatant user, Combatant opponent, int value)

@@ -5,7 +5,7 @@ public partial class DiceTokenLayer : Control
 {
     [Export] private float tokenWorldSize = 1.5f; // world units around each die; keep larger than the die
 
-    private readonly List<DiceToken> tokens = new();
+    private List<DiceToken> tokens = new();
     public IReadOnlyList<DiceToken> Tokens => tokens;
 
     public override void _Ready()
@@ -32,6 +32,20 @@ public partial class DiceTokenLayer : Control
         }
     }
 
+    public void createSingleToken(Dice die, DiceController controller)
+    {
+        float ppu = controller.GetScreenPixelsPerUnit();
+        Basis camBasis = controller.TrayCamera.GlobalBasis.Orthonormalized();
+
+        Vector2 center = controller.GetCanvasPosition(die); // read before the die leaves the tray
+
+        var token = new DiceToken();
+        AddChild(token);
+        token.Setup(die, camBasis, tokenWorldSize, ppu);
+        token.GlobalPosition = center - token.Size / 2f;
+        tokens.Add(token);
+    }
+
     public void ClearTokens()
     {
         foreach (var token in tokens)
@@ -43,5 +57,16 @@ public partial class DiceTokenLayer : Control
     {
         foreach (var token in tokens)
             if (IsInstanceValid(token)) token.Interactable = on;
+    }
+
+    public List<DiceToken> getTokens()
+    {
+        return tokens;
+    }
+
+    public void RemoveToken(DiceToken token)
+    {
+        tokens.Remove(token);
+        if (IsInstanceValid(token)) token.QueueFree();
     }
 }

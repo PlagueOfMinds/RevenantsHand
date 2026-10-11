@@ -259,4 +259,19 @@ public partial class GameManager : Node
         if (seconds > 0f)
             await ToSignal(GetTree().CreateTimer(seconds), SceneTreeTimer.SignalName.Timeout);
     }
+
+    public DiceController getPlayerDice()
+    {
+        return playerDice;
+    }
+
+    public DiceController getEnemyDice()
+    {
+        return enemyDice;
+    }
+
+    public DiceTokenLayer getDiceTokenLayer()
+    {
+        return tokenLayer;
+    }
 }
