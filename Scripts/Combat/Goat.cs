@@ -5,7 +5,7 @@ public partial class Goat : Enemy
 	public Goat()
 	{
 		DisplayName = "Goat";
-		MaxHealth = 50;
+		MaxHealth = 20;
 	}
 
 	protected override string SpriteScenePath => "res://Scenes/EnemiesAnim/Goat.tscn";

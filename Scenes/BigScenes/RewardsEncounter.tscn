@@ -35,6 +35,7 @@ offset_left = 40.0
 offset_top = 450.0
 offset_right = 1160.0
 offset_bottom = 750.0
+alignment = 1
 
 [node name="PromptLabel" type="Label" parent="UILayer" unique_id=1216073898]
 offset_left = 440.0
