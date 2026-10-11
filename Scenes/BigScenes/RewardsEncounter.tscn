@@ -1,9 +1,14 @@
 [gd_scene format=3 uid="uid://c2sdlimfp20th"]
 
 [ext_resource type="PackedScene" uid="uid://cwuac8qcnqbfv" path="res://Scenes/EnemiesAnim/Revenant.tscn" id="1_5qrl0"]
+[ext_resource type="Script" uid="uid://dxp8yvjq6j2hb" path="res://Scripts/EventSystems/RewardsEncounter.cs" id="1_vjf65"]
 [ext_resource type="Texture2D" uid="uid://cvby2cxerjisp" path="res://Tabur/Sprites/BrownBoard.png" id="6_2ssg0"]
 
-[node name="RewardsEncounter" type="Node2D" unique_id=833023829]
+[node name="RewardsEncounter" type="Node2D" unique_id=833023829 node_paths=PackedStringArray("pairRow", "skipButton", "promptLabel")]
+script = ExtResource("1_vjf65")
+pairRow = NodePath("UILayer/PairRow")
+skipButton = NodePath("UILayer/SkipButton")
+promptLabel = NodePath("UILayer/PromptLabel")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=814363677]
 position = Vector2(604, 401)
@@ -15,18 +20,6 @@ position = Vector2(950, 258)
 [node name="UILayer" type="CanvasLayer" parent="." unique_id=1790950463]
 layer = 2
 
-[node name="NewCardsRow" type="HBoxContainer" parent="UILayer" unique_id=536356838]
-offset_left = -79.0
-offset_top = 379.0
-offset_right = 1123.0
-offset_bottom = 800.0
-
-[node name="PlayerCardRow" type="HBoxContainer" parent="UILayer" unique_id=1258041697]
-offset_left = 95.0
-offset_top = 379.0
-offset_right = 1297.0
-offset_bottom = 800.0
-
 [node name="CardTable" type="TextureRect" parent="UILayer" unique_id=892101798]
 z_index = -10
 offset_left = -15.0
@@ -36,3 +29,21 @@ offset_bottom = 803.0
 mouse_filter = 2
 texture = ExtResource("6_2ssg0")
 expand_mode = 1
+
+[node name="PairRow" type="HBoxContainer" parent="UILayer" unique_id=846992242]
+offset_left = 40.0
+offset_top = 450.0
+offset_right = 1160.0
+offset_bottom = 750.0
+
+[node name="PromptLabel" type="Label" parent="UILayer" unique_id=1216073898]
+offset_left = 440.0
+offset_top = 40.0
+offset_right = 1160.0
+offset_bottom = 80.0
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SkipButton" type="Button" parent="UILayer" unique_id=750840964]
+offset_right = 8.0
+offset_bottom = 8.0

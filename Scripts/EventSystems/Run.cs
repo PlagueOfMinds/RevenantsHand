@@ -8,7 +8,8 @@ public static class Run
 {
     // ---- Scenes (use right-click > Copy Path in the FileSystem dock) ----
     public const string CombatScenePath = "res://Scenes/BigScenes/Main.tscn";
-    public const string RewardScenePath = "res://Scenes/BigScenes/RewardScreen.tscn";
+    public const string RewardScenePath = "res://Scenes/BigScenes/RewardsEncounter.tscn";
+    public const string CardFolder = "res://Scenes/Cards";
 
     // ---- Run setup ----
     public const int StartingMaxHealth = 30;
@@ -25,10 +26,21 @@ public static class Run
     // Cards the Revenant can offer between fights
     private static readonly string[] CardPool =
     {
-        "res://Scenes/Cards/AttackCard.tscn",
-        "res://Scenes/Cards/DefendCard.tscn",
-        "res://Scenes/Cards/HealCard.tscn",
-        // add more card scenes here
+        $"{CardFolder}/ArmegeddonCard.tscn",
+        $"{CardFolder}/AttackCard.tscn",
+        $"{CardFolder}/CostlyBlowCard.tscn",
+        $"{CardFolder}/DefendCard.tscn",
+        $"{CardFolder}/HealCard.tscn",
+        $"{CardFolder}/LifeStakesCard.tscn",
+        $"{CardFolder}/PanaceaCard.tscn",
+        $"{CardFolder}/RecklessAbandonCard.tscn",
+        $"{CardFolder}/RevengeCard.tscn",
+        $"{CardFolder}/ScrappyCard.tscn",
+        $"{CardFolder}/ShiftyCard.tscn",
+        $"{CardFolder}/SneakAttackCard.tscn",
+        $"{CardFolder}/StruggleCard.tscn",
+        $"{CardFolder}/ThrashCard.tscn",
+        $"{CardFolder}/Tough.tscn",
     };
 
     // Fights in order; the run is won after the last one
@@ -77,12 +89,17 @@ public static class Run
     // Called by the reward screen when the player is done
     public static void ContinueFromReward() => BeginCurrentEncounter();
 
-    // Random cards from the pool, preferring ones not already in the deck
+    
+    // Random cards the player doesn't already have, with no repeats.
+    // Returns fewer than OfferCount if the pool runs out; the reward screen leaves those slots empty.
     public static List<string> RollOffers()
     {
-        var options = CardPool.Where(path => !Deck.Contains(path)).ToList();
-        if (options.Count < OfferCount) options = CardPool.ToList();
-        return options.OrderBy(_ => rng.Next()).Take(OfferCount).ToList();
+        return CardPool
+            .Distinct()                              // ignore accidental duplicates in the pool list
+            .Where(path => !Deck.Contains(path))     // never offer a card the player already has
+            .OrderBy(_ => rng.Next())                // shuffle
+            .Take(OfferCount)
+            .ToList();
     }
 
     // The new card takes the old card's slot, so left-to-right order is kept
