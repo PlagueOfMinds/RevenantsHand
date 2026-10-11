@@ -6,16 +6,16 @@ using System.Linq;
 // Everything about the current run that has to survive scene changes
 public static class Run
 {
-    public const string CombatScenePath = "res://Scenes/BigScenes/Main.tscn";
-    public const string RewardScenePath = "res://Scenes/BigScenes/RewardsEncounter.tscn";
-    public const string StartMenuScenePath = "res://Scenes/BigScenes/StartMenu.tscn";
-    public const string CardFolder = "res://Scenes/Cards";
+	public const string CombatScenePath = "res://Scenes/BigScenes/Main.tscn";
+	public const string RewardScenePath = "res://Scenes/BigScenes/RewardsEncounter.tscn";
+	public const string StartMenuScenePath = "res://Scenes/BigScenes/StartMenu.tscn";
+	public const string CardFolder = "res://Scenes/Cards";
 
-    // ---- Run setup ----
-    public const int StartingMaxHealth = 30;
-    public const int OfferCount = 3;
+	// ---- Run setup ----
+	public const int StartingMaxHealth = 30;
+	public const int OfferCount = 3;
 
-    // The player's starting cards, left to right
+	// The player's starting cards, left to right
 
     public static Enemy CreateCurrentEnemy() => Encounters[EncounterIndex]();
 
@@ -98,26 +98,26 @@ public static class Run
     public static void ContinueFromReward() => BeginCurrentEncounter();
 
     
-    // Random cards the player doesn't already have, with no repeats.
-    // Returns fewer than OfferCount if the pool runs out; the reward screen leaves those slots empty.
-    public static List<string> RollOffers()
-    {
-        return CardPool
-            .Distinct()                              // ignore accidental duplicates in the pool list
-            .Where(path => !Deck.Contains(path))     // never offer a card the player already has
-            .OrderBy(_ => rng.Next())                // shuffle
-            .Take(OfferCount)
-            .ToList();
-    }
+	// Random cards the player doesn't already have, with no repeats.
+	// Returns fewer than OfferCount if the pool runs out; the reward screen leaves those slots empty.
+	public static List<string> RollOffers()
+	{
+		return CardPool
+			.Distinct()                              // ignore accidental duplicates in the pool list
+			.Where(path => !Deck.Contains(path))     // never offer a card the player already has
+			.OrderBy(_ => rng.Next())                // shuffle
+			.Take(OfferCount)
+			.ToList();
+	}
 
-    // The new card takes the old card's slot, so left-to-right order is kept
+	// The new card takes the old card's slot, so left-to-right order is kept
     public static void SwapCard(int deckIndex, string newCardPath) => Deck[deckIndex] = newCardPath;
 
-    // Start a fresh run from the menu: the Revenant's offer first, then fight 1
-    public static void BeginRun()
-    {
-        StartNewRun();                                   // fresh health, starting deck, encounter 0
-        SceneTransition.Instance.GoTo(RewardScenePath); // Revenant's offer before the first fight
+	// Start a fresh run from the menu: the Revenant's offer first, then fight 1
+	public static void BeginRun()
+	{
+		StartNewRun();                                   // fresh health, starting deck, encounter 0
+		SceneTransition.Instance.GoTo(RewardScenePath); // Revenant's offer before the first fight
     }
     private static void EndRun(bool won)
     {
