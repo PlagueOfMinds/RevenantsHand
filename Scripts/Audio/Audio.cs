@@ -85,7 +85,7 @@ public partial class Audio : Node
         if (now - lastUIHoverMs < UIHoverCooldownMs) return;
         lastUIHoverMs = now;
 
-        PlaySfx(uiHoverSound, volumeDb: UIHoverVolumeDb, pitchVariance: 0.05f, bus: "UI");
+        PlaySfx(uiHoverSound, volumeDb: UIHoverVolumeDb, pitchVariance: 0.30f, bus: "UI");
     }
 
     // One-shot sound with a slight random pitch so repeated sounds don't feel robotic
