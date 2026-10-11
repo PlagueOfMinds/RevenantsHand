@@ -45,7 +45,7 @@ shader_parameter/vignette_softness = 1.19700005615898
 shader_parameter/vignette_roundness = 0.2490000118275
 shader_parameter/vignette_color = Color(0, 0, 0, 1)
 
-[node name="StartMenu" type="Control" unique_id=436922654 node_paths=PackedStringArray("startButton")]
+[node name="StartMenu" type="Control" unique_id=436922654 node_paths=PackedStringArray("startButton", "quitButton")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -54,6 +54,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_kco5m")
 startButton = NodePath("UILayer/StartButton")
+quitButton = NodePath("UILayer/Quit")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1068376505]
 position = Vector2(604, 401)
@@ -137,13 +138,13 @@ rotation = -0.8133801
 icon = ExtResource("5_w3nm0")
 flat = true
 
-[node name="QuiteButton" type="Button" parent="UILayer" unique_id=1508121022]
+[node name="Quit" type="Button" parent="UILayer" unique_id=981353422]
 z_index = 501
-offset_left = 97.00001
-offset_top = 592.00006
-offset_right = 354.00003
-offset_bottom = 791.00006
-rotation = -0.29718402
+offset_left = 67.000015
+offset_top = 581.00006
+offset_right = 324.00006
+offset_bottom = 780.00006
+rotation = -0.16753048
 icon = ExtResource("6_dwcjn")
 flat = true
 
