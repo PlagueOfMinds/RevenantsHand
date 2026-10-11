@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bvhwr8lyl0p0r"]
 
 [ext_resource type="Script" uid="uid://cgwtr14hv111m" path="res://Scripts/Cards/ScrappyCard.cs" id="1_6h1v1"]
+[ext_resource type="Texture2D" uid="uid://cpkpvfnbflbrq" path="res://Sprites/CardsPngs/PlayerCards/Scrappy.png" id="2_bdbxc"]
 
 [node name="Card" type="Control" unique_id=1434031668 node_paths=PackedStringArray("dieSlot", "highlight")]
 custom_minimum_size = Vector2(160, 220)
@@ -23,6 +24,7 @@ dieSlot = NodePath("DieSlot")
 highlight = NodePath("Highlight")
 
 [node name="Background" type="Panel" parent="." unique_id=1162265622]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -43,6 +45,7 @@ offset_right = 110.0
 offset_bottom = 190.0
 
 [node name="Highlight" type="Panel" parent="." unique_id=707114575]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -52,6 +55,8 @@ grow_vertical = 2
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1714076107]
 layout_mode = 0
-offset_right = 160.0
+offset_left = -28.0
+offset_right = 190.0
 offset_bottom = 218.0
-expand_mode = 1
+texture = ExtResource("2_bdbxc")
+expand_mode = 3

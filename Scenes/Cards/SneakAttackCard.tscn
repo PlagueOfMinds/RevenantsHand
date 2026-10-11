@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://d0mrhlmrnmbpf"]
 
 [ext_resource type="Script" uid="uid://tev3x45iqlp8" path="res://Scripts/Cards/SneakAttackCard.cs" id="1_ixvot"]
+[ext_resource type="Texture2D" uid="uid://bgnt6wedmpi7e" path="res://Sprites/CardsPngs/PlayerCards/SneakAttack.png" id="2_201vy"]
 
 [node name="Card" type="Control" unique_id=1434031668]
 custom_minimum_size = Vector2(160, 220)
@@ -21,6 +22,7 @@ size_flags_vertical = 4
 script = ExtResource("1_ixvot")
 
 [node name="Background" type="Panel" parent="." unique_id=1162265622]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -41,6 +43,7 @@ offset_right = 110.0
 offset_bottom = 190.0
 
 [node name="Highlight" type="Panel" parent="." unique_id=707114575]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -50,6 +53,8 @@ grow_vertical = 2
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1696937182]
 layout_mode = 0
-offset_right = 160.0
+offset_left = -28.0
+offset_right = 190.0
 offset_bottom = 218.0
-expand_mode = 1
+texture = ExtResource("2_201vy")
+expand_mode = 3

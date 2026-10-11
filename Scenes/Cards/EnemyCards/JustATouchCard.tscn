@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cn54jcfu5d2u"]
 
 [ext_resource type="Script" uid="uid://c8x16a832tgsj" path="res://Scripts/Cards/EnemyCards/JustATouch.cs" id="1_qdrjv"]
+[ext_resource type="Texture2D" uid="uid://co5h2j2pwafjh" path="res://Sprites/CardsPngs/EnemyCards/JustATouch.png" id="2_3tb38"]
 
 [node name="Card" type="Control" unique_id=1434031668 node_paths=PackedStringArray("dieSlot", "highlight")]
 custom_minimum_size = Vector2(160, 220)
@@ -24,6 +25,7 @@ dieSlot = NodePath("DieSlot")
 highlight = NodePath("Highlight")
 
 [node name="Background" type="Panel" parent="." unique_id=1162265622]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -44,6 +46,7 @@ offset_right = 110.0
 offset_bottom = 190.0
 
 [node name="Highlight" type="Panel" parent="." unique_id=707114575]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -53,6 +56,8 @@ grow_vertical = 2
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=789779455]
 layout_mode = 0
-offset_right = 160.0
+offset_left = -27.0
+offset_right = 191.0
 offset_bottom = 218.0
-expand_mode = 1
+texture = ExtResource("2_3tb38")
+expand_mode = 3
