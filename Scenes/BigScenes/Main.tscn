@@ -6,7 +6,10 @@
 [ext_resource type="PackedScene" uid="uid://b1qvdpbfyhm46" path="res://Scenes/Background.tscn" id="3_65qb0"]
 [ext_resource type="Script" uid="uid://cg0fph5qdu50j" path="res://Scripts/Dice/DiceTokenLayer.cs" id="4_52gy2"]
 [ext_resource type="Texture2D" uid="uid://cvby2cxerjisp" path="res://Tabur/Sprites/BrownBoard.png" id="4_c7w63"]
+[ext_resource type="Texture2D" uid="uid://b2bnrsfljaaei" path="res://Sprites/EnemyHealthSymbol.png" id="6_52gy2"]
+[ext_resource type="Texture2D" uid="uid://bgjlxyyljjp8g" path="res://Sprites/HealthSymbol.png" id="7_6klns"]
 [ext_resource type="Shader" uid="uid://b65s5eivjdd25" path="res://Tabur/Misc/bloom_vignette.gdshader" id="7_8vdos"]
+[ext_resource type="Script" uid="uid://dpfws0whhr21o" path="res://Scripts/UIElements/StatLabel.cs" id="7_qcvra"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_52gy2"]
 shader = ExtResource("7_8vdos")
@@ -28,7 +31,7 @@ shader_parameter/vignette_color = Color(0, 0, 0, 1)
 position = Vector2(604, 401)
 zoom = Vector2(0.5, 0.5)
 
-[node name="GameManager" type="Node" parent="." unique_id=1802966013 node_paths=PackedStringArray("playerDice", "enemyDice", "tokenLayer", "playerCardRow", "enemyCardRow", "rollButton", "lockInButton", "turnLabel", "playerHealthLabel", "enemyHealthLabel")]
+[node name="GameManager" type="Node" parent="." unique_id=1802966013 node_paths=PackedStringArray("playerDice", "enemyDice", "tokenLayer", "playerCardRow", "enemyCardRow", "rollButton", "lockInButton", "turnLabel", "playerHealthLabel", "enemyHealthLabel", "playerHealthText", "enemyHealthText")]
 script = ExtResource("1_c7w63")
 playerDice = NodePath("../UILayer/PlayerDiceCorner/SubViewportContainer/SubViewport/DiceView/DiceController")
 enemyDice = NodePath("../UILayer/EnemyDiceCorner/SubViewportContainer/SubViewport/DiceView/DiceController")
@@ -40,6 +43,8 @@ lockInButton = NodePath("../UILayer/NonDiceUI/LockInTurnButton")
 turnLabel = NodePath("../UILayer/NonDiceUI/TurnLabel")
 playerHealthLabel = NodePath("../UILayer/NonDiceUI/PlayerHealthLabel")
 enemyHealthLabel = NodePath("../UILayer/NonDiceUI/EnemyHealthLabel")
+playerHealthText = NodePath("../UILayer/PlayerHealthText")
+enemyHealthText = NodePath("../UILayer/EnemyHealthText")
 
 [node name="UILayer" type="CanvasLayer" parent="." unique_id=1568385355]
 layer = 2
@@ -201,6 +206,38 @@ anchors_preset = 0
 offset_left = -2.0
 offset_right = 38.0
 offset_bottom = 40.0
+
+[node name="EnemyHealth" type="TextureRect" parent="UILayer" unique_id=2102389579]
+offset_left = 155.0
+offset_top = 345.00003
+offset_right = 755.0
+offset_bottom = 945.0
+scale = Vector2(0.35, 0.339)
+texture = ExtResource("6_52gy2")
+
+[node name="EnemyHealthText" type="Label" parent="UILayer" unique_id=1342045134]
+offset_left = 243.0
+offset_top = 445.00003
+offset_right = 283.0
+offset_bottom = 462.00003
+scale = Vector2(1.2381345, 1.3710499)
+script = ExtResource("7_qcvra")
+
+[node name="PlayerHealth" type="TextureRect" parent="UILayer" unique_id=1470961869]
+offset_left = 824.0
+offset_top = 332.99997
+offset_right = 1424.0
+offset_bottom = 933.0
+scale = Vector2(0.35, 0.35)
+texture = ExtResource("7_6klns")
+
+[node name="PlayerHealthText" type="Label" parent="UILayer" unique_id=473487911]
+offset_left = 935.0
+offset_top = 430.0
+offset_right = 975.0
+offset_bottom = 447.0
+scale = Vector2(1.1875395, 1.4765383)
+script = ExtResource("7_qcvra")
 
 [node name="Background" parent="." unique_id=2110014799 instance=ExtResource("3_65qb0")]
 position = Vector2(-615, -392)

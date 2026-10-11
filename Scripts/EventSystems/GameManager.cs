@@ -22,6 +22,10 @@ public partial class GameManager : Node
     [Export] private Label turnLabel;
     [Export] private Label playerHealthLabel; // optional
     [Export] private Label enemyHealthLabel;  // optional
+    [Export] private StatLabel playerHealthText;
+    [Export] private StatLabel enemyHealthText;
+    [Export] private StatLabel playerPoisonText; // optional
+    [Export] private StatLabel enemyPoisonText;  // optional
     [Export] private float fadedAlpha = 0.35f;
     [Export] private float actionDelay = 0.6f;      // pause between actions so each one is readable
     [Export] private float endOfBattleDelay = 2f;   // how long "Victory"/"Defeat" shows before moving on
@@ -245,6 +249,11 @@ public partial class GameManager : Node
     {
         if (playerHealthLabel != null && Player != null) playerHealthLabel.Text = Describe(Player);
         if (enemyHealthLabel != null && Enemy != null) enemyHealthLabel.Text = Describe(Enemy);
+
+        playerHealthText?.Display(Player);
+        enemyHealthText?.Display(Enemy);
+        playerPoisonText?.Display(Player);
+        enemyPoisonText?.Display(Enemy);
     }
 
     private static string Describe(Combatant c)
