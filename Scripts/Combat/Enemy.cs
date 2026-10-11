@@ -21,6 +21,10 @@ public partial class Enemy : Combatant
     // How this enemy weighs damage, healing and poison
     protected virtual AiProfile AiProfile => AiProfile.Default;
 
+    protected virtual string YellSoundPath => null;
+
+    private AudioStream yellSound;
+
     public Node Visual { get; private set; }             // the instanced scene
     public AnimatedSprite2D Sprite { get; private set; } // first AnimatedSprite2D inside it, if any
 
@@ -66,4 +70,21 @@ public partial class Enemy : Combatant
         }
         return null;
     }
+
+    public void Yell()
+	{
+		if (YellSoundPath == null) return;
+
+		if (yellSound == null)
+		{
+			if (!ResourceLoader.Exists(YellSoundPath))
+			{
+				GD.Print($"Yell not found at {YellSoundPath}");
+				return;
+			}
+			yellSound = GD.Load<AudioStream>(YellSoundPath); // loaded once, on the first yell
+		}
+
+		Audio.Instance?.PlaySfx(yellSound, pitchVariance: 0.03f);
+	}
 }

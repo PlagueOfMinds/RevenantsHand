@@ -13,6 +13,8 @@ public partial class Hands : Enemy
 
 	protected override AiProfile AiProfile => new AiProfile(DamageWeight: 1f);
 	
+	protected override string YellSoundPath => "res://AudioFX/CreatureYell/HandsScream.mp3";
+
 	public override string[] CardScenePaths => new[]
 	{
 		"res://Scenes/Cards/EnemyCards/JustATouch.tscn",

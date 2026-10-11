@@ -148,6 +148,7 @@ public partial class GameManager : Node
 	{
 		if (CurrentPhase != Phase.Place) return;
 		SetPhase(Phase.Resolve);
+		Enemy.Yell();
 
 		// Player's turn: cards left to right, then poison
 		var playerActions = new List<QueuedAction>();
@@ -159,6 +160,7 @@ public partial class GameManager : Node
 
 		await ResolveActions(playerActions);
 		await EndOfTurnPoison(Player);
+
 		Player.EndOwnTurn();
 
 		// Enemy's turn: the shared AI plans now, after seeing what the player did
