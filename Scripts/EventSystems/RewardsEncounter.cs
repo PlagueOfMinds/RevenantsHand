@@ -38,45 +38,46 @@ public partial class RewardsEncounter : Node2D
     }
 
     // [offered card] [swap] [your card], side by side
-    private Control BuildPair(int deckIndex, string offerPath)
-    {
-        var pair = new HBoxContainer { Alignment = BoxContainer.AlignmentMode.Center };
-        pair.AddThemeConstantOverride("separation", pairSeparation);
+    // [your card] [swap] [offered card], side by side
+	private Control BuildPair(int deckIndex, string offerPath)
+	{
+		var pair = new HBoxContainer { Alignment = BoxContainer.AlignmentMode.Center };
+		pair.AddThemeConstantOverride("separation", pairSeparation);
 
-        Card yourCard = LoadCard(Run.Deck[deckIndex]);
+		Card yourCard = LoadCard(Run.Deck[deckIndex]);
 
-        if (offerPath == null)
-        {
-            // Nothing offered for this slot: invisible placeholders keep the spacing even
-            pair.AddChild(new Control { CustomMinimumSize = yourCard.CustomMinimumSize });
-            pair.AddChild(CreateButton(visible: false));
-            pair.AddChild(yourCard);
-            return pair;
-        }
+		if (offerPath == null)
+		{
+			// Nothing offered for this slot: invisible placeholders keep the spacing even
+			pair.AddChild(yourCard);
+			pair.AddChild(CreateButton(visible: false));
+			pair.AddChild(new Control { CustomMinimumSize = yourCard.CustomMinimumSize });
+			return pair;
+		}
 
-        Card offeredCard = LoadCard(offerPath);
-        Button swap = CreateButton(visible: true);
+		Card offeredCard = LoadCard(offerPath);
+		Button swap = CreateButton(visible: true);
 
-        swap.Pressed += () => OnSwapPressed(deckIndex, offerPath);
-        swap.MouseEntered += () =>
-        {
-            offeredCard.SetHover(true);
-            yourCard.SetHover(true);
-            SetPrompt($"Replace {yourCard.CardName} with {offeredCard.CardName}?");
-        };
-        swap.MouseExited += () =>
-        {
-            offeredCard.SetHover(false);
-            yourCard.SetHover(false);
-            SetPrompt(DefaultPrompt);
-        };
-        swapButtons.Add(swap);
+		swap.Pressed += () => OnSwapPressed(deckIndex, offerPath);
+		swap.MouseEntered += () =>
+		{
+			offeredCard.SetHover(true);
+			yourCard.SetHover(true);
+			SetPrompt($"Replace {yourCard.CardName} with {offeredCard.CardName}?");
+		};
+		swap.MouseExited += () =>
+		{
+			offeredCard.SetHover(false);
+			yourCard.SetHover(false);
+			SetPrompt(DefaultPrompt);
+		};
+		swapButtons.Add(swap);
 
-        pair.AddChild(offeredCard);
-        pair.AddChild(swap);
-        pair.AddChild(yourCard);
-        return pair;
-    }
+		pair.AddChild(yourCard);
+		pair.AddChild(swap);
+		pair.AddChild(offeredCard);
+		return pair;
+	}
 
     private Card LoadCard(string path)
     {
