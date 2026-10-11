@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://c8gqcfa0ycqq1"]
 
-[ext_resource type="Script" uid="uid://60tog76mdq7p" path="res://Scripts/Cards/EnemyCards/DontBite.cs" id="1_22jw0"]
-[ext_resource type="Texture2D" uid="uid://dyjq0j0srh45p" path="res://Sprites/CardsPngs/EnemyCards/DontBite.png" id="2_8w27g"]
+[ext_resource type="Script" uid="uid://60tog76mdq7p" path="res://Scripts/Cards/EnemyCards/DontBite.cs" id="1_6vrp6"]
+[ext_resource type="Texture2D" uid="uid://dyjq0j0srh45p" path="res://Sprites/CardsPngs/EnemyCards/DontBite.png" id="2_8echj"]
 
-[node name="Card" type="Control" unique_id=1434031668 node_paths=PackedStringArray("dieSlot", "highlight")]
+[node name="Card2" type="Control" unique_id=1434031668 node_paths=PackedStringArray("dieSlot", "highlight")]
 custom_minimum_size = Vector2(160, 220)
 layout_mode = 3
 anchors_preset = 8
@@ -19,7 +19,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 6
 size_flags_vertical = 4
-script = ExtResource("1_22jw0")
+script = ExtResource("1_6vrp6")
 CardName = "AttackCard"
 dieSlot = NodePath("DieSlot")
 highlight = NodePath("Highlight")
@@ -59,5 +59,5 @@ layout_mode = 0
 offset_left = -27.0
 offset_right = 191.0
 offset_bottom = 218.0
-texture = ExtResource("2_8w27g")
+texture = ExtResource("2_8echj")
 expand_mode = 3

@@ -1,6 +1,7 @@
 using Godot;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
 
 public partial class GameManager : Node
 {
@@ -154,7 +155,13 @@ public partial class GameManager : Node
         // Enemy's turn: the shared AI plans now, after seeing what the player did
         if (!BattleOver)
         {
-            List<QueuedAction> enemyActions = Enemy.ChooseMoves(GetCards(enemyCardRow), Player);
+            List<Card> enemyCards = GetCards(enemyCardRow);
+            GD.Print($"[AI] {Enemy.DisplayName} dice: [{string.Join(", ", Enemy.Dice)}] " +
+                    $"cards: [{string.Join(", ", enemyCards.Select(c => c.CardName))}]");
+
+            List<QueuedAction> enemyActions = Enemy.ChooseMoves(enemyCards, Player);
+            GD.Print($"[AI] chose: [{string.Join(", ", enemyActions.Select(a => $"{a.Card.CardName} with {a.Value}"))}]");
+
             await ResolveActions(enemyActions);
             await EndOfTurnPoison(Enemy);
             Enemy.EndOwnTurn();
@@ -177,7 +184,7 @@ public partial class GameManager : Node
             if (!action.Card.CanUse(action.User, action.Opponent) || !action.Card.AcceptsValue(action.Value)) continue;
 
             action.Card.SetHover(true);
-            Audio.Instance.PlaySfx(action.Card.ResolveSound);
+            //Audio.Instance.PlaySfx(action.Card.ResolveSound);
             await action.Card.Resolve(action.User, action.Opponent, action.Value);
             await Wait(actionDelay);
             action.Card.SetHover(false);
