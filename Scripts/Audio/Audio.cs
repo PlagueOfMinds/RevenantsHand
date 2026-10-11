@@ -5,29 +5,48 @@ public partial class Audio : Node
 {
     public static Audio Instance { get; private set; }
 
-    [Export] private int sfxVoices = 12;
-    [Export] private float musicFadeTime = 1f;
+    // The track that plays for the whole game (right-click the file in FileSystem → Copy Path)
+    private const string BackgroundMusicPath = "res://AudioFX/Music/one.mp3";
+    private const float MusicVolumeDb = -6f;
+    private const int SfxVoices = 12;
 
     private readonly List<AudioStreamPlayer> sfxPool = new();
     private readonly RandomNumberGenerator rng = new();
-    private AudioStreamPlayer musicA, musicB, currentMusic;
+    private AudioStreamPlayer music;
 
     public override void _Ready()
     {
         Instance = this;
+        ProcessMode = ProcessModeEnum.Always; // keeps playing if the game is ever paused
         rng.Randomize();
 
-        for (int i = 0; i < sfxVoices; i++)
+        // Sound effect players, reused for overlapping one-shot sounds
+        for (int i = 0; i < SfxVoices; i++)
         {
             var player = new AudioStreamPlayer { Bus = "SFX" };
             AddChild(player);
             sfxPool.Add(player);
         }
 
-        musicA = new AudioStreamPlayer { Bus = "Music" };
-        musicB = new AudioStreamPlayer { Bus = "Music" };
-        AddChild(musicA);
-        AddChild(musicB);
+        StartBackgroundMusic();
+    }
+
+    private void StartBackgroundMusic()
+    {
+        if (!ResourceLoader.Exists(BackgroundMusicPath))
+        {
+            GD.PushWarning($"Audio: background music not found at {BackgroundMusicPath}");
+            return;
+        }
+
+        music = new AudioStreamPlayer
+        {
+            Stream = GD.Load<AudioStream>(BackgroundMusicPath),
+            Bus = "Music",
+            VolumeDb = MusicVolumeDb,
+        };
+        AddChild(music);
+        music.Play();
     }
 
     // One-shot sound with a slight random pitch so repeated sounds don't feel robotic
@@ -41,29 +60,5 @@ public partial class Audio : Node
         player.VolumeDb = volumeDb;
         player.PitchScale = 1f + rng.RandfRange(-pitchVariance, pitchVariance);
         player.Play();
-    }
-
-    // Crossfade to a new track; does nothing if that track is already playing
-    public void PlayMusic(AudioStream stream)
-    {
-        if (stream == null) return;
-        if (currentMusic != null && currentMusic.Stream == stream && currentMusic.Playing) return;
-
-        AudioStreamPlayer next = currentMusic == musicA ? musicB : musicA;
-        AudioStreamPlayer previous = currentMusic;
-
-        next.Stream = stream;
-        next.VolumeDb = -40f;
-        next.Play();
-
-        Tween tween = CreateTween().SetParallel();
-        tween.TweenProperty(next, "volume_db", 0f, musicFadeTime);
-        if (previous != null)
-        {
-            tween.TweenProperty(previous, "volume_db", -40f, musicFadeTime);
-            tween.Chain().TweenCallback(Callable.From(previous.Stop));
-        }
-
-        currentMusic = next;
     }
 }

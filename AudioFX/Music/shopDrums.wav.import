@@ -2,13 +2,13 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://diuacta3rdfet"
-path="res://.godot/imported/Roll 3d6.wav-1698168a9301b868b0b6575b061933f0.sample"
+uid="uid://btna3nvrrlck8"
+path="res://.godot/imported/shopDrums.wav-7efc3fc9851fe4bd67fa046f12ea5410.sample"
 
 [deps]
 
-source_file="res://AudioFX/Dice/Roll 3d6.wav"
-dest_files=["res://.godot/imported/Roll 3d6.wav-1698168a9301b868b0b6575b061933f0.sample"]
+source_file="res://AudioFX/Music/shopDrums.wav"
+dest_files=["res://.godot/imported/shopDrums.wav-7efc3fc9851fe4bd67fa046f12ea5410.sample"]
 
 [params]
 

@@ -5,7 +5,8 @@ using System.Drawing;
 using System.Threading.Tasks;
 
 public partial class DiceController : Node3D
-{
+{   
+    private const string diceRoleAudioPath = "res://AudioFX/Dice/diceRoll.wav";
     [Export] private PackedScene diceScene;
     [Export] private Node3D diceParent;
     [Export] private Marker3D spawnPoint;
@@ -50,6 +51,7 @@ public partial class DiceController : Node3D
         if (rolling) return Array.Empty<Dice>();
         ClearDice();
 
+        Audio.Instance.PlaySfx(GD.Load<AudioStream>(diceRoleAudioPath), pitchVariance: 0f);
         Vector3 baseDir = throwTarget.GlobalPosition - spawnPoint.GlobalPosition;
         baseDir.Y = 0f;
         baseDir = baseDir.Normalized();

@@ -15,6 +15,7 @@ public partial class RewardsEncounter : Node2D
 	[Export] private int swapFontSize = 0;      
 
     private const string DefaultPrompt = "The Revenant offers a trade. Swap one card, or keep your hand.";
+	private const string OpenSoundPath = "res://AudioFX/Music/shopDrums.wav";
 
     private readonly List<Button> swapButtons = new();
     private bool finished;
@@ -24,6 +25,7 @@ public partial class RewardsEncounter : Node2D
 		swapFont ??= GD.Load<Font>("res://Font/Imprint MT Std Shadow.otf"); // Load font for later
 
         if (!Run.IsActive) Run.StartNewRun(); // lets you test this scene on its own (F6)
+		Audio.Instance.PlaySfx(GD.Load<AudioStream>(OpenSoundPath), pitchVariance: 0f); // Audio for shop opening
 
         // Remove any placeholders used for laying out the scene in the editor
         foreach (Node child in pairRow.GetChildren())
