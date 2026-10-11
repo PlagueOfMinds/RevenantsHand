@@ -53,6 +53,8 @@ public partial class Combatant : Node2D
         damageTakenSinceLastTurnT += amount;
         int lost = Math.Min(amount, Health);
 
+        ScreenShake.Shake(this, strength: Mathf.Min(amount * 1.5f, 30f));
+
         Changed?.Invoke(this);
         if (IsDead) Died?.Invoke(this);
         return lost;
