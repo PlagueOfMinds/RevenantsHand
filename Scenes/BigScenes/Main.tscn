@@ -4,12 +4,16 @@
 [ext_resource type="Script" uid="uid://bjwv1qxhm4gqq" path="res://Scripts/Cards/CardTableToggle.cs" id="2_65qb0"]
 [ext_resource type="PackedScene" uid="uid://ddsp2bxsew3wd" path="res://Scenes/Dice/DiceTray.tscn" id="3_8vdos"]
 [ext_resource type="PackedScene" uid="uid://b1qvdpbfyhm46" path="res://Scenes/Background.tscn" id="3_65qb0"]
+[ext_resource type="Texture2D" uid="uid://o3pxbvyallcx" path="res://Sprites/RollDiceSymbol.png" id="3_hjjcd"]
+[ext_resource type="Texture2D" uid="uid://cwoe5cr3tvi1u" path="res://Sprites/EndTurn.png" id="3_s44sp"]
 [ext_resource type="Script" uid="uid://cg0fph5qdu50j" path="res://Scripts/Dice/DiceTokenLayer.cs" id="4_52gy2"]
-[ext_resource type="Texture2D" uid="uid://cvby2cxerjisp" path="res://Tabur/Sprites/BrownBoard.png" id="4_c7w63"]
+[ext_resource type="Texture2D" uid="uid://ck74b5qbm5n5c" path="res://Sprites/SwapCardView.png" id="5_240eh"]
 [ext_resource type="Texture2D" uid="uid://b2bnrsfljaaei" path="res://Sprites/EnemyHealthSymbol.png" id="6_52gy2"]
 [ext_resource type="Texture2D" uid="uid://bgjlxyyljjp8g" path="res://Sprites/HealthSymbol.png" id="7_6klns"]
 [ext_resource type="Shader" uid="uid://b65s5eivjdd25" path="res://Tabur/Misc/bloom_vignette.gdshader" id="7_8vdos"]
 [ext_resource type="Script" uid="uid://dpfws0whhr21o" path="res://Scripts/UIElements/StatLabel.cs" id="7_qcvra"]
+[ext_resource type="FontFile" uid="uid://cj28xwhxpcnst" path="res://Font/Imprint MT Std Shadow.otf" id="8_1h3kv"]
+[ext_resource type="Texture2D" uid="uid://j7njhwtvck15" path="res://Sprites/AlternativeBlackBoard.png" id="8_240eh"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_52gy2"]
 shader = ExtResource("7_8vdos")
@@ -25,13 +29,35 @@ shader_parameter/vignette_softness = 0.7790000363039801
 shader_parameter/vignette_roundness = 1.0
 shader_parameter/vignette_color = Color(0, 0, 0, 1)
 
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_240eh"]
+particle_flag_disable_z = true
+angle_min = 1.0728835e-05
+angle_max = 360.00003
+gravity = Vector3(500, 0, 0)
+color = Color(0.09872841, 0.09872835, 0.09872835, 0.15686275)
+hue_variation_min = -2.2351742e-08
+hue_variation_max = 0.049999975
+turbulence_enabled = true
+turbulence_noise_strength = 0.2
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ed1c6"]
+particle_flag_disable_z = true
+angle_min = 1.0728835e-05
+angle_max = 360.00003
+gravity = Vector3(-500, 0, 0)
+color = Color(0.17880967, 0.17880964, 0.17880964, 0.15686275)
+hue_variation_min = -2.2351742e-08
+hue_variation_max = 0.049999975
+turbulence_enabled = true
+turbulence_noise_strength = 0.2
+
 [node name="Combat" type="Node2D" unique_id=328123032]
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=542988287]
 position = Vector2(604, 401)
 zoom = Vector2(0.5, 0.5)
 
-[node name="GameManager" type="Node" parent="." unique_id=1802966013 node_paths=PackedStringArray("playerDice", "enemyDice", "tokenLayer", "playerCardRow", "enemyCardRow", "rollButton", "lockInButton", "turnLabel", "playerHealthLabel", "enemyHealthLabel")]
+[node name="GameManager" type="Node" parent="." unique_id=1802966013 node_paths=PackedStringArray("playerDice", "enemyDice", "tokenLayer", "playerCardRow", "enemyCardRow", "rollButton", "lockInButton", "turnLabel", "playerHealthLabel", "enemyHealthLabel", "playerHealthText", "enemyHealthText", "playerPoisonText")]
 script = ExtResource("1_c7w63")
 playerDice = NodePath("../UILayer/PlayerDiceCorner/SubViewportContainer/SubViewport/DiceView/DiceController")
 enemyDice = NodePath("../UILayer/EnemyDiceCorner/SubViewportContainer/SubViewport/DiceView/DiceController")
@@ -43,6 +69,9 @@ lockInButton = NodePath("../UILayer/NonDiceUI/LockInTurnButton")
 turnLabel = NodePath("../UILayer/NonDiceUI/TurnLabel")
 playerHealthLabel = NodePath("../UILayer/NonDiceUI/PlayerHealthLabel")
 enemyHealthLabel = NodePath("../UILayer/NonDiceUI/EnemyHealthLabel")
+playerHealthText = NodePath("../UILayer/PlayerHealth/PlayerHealthText")
+enemyHealthText = NodePath("../UILayer/EnemyHealth/EnemyHealthText")
+playerPoisonText = NodePath("../UILayer/PlayerHealth/PlayerPoisonText")
 
 [node name="UILayer" type="CanvasLayer" parent="." unique_id=1568385355]
 layer = 2
@@ -63,17 +92,24 @@ offset_left = 1000.0
 offset_top = 425.0
 offset_right = 1200.0
 offset_bottom = 500.0
+scale = Vector2(0.5, 0.5)
+icon = ExtResource("3_hjjcd")
+flat = true
 
 [node name="LockInTurnButton" type="Button" parent="UILayer/NonDiceUI" unique_id=168544116]
 offset_left = 1000.0
 offset_top = 350.0
 offset_right = 1200.0
 offset_bottom = 425.0
+scale = Vector2(0.5, 0.5)
+icon = ExtResource("3_s44sp")
+flat = true
 
 [node name="TurnLabel" type="Label" parent="UILayer/NonDiceUI" unique_id=851341680]
 offset_top = 425.0
 offset_right = 200.0
 offset_bottom = 500.0
+theme_override_colors/font_color = Color(1, 1, 1, 0)
 
 [node name="PlayerHealthLabel" type="Label" parent="UILayer/NonDiceUI" unique_id=1648100727]
 anchors_preset = -1
@@ -83,6 +119,7 @@ offset_left = 691.0
 offset_top = 455.0
 offset_right = 861.4
 offset_bottom = 476.8
+theme_override_colors/font_color = Color(1, 1, 1, 0)
 
 [node name="EnemyHealthLabel" type="Label" parent="UILayer/NonDiceUI" unique_id=369121745]
 anchors_preset = -1
@@ -92,11 +129,24 @@ offset_left = 691.0
 offset_top = 455.0
 offset_right = 861.4
 offset_bottom = 476.8
+theme_override_colors/font_color = Color(1, 1, 1, 0)
 
 [node name="SwapCardViewButton" type="Button" parent="UILayer/NonDiceUI" unique_id=941990924 node_paths=PackedStringArray("playerCardRow", "enemyCardRow", "playerHealthLabel", "enemyHealthLabel")]
-offset_top = 425.0
-offset_right = 200.0
-offset_bottom = 500.0
+offset_left = -4.0
+offset_top = 419.99997
+offset_right = 488.0
+offset_bottom = 653.0
+rotation = -0.30194196
+scale = Vector2(0.5, 0.5)
+theme_override_colors/font_color = Color(0.8745098, 0.8745098, 0.8745098, 0)
+theme_override_colors/font_focus_color = Color(0.9490196, 0.9490196, 0.9490196, 0)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 0)
+theme_override_colors/font_hover_color = Color(0.9490196, 0.9490196, 0.9490196, 0)
+theme_override_colors/font_hover_pressed_color = Color(1, 1, 1, 0)
+theme_override_font_sizes/font_size = 1
+icon = ExtResource("5_240eh")
+flat = true
+alignment = 0
 script = ExtResource("2_65qb0")
 playerCardRow = NodePath("../../PlayerCardRow")
 enemyCardRow = NodePath("../../EnemyCardRow")
@@ -173,7 +223,7 @@ offset_top = 500.0
 offset_right = 1219.0
 offset_bottom = 807.0
 mouse_filter = 2
-texture = ExtResource("4_c7w63")
+texture = ExtResource("8_240eh")
 expand_mode = 1
 
 [node name="PlayerCardRow" type="HBoxContainer" parent="UILayer" unique_id=1143773701]
@@ -206,20 +256,29 @@ offset_right = 38.0
 offset_bottom = 40.0
 
 [node name="EnemyHealth" type="TextureRect" parent="UILayer" unique_id=2102389579]
-offset_left = 155.0
-offset_top = 345.00003
-offset_right = 755.0
-offset_bottom = 945.0
+offset_left = 212.00002
+offset_top = 339.0
+offset_right = 812.0
+offset_bottom = 939.0
 scale = Vector2(0.35, 0.339)
 texture = ExtResource("6_52gy2")
 
-[node name="EnemyHealthText" type="Label" parent="UILayer" unique_id=1342045134]
-offset_left = 243.0
-offset_top = 445.00003
-offset_right = 283.0
-offset_bottom = 462.00003
-scale = Vector2(1.2381345, 1.3710499)
+[node name="EnemyHealthText" type="Label" parent="UILayer/EnemyHealth" unique_id=1342045134]
+layout_mode = 0
+offset_left = 194.28572
+offset_top = 294.98517
+offset_right = 325.2857
+offset_bottom = 423.98517
+theme_override_colors/font_color = Color(0.8156863, 0, 0, 1)
+theme_override_fonts/font = ExtResource("8_1h3kv")
+theme_override_font_sizes/font_size = 128
+text = "00"
+horizontal_alignment = 1
 script = ExtResource("7_qcvra")
+healthyColor = Color(0.8156863, 0, 0, 1)
+hurtColor = Color(0.8156863, 0, 0, 1)
+criticalColor = Color(0.8156863, 0, 0, 1)
+poisonColor = Color(0.8156863, 0, 0, 1)
 
 [node name="PlayerHealth" type="TextureRect" parent="UILayer" unique_id=1470961869]
 offset_left = 824.0
@@ -229,17 +288,45 @@ offset_bottom = 933.0
 scale = Vector2(0.35, 0.35)
 texture = ExtResource("7_6klns")
 
-[node name="PlayerHealthText" type="Label" parent="UILayer" unique_id=473487911]
-offset_left = 935.0
-offset_top = 430.0
-offset_right = 975.0
-offset_bottom = 447.0
-scale = Vector2(1.1875395, 1.4765383)
+[node name="PlayerHealthText" type="Label" parent="UILayer/PlayerHealth" unique_id=473487911]
+layout_mode = 0
+offset_left = 291.42853
+offset_top = 265.71436
+offset_right = 422.42853
+offset_bottom = 394.71436
+theme_override_colors/font_color = Color(0.9843137, 0.23137255, 0.007843138, 1)
+theme_override_fonts/font = ExtResource("8_1h3kv")
+theme_override_font_sizes/font_size = 128
+text = "00"
+horizontal_alignment = 1
 script = ExtResource("7_qcvra")
+
+[node name="PlayerPoisonText" type="Label" parent="UILayer/PlayerHealth" unique_id=1569381333]
+layout_mode = 0
+offset_left = 219.99997
+offset_top = 400.00006
+offset_right = 259.99997
+offset_bottom = 465.00006
+theme_override_colors/font_color = Color(0.21960784, 0.6745098, 0, 1)
+theme_override_fonts/font = ExtResource("8_1h3kv")
+theme_override_font_sizes/font_size = 64
+text = "0"
+horizontal_alignment = 1
+script = ExtResource("7_qcvra")
+healthyColor = Color(0.22352941, 0.68235296, 0, 1)
+hurtColor = Color(0.22352941, 0.68235296, 0, 1)
+criticalColor = Color(0.21568628, 0.65882355, 0, 1)
+poisonColor = Color(0.22352941, 0.68235296, 0, 1)
 
 [node name="Background" parent="." unique_id=2110014799 instance=ExtResource("3_65qb0")]
 position = Vector2(-615, -392)
 scale = Vector2(1.01, 1)
+
+[node name="FogParticle3" parent="Background" index="3" unique_id=1507680156]
+process_material = SubResource("ParticleProcessMaterial_240eh")
+
+[node name="FogParticle4" parent="Background" index="4" unique_id=529869307]
+process_material = SubResource("ParticleProcessMaterial_ed1c6")
 
 [editable path="UILayer/PlayerDiceCorner/SubViewportContainer/SubViewport/DiceView"]
 [editable path="UILayer/EnemyDiceCorner/SubViewportContainer/SubViewport/DiceView"]

@@ -14,9 +14,9 @@ public partial class Hands : Enemy
 	protected override AiProfile AiProfile => new AiProfile(DamageWeight: 1f);
 	
 	public override string[] CardScenePaths => new[]
-    {
-        "res://Scenes/Cards/EnemyCards/JustATouch.tscn",
-        "res://Scenes/Cards/EnemyCards/Mesmerize.tscn",
-        "res://Scenes/Cards/EnemyCards/Embrace.tscn",
-    };
+	{
+		"res://Scenes/Cards/EnemyCards/JustATouch.tscn",
+		"res://Scenes/Cards/EnemyCards/Mesmerize.tscn",
+		"res://Scenes/Cards/EnemyCards/Embrace.tscn",
+	};
 }
