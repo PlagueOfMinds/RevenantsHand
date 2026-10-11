@@ -12,6 +12,7 @@ public partial class StruggleCard : Card
         {
             gameManager.Player.TakeDamage(1);
             gameManager.Enemy.TakeDamage(1);
+            SlashFx.Instance.Play();
         }
         int newValue = token.Die.bump(-1);
         

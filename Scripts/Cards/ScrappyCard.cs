@@ -9,6 +9,7 @@ public partial class ScrappyCard : Card
         {
             gameManager.Enemy.TakeDamage(4);
             gameManager.Player.Heal(4);
+            SlashFx.Instance.Play();
         }
         return Task.CompletedTask;
     }

@@ -81,6 +81,10 @@ public partial class GameManager : Node
         BuildPlayerCards();
         BuildEnemyCards();
 
+        //SlashFx.Instance.TargetPosition = enemy.GlobalPosition;
+        //SlashFx.Instance.Layer = 1000;
+        //SlashFx.Instance.Play(position: new Vector2(500, 300), length: 600f, width: 80f);
+
         Turn = 1;
         tokenLayer.ClearTokens();
         UpdateTurnLabel();

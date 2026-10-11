@@ -9,6 +9,7 @@ public partial class RevengeCard : Card
         {
             gameManager.Enemy.TakeDamage(value);
             gameManager.Player.Heal(value);
+            SlashFx.Instance.Play();
         }
         return Task.CompletedTask;
     }

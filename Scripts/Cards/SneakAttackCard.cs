@@ -8,6 +8,7 @@ public partial class SneakAttackCard : Card
         if(value < 4)
         {
             gameManager.Enemy.TakeDamage(5);
+            SlashFx.Instance.Play();
         }
         return Task.CompletedTask;
     }
