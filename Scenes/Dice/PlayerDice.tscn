@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bnw0twbu2gma0"]
 
-[ext_resource type="Script" uid="uid://c5vvvct78ieu1" path="res://Scripts/Dice/Dice.cs" id="1_2mcnk"]
-[ext_resource type="PackedScene" uid="uid://bavf58w7x3v67" path="res://Models/Dice.glb" id="1_mfpug"]
+[ext_resource type="Script" uid="uid://c5vvvct78ieu1" path="res://Scripts/Dice/Dice.cs" id="1_cypxq"]
+[ext_resource type="PackedScene" uid="uid://bavf58w7x3v67" path="res://Models/Dice.glb" id="2_fr7h3"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_dgcv6"]
 size = Vector3(1.0717354, 1.0901871, 1.064331)
@@ -9,14 +9,14 @@ size = Vector3(1.0717354, 1.0901871, 1.064331)
 [node name="PlayerDice" type="RigidBody3D" unique_id=923661277 node_paths=PackedStringArray("diceSides")]
 collision_layer = 2
 collision_mask = 2
-script = ExtResource("1_2mcnk")
+script = ExtResource("1_cypxq")
 diceSides = NodePath("Dice Sides")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1840759485]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.012506485, -0.004047394, 0.0053100586)
 shape = SubResource("BoxShape3D_dgcv6")
 
-[node name="Dice2" parent="." unique_id=160238611 instance=ExtResource("1_mfpug")]
+[node name="Dice2" parent="." unique_id=160238611 instance=ExtResource("2_fr7h3")]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
 
 [node name="Dice Sides" type="Node3D" parent="." unique_id=1266672986]

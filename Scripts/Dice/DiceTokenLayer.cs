@@ -5,7 +5,7 @@ public partial class DiceTokenLayer : Control
 {
     [Export] private float tokenWorldSize = 1.5f; // world units around each die; keep larger than the die
 
-    private readonly List<DiceToken> tokens = new();
+    private List<DiceToken> tokens = new();
     public IReadOnlyList<DiceToken> Tokens => tokens;
 
     public override void _Ready()

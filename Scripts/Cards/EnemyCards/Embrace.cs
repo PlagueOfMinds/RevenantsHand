@@ -1,14 +1,18 @@
 using Godot;
 using System.Threading.Tasks;
 
+// Embrace: Use only with [3]: Deal 3 Poison.
 public partial class Embrace : Card
 {
-	// What the AI reads: the card's type...
-	public override CardEffect Effect => CardEffect.Poison;
-	
-	public override Task Resolve(Combatant user, Combatant opponent, int value)
-	{
-		gameManager.Player.poisonCount += 3;
-		return Task.CompletedTask;
-	}
+    public override CardEffect Effect => CardEffect.Poison;
+    public override bool AcceptsValue(int dieValue) => dieValue == 3;
+    public override int GetAmount(int dieValue) => 3;
+
+    public override Task Resolve(Combatant user, Combatant opponent, int value)
+    {
+        if (AcceptsValue(value))
+            opponent.AddPoison(GetAmount(value));
+
+        return Task.CompletedTask;
+    }
 }

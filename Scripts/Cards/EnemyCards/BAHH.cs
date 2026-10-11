@@ -6,6 +6,7 @@ public partial class BAHH : Card
 {
 	// What the AI reads: the card's type...
 	public override CardEffect Effect => CardEffect.Damage;
+	public override bool AcceptsValue(int dieValue) => dieValue % 2 == 1;
 
 	// amount it is for a die X (BAHH!: Deal [X-2])
 	public override int GetAmount(int dieValue) => Math.Max(0, dieValue - 2);

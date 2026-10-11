@@ -157,7 +157,7 @@ public partial class GameManager : Node
         {
             List<Card> enemyCards = GetCards(enemyCardRow);
             GD.Print($"[AI] {Enemy.DisplayName} dice: [{string.Join(", ", Enemy.Dice)}] " +
-                    $"cards: [{string.Join(", ", enemyCards.Select(c => c.CardName))}]");
+            $"cards: [{string.Join(", ", enemyCards.Select(c => $"{c.CardName} ({c.GetType().Name})"))}]");
 
             List<QueuedAction> enemyActions = Enemy.ChooseMoves(enemyCards, Player);
             GD.Print($"[AI] chose: [{string.Join(", ", enemyActions.Select(a => $"{a.Card.CardName} with {a.Value}"))}]");
