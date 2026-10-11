@@ -10,6 +10,9 @@ public partial class RewardsEncounter : Node2D
     [Export] private string swapText = "Swap";
     [Export] private Vector2 swapButtonSize = new Vector2(64, 44);
     [Export] private int pairSeparation = 8;      // gap between the cards and the button inside a pair
+	[Export] private Font swapFont;                                // leave empty to use the default below
+	[Export] private Color swapFontColor = new Color("#FB3B02");
+	[Export] private int swapFontSize = 0;      
 
     private const string DefaultPrompt = "The Revenant offers a trade. Swap one card, or keep your hand.";
 
@@ -18,6 +21,8 @@ public partial class RewardsEncounter : Node2D
 
     public override void _Ready()
     {
+		swapFont ??= GD.Load<Font>("res://Font/Imprint MT Std Shadow.otf"); // Load font for later
+
         if (!Run.IsActive) Run.StartNewRun(); // lets you test this scene on its own (F6)
 
         // Remove any placeholders used for laying out the scene in the editor
@@ -38,45 +43,46 @@ public partial class RewardsEncounter : Node2D
     }
 
     // [offered card] [swap] [your card], side by side
-    private Control BuildPair(int deckIndex, string offerPath)
-    {
-        var pair = new HBoxContainer { Alignment = BoxContainer.AlignmentMode.Center };
-        pair.AddThemeConstantOverride("separation", pairSeparation);
+    // [your card] [swap] [offered card], side by side
+	private Control BuildPair(int deckIndex, string offerPath)
+	{
+		var pair = new HBoxContainer { Alignment = BoxContainer.AlignmentMode.Center };
+		pair.AddThemeConstantOverride("separation", pairSeparation);
 
-        Card yourCard = LoadCard(Run.Deck[deckIndex]);
+		Card yourCard = LoadCard(Run.Deck[deckIndex]);
 
-        if (offerPath == null)
-        {
-            // Nothing offered for this slot: invisible placeholders keep the spacing even
-            pair.AddChild(new Control { CustomMinimumSize = yourCard.CustomMinimumSize });
-            pair.AddChild(CreateButton(visible: false));
-            pair.AddChild(yourCard);
-            return pair;
-        }
+		if (offerPath == null)
+		{
+			// Nothing offered for this slot: invisible placeholders keep the spacing even
+			pair.AddChild(yourCard);
+			pair.AddChild(CreateButton(visible: false));
+			pair.AddChild(new Control { CustomMinimumSize = yourCard.CustomMinimumSize });
+			return pair;
+		}
 
-        Card offeredCard = LoadCard(offerPath);
-        Button swap = CreateButton(visible: true);
+		Card offeredCard = LoadCard(offerPath);
+		Button swap = CreateButton(visible: true);
 
-        swap.Pressed += () => OnSwapPressed(deckIndex, offerPath);
-        swap.MouseEntered += () =>
-        {
-            offeredCard.SetHover(true);
-            yourCard.SetHover(true);
-            SetPrompt($"Replace {yourCard.CardName} with {offeredCard.CardName}?");
-        };
-        swap.MouseExited += () =>
-        {
-            offeredCard.SetHover(false);
-            yourCard.SetHover(false);
-            SetPrompt(DefaultPrompt);
-        };
-        swapButtons.Add(swap);
+		swap.Pressed += () => OnSwapPressed(deckIndex, offerPath);
+		swap.MouseEntered += () =>
+		{
+			offeredCard.SetHover(true);
+			yourCard.SetHover(true);
+			SetPrompt($"Replace {yourCard.CardName} with {offeredCard.CardName}?");
+		};
+		swap.MouseExited += () =>
+		{
+			offeredCard.SetHover(false);
+			yourCard.SetHover(false);
+			SetPrompt(DefaultPrompt);
+		};
+		swapButtons.Add(swap);
 
-        pair.AddChild(offeredCard);
-        pair.AddChild(swap);
-        pair.AddChild(yourCard);
-        return pair;
-    }
+		pair.AddChild(yourCard);
+		pair.AddChild(swap);
+		pair.AddChild(offeredCard);
+		return pair;
+	}
 
     private Card LoadCard(string path)
     {
@@ -88,21 +94,32 @@ public partial class RewardsEncounter : Node2D
     }
 
     private Button CreateButton(bool visible)
-    {
-        Button button = swapButtonScene != null
-            ? swapButtonScene.Instantiate<Button>()
-            : new Button { Text = swapText };
+	{
+		Button button = swapButtonScene != null
+			? swapButtonScene.Instantiate<Button>()
+			: new Button { Text = swapText };
 
-        button.CustomMinimumSize = swapButtonSize;
-        button.SizeFlagsVertical = Control.SizeFlags.ShrinkCenter; // centered beside the cards
+		button.CustomMinimumSize = swapButtonSize;
+		button.SizeFlagsVertical = Control.SizeFlags.ShrinkCenter; // centered beside the cards
 
-        if (!visible)
-        {
-            button.Disabled = true;
-            button.Modulate = new Color(1f, 1f, 1f, 0f);
-        }
-        return button;
-    }
+		// Font and color, kept the same when hovered, pressed or focused
+		if (swapFont != null) button.AddThemeFontOverride("font", swapFont);
+		if (swapFontSize > 0) button.AddThemeFontSizeOverride("font_size", swapFontSize);
+
+		button.AddThemeColorOverride("font_color", swapFontColor);
+		button.AddThemeColorOverride("font_hover_color", swapFontColor);
+		button.AddThemeColorOverride("font_pressed_color", swapFontColor);
+		button.AddThemeColorOverride("font_focus_color", swapFontColor);
+		button.AddThemeColorOverride("font_hover_pressed_color", swapFontColor);
+		button.AddThemeColorOverride("font_disabled_color", swapFontColor with { A = 0.4f }); // dimmed after a swap
+
+		if (!visible)
+		{
+			button.Disabled = true;
+			button.Modulate = new Color(1f, 1f, 1f, 0f);
+		}
+		return button;
+	}
 
     private void OnSwapPressed(int deckIndex, string offerPath)
     {

@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://0ugumpri77vx"]
+
+[ext_resource type="Script" uid="uid://otr7yrnc5ehh" path="res://Scripts/EventSystems/StartMenu.cs" id="1_kco5m"]
+
+[node name="StartMenu" type="Control" unique_id=436922654 node_paths=PackedStringArray("startButton")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_kco5m")
+startButton = NodePath("StartButton")
+
+[node name="Background" type="TextureRect" parent="." unique_id=722592994]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="Label" parent="." unique_id=1263753772]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="StartButton" type="Button" parent="." unique_id=243456056]
+layout_mode = 0
+offset_left = 462.00003
+offset_top = 364.0
+offset_right = 470.00003
+offset_bottom = 372.0
+scale = Vector2(34.793, 12.481755)
