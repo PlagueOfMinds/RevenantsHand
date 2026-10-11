@@ -297,4 +297,14 @@ public partial class GameManager : Node
 	{
 		return tokenLayer;
 	}
+
+    public override void _UnhandledInput(InputEvent @event)
+    {
+        if (@event.IsActionPressed("ui_cancel")) GetTree().Quit();
+        if (@event is InputEventKey { Pressed: true, Keycode: Key.Enter } && CurrentPhase is Phase.Roll or Phase.Place)
+        {
+            Enemy.SetHealth(0);
+            EndGame();
+        }
+    }
 }

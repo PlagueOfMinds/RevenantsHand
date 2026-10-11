@@ -78,6 +78,7 @@ offset_left = -15.0
 offset_top = 456.0
 offset_right = 1199.0
 offset_bottom = 864.0
+scale = Vector2(1.0359633, 1.0168564)
 mouse_filter = 2
 texture = ExtResource("4_oc25q")
 expand_mode = 1

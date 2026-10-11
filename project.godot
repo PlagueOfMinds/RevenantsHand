@@ -29,8 +29,8 @@ Audio="*uid://b2lr2bryk5f7p"
 
 window/size/viewport_width=1200
 window/size/viewport_height=800
+window/size/mode=3
 window/stretch/mode="canvas_items"
-window/stretch/aspect="expand"
 window/gi/use_half_resolution=false
 
 [dotnet]
