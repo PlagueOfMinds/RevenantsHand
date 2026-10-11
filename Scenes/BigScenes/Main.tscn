@@ -6,6 +6,21 @@
 [ext_resource type="PackedScene" uid="uid://b1qvdpbfyhm46" path="res://Scenes/Background.tscn" id="3_65qb0"]
 [ext_resource type="Script" uid="uid://cg0fph5qdu50j" path="res://Scripts/Dice/DiceTokenLayer.cs" id="4_52gy2"]
 [ext_resource type="Texture2D" uid="uid://cvby2cxerjisp" path="res://Tabur/Sprites/BrownBoard.png" id="4_c7w63"]
+[ext_resource type="Shader" uid="uid://b65s5eivjdd25" path="res://Tabur/Misc/bloom_vignette.gdshader" id="7_8vdos"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_52gy2"]
+shader = ExtResource("7_8vdos")
+shader_parameter/bloom_threshold = 0.10000000475
+shader_parameter/bloom_soft_knee = 0.5
+shader_parameter/bloom_intensity = 1.0000000475
+shader_parameter/bloom_radius = 1.0
+shader_parameter/bloom_lod = 0.0
+shader_parameter/bloom_tint = Color(1, 1, 1, 1)
+shader_parameter/vignette_intensity = 0.800000038
+shader_parameter/vignette_radius = 0.866000041135
+shader_parameter/vignette_softness = 0.7790000363039801
+shader_parameter/vignette_roundness = 1.0
+shader_parameter/vignette_color = Color(0, 0, 0, 1)
 
 [node name="Combat" type="Node2D" unique_id=328123032]
 
@@ -28,6 +43,15 @@ enemyHealthLabel = NodePath("../UILayer/NonDiceUI/EnemyHealthLabel")
 
 [node name="UILayer" type="CanvasLayer" parent="." unique_id=1568385355]
 layer = 2
+
+[node name="BloomAndVignette" type="ColorRect" parent="UILayer" unique_id=1304742920]
+z_index = 500
+material = SubResource("ShaderMaterial_52gy2")
+offset_left = -643.0
+offset_top = -418.0
+offset_right = 1838.0
+offset_bottom = 1226.0
+mouse_filter = 2
 
 [node name="NonDiceUI" type="Node" parent="UILayer" unique_id=705194871]
 
@@ -184,3 +208,4 @@ scale = Vector2(1.01, 1)
 
 [editable path="UILayer/PlayerDiceCorner/SubViewportContainer/SubViewport/DiceView"]
 [editable path="UILayer/EnemyDiceCorner/SubViewportContainer/SubViewport/DiceView"]
+[editable path="Background"]
