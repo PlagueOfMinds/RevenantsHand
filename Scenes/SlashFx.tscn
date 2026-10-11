@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://ca4r7yk38io03"]
+
+[ext_resource type="Script" uid="uid://cgaa3mje2yiew" path="res://Scripts/Polish/SlashFx.cs" id="1_ji500"]
+
+[node name="SlashFx" type="CanvasLayer" unique_id=962256120]
+layer = 400
+script = ExtResource("1_ji500")

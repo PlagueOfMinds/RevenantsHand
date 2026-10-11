@@ -7,6 +7,7 @@ public partial class CostlyBlowCard : Card
     {
         gameManager.Enemy.TakeDamage(2*value);
         gameManager.Player.TakeDamage(value);
+        SlashFx.Instance.Play();
         return Task.CompletedTask;
     }
 }

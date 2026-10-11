@@ -9,6 +9,7 @@ public partial class ThrashCard : Card
         if (!CanAccept(token) || disabled) return;
 
         gameManager.Enemy.TakeDamage(token.Value);
+        SlashFx.Instance.Play();
 
 
         var controller = gameManager.getPlayerDice();

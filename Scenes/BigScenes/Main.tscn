@@ -31,7 +31,7 @@ shader_parameter/vignette_color = Color(0, 0, 0, 1)
 position = Vector2(604, 401)
 zoom = Vector2(0.5, 0.5)
 
-[node name="GameManager" type="Node" parent="." unique_id=1802966013 node_paths=PackedStringArray("playerDice", "enemyDice", "tokenLayer", "playerCardRow", "enemyCardRow", "rollButton", "lockInButton", "turnLabel", "playerHealthLabel", "enemyHealthLabel", "playerHealthText", "enemyHealthText")]
+[node name="GameManager" type="Node" parent="." unique_id=1802966013 node_paths=PackedStringArray("playerDice", "enemyDice", "tokenLayer", "playerCardRow", "enemyCardRow", "rollButton", "lockInButton", "turnLabel", "playerHealthLabel", "enemyHealthLabel")]
 script = ExtResource("1_c7w63")
 playerDice = NodePath("../UILayer/PlayerDiceCorner/SubViewportContainer/SubViewport/DiceView/DiceController")
 enemyDice = NodePath("../UILayer/EnemyDiceCorner/SubViewportContainer/SubViewport/DiceView/DiceController")
@@ -43,8 +43,6 @@ lockInButton = NodePath("../UILayer/NonDiceUI/LockInTurnButton")
 turnLabel = NodePath("../UILayer/NonDiceUI/TurnLabel")
 playerHealthLabel = NodePath("../UILayer/NonDiceUI/PlayerHealthLabel")
 enemyHealthLabel = NodePath("../UILayer/NonDiceUI/EnemyHealthLabel")
-playerHealthText = NodePath("../UILayer/PlayerHealthText")
-enemyHealthText = NodePath("../UILayer/EnemyHealthText")
 
 [node name="UILayer" type="CanvasLayer" parent="." unique_id=1568385355]
 layer = 2

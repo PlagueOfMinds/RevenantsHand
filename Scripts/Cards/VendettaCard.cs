@@ -14,6 +14,7 @@ public partial class VendettaCard : Card
         {
             // On odd, attack
             gameManager.Enemy.TakeDamage(value);
+            SlashFx.Instance.Play();
         }
         return Task.CompletedTask;
     }
