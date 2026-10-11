@@ -48,6 +48,7 @@ public partial class GameManager : Node
         Player.SetHealth(Run.PlayerHealth);
         AddChild(Player);
         Player.Changed += OnCombatantChanged;
+        Player.IsPlayer = true;
 
         rollButton.Pressed += OnRollPressed;
         lockInButton.Pressed += OnLockInPressed;

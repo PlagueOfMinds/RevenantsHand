@@ -22,6 +22,8 @@ public partial class Combatant : Node2D
     public int damageTakenSinceLastTurn;
     public int damageTakenSinceLastTurnT;
 
+    public bool IsPlayer { get; set; } = false;
+
 
     // This turn's dice, plus a record of every turn's dice
     public int[] Dice { get; private set; } = Array.Empty<int>();
@@ -54,6 +56,8 @@ public partial class Combatant : Node2D
         int lost = Math.Min(amount, Health);
 
         ScreenShake.Shake(this, strength: Mathf.Min(amount * 1.5f, 30f));
+        if (IsPlayer && amount >= ScreenFlash.DamageThreshold)              // <-- new
+            ScreenFlash.Flash(this, ScreenFlash.DamageColor);
 
         Changed?.Invoke(this);
         if (IsDead) Died?.Invoke(this);
@@ -65,6 +69,8 @@ public partial class Combatant : Node2D
         if (amount <= 0 || IsDead) return;
         Health = Math.Min(MaxHealth, Health + amount);
         Changed?.Invoke(this);
+
+        if (IsPlayer) ScreenFlash.Flash(this, ScreenFlash.HealColor);
     }
 
     public void AddPoison(int amount)
