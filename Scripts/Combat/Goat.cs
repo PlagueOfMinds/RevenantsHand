@@ -12,6 +12,9 @@ public partial class Goat : Enemy
 	protected override Vector2 SpritePosition => new Vector2(960, 320);
 
 	protected override AiProfile AiProfile => new AiProfile(DamageWeight: 1f);
+
+	// Goat.cs
+	protected override string YellSoundPath => "res://AudioFX/CreatureYell/GoatScream.mp3";
 	
 	public override string[] CardScenePaths => new[]
 	{
