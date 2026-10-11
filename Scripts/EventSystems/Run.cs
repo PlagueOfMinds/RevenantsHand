@@ -34,6 +34,8 @@ public static class Run
     // Fights in order; the run is won after the last one
     private static readonly Func<Enemy>[] Encounters =
     {
+        () => new Goat(),
+        () => new Hands(),
         () => new Revenant(),
         // () => new SomeOtherEnemy(),
     };

@@ -3,6 +3,9 @@ using Godot;
 public partial class Dice : RigidBody3D
 {
     [Export] private Node3D diceSides;
+    [Export] private AudioStream[] hitSounds;   // a few clack variations
+    [Export] private float minHitSpeed = 0.5f;
+    private ulong lastHitMs;
 
     private Node3D[] sides = new Node3D[6];
 
@@ -15,6 +18,9 @@ public partial class Dice : RigidBody3D
             if (!IsAncestorOf(sides[i]))
                 GD.PushError($"Dice: side{i + 1} is not inside this die, so it won't move with it.");
         }
+        ContactMonitor = true;
+        MaxContactsReported = 4;
+        BodyEntered += OnBodyEntered;
     }
 
     public int getRoll()
@@ -34,6 +40,19 @@ public partial class Dice : RigidBody3D
         return result;
     }
 
+    private void OnBodyEntered(Node body)
+    {
+        float speed = LinearVelocity.Length();
+        if (speed < minHitSpeed || hitSounds == null || hitSounds.Length == 0) return;
+
+        ulong now = Time.GetTicksMsec();
+        if (now - lastHitMs < 60) return; // stops rapid machine-gun clicking while settling
+        lastHitMs = now;
+
+        AudioStream sound = hitSounds[GD.RandRange(0, hitSounds.Length - 1)];
+        float volume = Mathf.LinearToDb(Mathf.Clamp(speed / 6f, 0.15f, 1f)); // harder hit = louder
+        Audio.Instance.PlaySfx(sound, volume);
+    }
     // Transform that turns the given side straight up and rests the die flat on floorY
     public Transform3D GetUprightTransform(int side, float? floorY)
     {

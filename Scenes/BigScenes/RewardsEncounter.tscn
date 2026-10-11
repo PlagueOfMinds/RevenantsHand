@@ -49,9 +49,9 @@ layout_mode = 2
 [node name="CardTable" type="TextureRect" parent="UILayer" unique_id=892101798]
 z_index = -10
 offset_left = -15.0
-offset_top = 377.0
+offset_top = 381.0
 offset_right = 1199.0
-offset_bottom = 799.0
+offset_bottom = 803.0
 mouse_filter = 2
 texture = ExtResource("6_2ssg0")
 expand_mode = 1

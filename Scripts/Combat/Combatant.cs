@@ -16,11 +16,12 @@ public partial class Combatant : Node2D
     }
 
     public int Health { get; private set; } = 30;
-    public int Block { get; private set; }
+    public int Poison { get; private set; }
     public bool IsDead => Health <= 0;
     public int poisonCount = 0;
     public int damageTakenSinceLastTurn;
     public int damageTakenSinceLastTurnT;
+
 
     // This turn's dice, plus a record of every turn's dice
     public int[] Dice { get; private set; } = Array.Empty<int>();
@@ -30,6 +31,12 @@ public partial class Combatant : Node2D
     public event Action<Combatant> Changed;
     public event Action<Combatant> Died;
 
+    public void SetHealth(int value)
+    {
+        Health = Math.Clamp(value, 0, MaxHealth);
+        Changed?.Invoke(this);
+    }
+
     public void SetDice(int[] dice)
     {
         Dice = (int[])dice.Clone();
@@ -37,20 +44,18 @@ public partial class Combatant : Node2D
         Changed?.Invoke(this);
     }
 
-    // Block absorbs damage first; returns the damage that got through
+    // Lose HP from any source (cards, poison). Returns the HP actually lost.
     public int TakeDamage(int amount)
     {
         if (amount <= 0 || IsDead) return 0;
-
-        int blocked = Math.Min(Block, amount);
-        Block -= blocked;
-        int dealt = amount - blocked;
+        int dealt = amount;
         Health = Math.Max(0, Health - dealt);
         damageTakenSinceLastTurnT += amount;
-
+        int lost = Math.Min(amount, Health);
+        Health -= lost;
         Changed?.Invoke(this);
         if (IsDead) Died?.Invoke(this);
-        return dealt;
+        return lost;
     }
 
     public void Heal(int amount)
@@ -60,17 +65,30 @@ public partial class Combatant : Node2D
         Changed?.Invoke(this);
     }
 
-    public void AddBlock(int amount)
+    public void AddPoison(int amount)
     {
-        if (amount <= 0) return;
-        Block += amount;
+        if (amount <= 0 || IsDead) return;
+        Poison += amount;
         Changed?.Invoke(this);
     }
 
-    // New turn: block wears off, dice clear until the next roll
+    // End of this combatant's turn: lose HP equal to poison, then poison drops by 1.
+    // Returns the damage dealt.
+    public int TickPoison()
+    {
+        if (Poison <= 0 || IsDead) return 0;
+
+        int damage = Poison;
+        Poison--;
+        return TakeDamage(damage);
+    }
+
+    // Called by GameManager when this combatant's turn is fully over
+    public void EndOwnTurn() => damageTakenSinceLastTurn = 0;
+
+    // New turn: dice clear until the next roll
     public virtual void StartTurn()
     {
-        Block = 0;
         Dice = Array.Empty<int>();
         Changed?.Invoke(this);
         TakeDamage(poisonCount);
@@ -81,11 +99,6 @@ public partial class Combatant : Node2D
         damageTakenSinceLastTurn = damageTakenSinceLastTurnT;
         damageTakenSinceLastTurnT = 0;
         
-    }
-    public void SetHealth(int value)
-    {
-        Health = Math.Clamp(value, 0, MaxHealth);
-        Changed?.Invoke(this);
     }
 }
 
