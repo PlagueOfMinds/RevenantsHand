@@ -5,14 +5,23 @@ public partial class Audio : Node
 {
     public static Audio Instance { get; private set; }
 
-    // The track that plays for the whole game (right-click the file in FileSystem → Copy Path)
+    // ---- Background music (plays for the whole game) ----
     private const string BackgroundMusicPath = "res://AudioFX/Music/one.mp3";
     private const float MusicVolumeDb = -6f;
+
+    // ---- Button hover sound (added to every button automatically) ----
+    private const string UIHoverSoundPath = "res://AudioFX/UIElements/basicUISound.mp3";
+    private const string NoSoundGroup = "no_ui_sound"; // add a button to this group to keep it silent
+    private const ulong UIHoverCooldownMs = 80;        // stops a fast swipe across buttons from stacking sounds
+    private const float UIHoverVolumeDb = -4f;
+
     private const int SfxVoices = 12;
 
     private readonly List<AudioStreamPlayer> sfxPool = new();
     private readonly RandomNumberGenerator rng = new();
     private AudioStreamPlayer music;
+    private AudioStream uiHoverSound;
+    private ulong lastUIHoverMs;
 
     public override void _Ready()
     {
@@ -20,7 +29,6 @@ public partial class Audio : Node
         ProcessMode = ProcessModeEnum.Always; // keeps playing if the game is ever paused
         rng.Randomize();
 
-        // Sound effect players, reused for overlapping one-shot sounds
         for (int i = 0; i < SfxVoices; i++)
         {
             var player = new AudioStreamPlayer { Bus = "SFX" };
@@ -29,6 +37,14 @@ public partial class Audio : Node
         }
 
         StartBackgroundMusic();
+
+        // Hook up every button that enters the game from now on, in any scene
+        if (ResourceLoader.Exists(UIHoverSoundPath))
+            uiHoverSound = GD.Load<AudioStream>(UIHoverSoundPath);
+        else
+            GD.PushWarning($"Audio: UI hover sound not found at {UIHoverSoundPath}");
+
+        GetTree().NodeAdded += OnNodeAdded;
     }
 
     private void StartBackgroundMusic()
@@ -49,8 +65,32 @@ public partial class Audio : Node
         music.Play();
     }
 
+    // Every node added to the game passes through here; buttons get the hover sound
+    private void OnNodeAdded(Node node)
+    {
+        if (node is not BaseButton button) return;
+        if (button.IsInGroup(NoSoundGroup) || button.HasMeta("ui_hover_sound")) return;
+
+        button.SetMeta("ui_hover_sound", true); // never hook the same button twice
+        button.MouseEntered += () =>
+        {
+            if (!button.Disabled) PlayUIHover();
+        };
+    }
+
+    // The shared UI hover sound; other scripts can call this too
+    public void PlayUIHover()
+    {
+        ulong now = Time.GetTicksMsec();
+        if (now - lastUIHoverMs < UIHoverCooldownMs) return;
+        lastUIHoverMs = now;
+
+        PlaySfx(uiHoverSound, volumeDb: UIHoverVolumeDb, pitchVariance: 0.05f, bus: "UI");
+    }
+
     // One-shot sound with a slight random pitch so repeated sounds don't feel robotic
-    public void PlaySfx(AudioStream stream, float volumeDb = 0f, float pitchVariance = 0.08f, string bus = "SFX")
+    public void PlaySfx(AudioStream stream, float volumeDb = 0f, float pitchVariance = 0.08f,
+                        string bus = "SFX", float pitch = 1f)
     {
         if (stream == null) return;
 
@@ -58,7 +98,7 @@ public partial class Audio : Node
         player.Stream = stream;
         player.Bus = bus;
         player.VolumeDb = volumeDb;
-        player.PitchScale = 1f + rng.RandfRange(-pitchVariance, pitchVariance);
+        player.PitchScale = pitch * (1f + rng.RandfRange(-pitchVariance, pitchVariance));
         player.Play();
     }
 }

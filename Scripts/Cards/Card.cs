@@ -12,6 +12,15 @@ public partial class Card : Control
 {
     public const string GroupName = "dice_card";
 
+    private const string HoverSoundPath = "res://AudioFX/UIElements/basicUISound.mp3";
+    private static AudioStream hoverSound; // loaded once, shared by every card
+
+    private bool mouseOver;
+    private bool hoverReady; // skips the very first frame
+
+    private const ulong HoverCooldownMs = 150; // minimum time between hover sounds, shared by all cards
+    private static ulong lastHoverSoundMs;
+
     [Export] public string CardName { get; set; } = "Card";
     [Export] public bool IsPlayerCard { get; set; } = true; // uncheck for enemy cards
     [Export] private Control dieSlot;
@@ -109,6 +118,22 @@ public partial class Card : Control
             }
         }
 
+        bool over = IsVisibleInTree() && GetGlobalRect().HasPoint(GetGlobalMousePosition());
+
+        // Play only on the frame the mouse moves onto the card, and not if any card played it moments ago
+        if (over && !mouseOver && hoverReady)
+        {
+            ulong now = Time.GetTicksMsec();
+            if (now - lastHoverSoundMs >= HoverCooldownMs)
+            {
+                lastHoverSoundMs = now;
+                hoverSound ??= GD.Load<AudioStream>(HoverSoundPath);
+                Audio.Instance?.PlaySfx(hoverSound, volumeDb: -4f, pitchVariance: 0.30f);
+            }
+        }
+
+        mouseOver = over;
+        hoverReady = true;
     }
 
     // Player cards take dice that meet their value condition
@@ -169,6 +194,5 @@ public partial class Card : Control
         foreach (Node child in parent.GetChildren())
             SetMouseFilterRecursive(child, filter);
     }
-
 
 }
