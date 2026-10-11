@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://c2sdlimfp20th"]
 
 [ext_resource type="PackedScene" uid="uid://cwuac8qcnqbfv" path="res://Scenes/EnemiesAnim/Revenant.tscn" id="1_5qrl0"]
-[ext_resource type="PackedScene" uid="uid://bmyv0eseprxua" path="res://Scenes/Cards/Card.tscn" id="5_gscot"]
 [ext_resource type="Texture2D" uid="uid://cvby2cxerjisp" path="res://Tabur/Sprites/BrownBoard.png" id="6_2ssg0"]
 
 [node name="RewardsEncounter" type="Node2D" unique_id=833023829]
@@ -22,29 +21,11 @@ offset_top = 379.0
 offset_right = 1123.0
 offset_bottom = 800.0
 
-[node name="Card" parent="UILayer/NewCardsRow" unique_id=1434031668 instance=ExtResource("5_gscot")]
-layout_mode = 2
-
-[node name="Card2" parent="UILayer/NewCardsRow" unique_id=1668024978 instance=ExtResource("5_gscot")]
-layout_mode = 2
-
-[node name="Card3" parent="UILayer/NewCardsRow" unique_id=308286965 instance=ExtResource("5_gscot")]
-layout_mode = 2
-
 [node name="PlayerCardRow" type="HBoxContainer" parent="UILayer" unique_id=1258041697]
 offset_left = 95.0
 offset_top = 379.0
 offset_right = 1297.0
 offset_bottom = 800.0
-
-[node name="Card" parent="UILayer/PlayerCardRow" unique_id=1887072141 instance=ExtResource("5_gscot")]
-layout_mode = 2
-
-[node name="Card2" parent="UILayer/PlayerCardRow" unique_id=877493845 instance=ExtResource("5_gscot")]
-layout_mode = 2
-
-[node name="Card3" parent="UILayer/PlayerCardRow" unique_id=533794586 instance=ExtResource("5_gscot")]
-layout_mode = 2
 
 [node name="CardTable" type="TextureRect" parent="UILayer" unique_id=892101798]
 z_index = -10
