@@ -3,6 +3,46 @@
   "WorkspaceRootPath": "C:\\Users\\Gabriel Salmon\\Documents\\revenant\u0027s-hand\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{613AE210-23A9-4B20-9F48-C5D876B5A0DF}|Revenant-s Hand.csproj|c:\\users\\gabriel salmon\\documents\\revenant\u0027s-hand\\scripts\\cards\\card.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{613AE210-23A9-4B20-9F48-C5D876B5A0DF}|Revenant-s Hand.csproj|solutionrelative:scripts\\cards\\card.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{613AE210-23A9-4B20-9F48-C5D876B5A0DF}|Revenant-s Hand.csproj|c:\\users\\gabriel salmon\\documents\\revenant\u0027s-hand\\scripts\\cards\\enemycards\\mesmerize.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{613AE210-23A9-4B20-9F48-C5D876B5A0DF}|Revenant-s Hand.csproj|solutionrelative:scripts\\cards\\enemycards\\mesmerize.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{613AE210-23A9-4B20-9F48-C5D876B5A0DF}|Revenant-s Hand.csproj|c:\\users\\gabriel salmon\\documents\\revenant\u0027s-hand\\scripts\\cards\\enemycards\\embrace.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{613AE210-23A9-4B20-9F48-C5D876B5A0DF}|Revenant-s Hand.csproj|solutionrelative:scripts\\cards\\enemycards\\embrace.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{613AE210-23A9-4B20-9F48-C5D876B5A0DF}|Revenant-s Hand.csproj|c:\\users\\gabriel salmon\\documents\\revenant\u0027s-hand\\scripts\\cards\\lifestakescard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{613AE210-23A9-4B20-9F48-C5D876B5A0DF}|Revenant-s Hand.csproj|solutionrelative:scripts\\cards\\lifestakescard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{613AE210-23A9-4B20-9F48-C5D876B5A0DF}|Revenant-s Hand.csproj|c:\\users\\gabriel salmon\\documents\\revenant\u0027s-hand\\scripts\\cards\\enemycards\\justatouch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{613AE210-23A9-4B20-9F48-C5D876B5A0DF}|Revenant-s Hand.csproj|solutionrelative:scripts\\cards\\enemycards\\justatouch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{613AE210-23A9-4B20-9F48-C5D876B5A0DF}|Revenant-s Hand.csproj|c:\\users\\gabriel salmon\\documents\\revenant\u0027s-hand\\scripts\\combat\\combatant.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{613AE210-23A9-4B20-9F48-C5D876B5A0DF}|Revenant-s Hand.csproj|solutionrelative:scripts\\combat\\combatant.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{613AE210-23A9-4B20-9F48-C5D876B5A0DF}|Revenant-s Hand.csproj|c:\\users\\gabriel salmon\\documents\\revenant\u0027s-hand\\scripts\\eventsystems\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{613AE210-23A9-4B20-9F48-C5D876B5A0DF}|Revenant-s Hand.csproj|solutionrelative:scripts\\eventsystems\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{613AE210-23A9-4B20-9F48-C5D876B5A0DF}|Revenant-s Hand.csproj|c:\\users\\gabriel salmon\\documents\\revenant\u0027s-hand\\scripts\\uielements\\statlabel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{613AE210-23A9-4B20-9F48-C5D876B5A0DF}|Revenant-s Hand.csproj|solutionrelative:scripts\\uielements\\statlabel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{613AE210-23A9-4B20-9F48-C5D876B5A0DF}|Revenant-s Hand.csproj|c:\\users\\gabriel salmon\\documents\\revenant\u0027s-hand\\scripts\\combat\\hands.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{613AE210-23A9-4B20-9F48-C5D876B5A0DF}|Revenant-s Hand.csproj|solutionrelative:scripts\\combat\\hands.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{613AE210-23A9-4B20-9F48-C5D876B5A0DF}|Revenant-s Hand.csproj|c:\\users\\gabriel salmon\\documents\\revenant\u0027s-hand\\scripts\\combat\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{613AE210-23A9-4B20-9F48-C5D876B5A0DF}|Revenant-s Hand.csproj|solutionrelative:scripts\\combat\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{613AE210-23A9-4B20-9F48-C5D876B5A0DF}|Revenant-s Hand.csproj|c:\\users\\gabriel salmon\\documents\\revenant\u0027s-hand\\scripts\\polish\\slashfx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{613AE210-23A9-4B20-9F48-C5D876B5A0DF}|Revenant-s Hand.csproj|solutionrelative:scripts\\polish\\slashfx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -13,22 +53,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{613AE210-23A9-4B20-9F48-C5D876B5A0DF}|Revenant-s Hand.csproj|c:\\users\\gabriel salmon\\documents\\revenant\u0027s-hand\\scripts\\cards\\attackcard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{613AE210-23A9-4B20-9F48-C5D876B5A0DF}|Revenant-s Hand.csproj|solutionrelative:scripts\\cards\\attackcard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{613AE210-23A9-4B20-9F48-C5D876B5A0DF}|Revenant-s Hand.csproj|c:\\users\\gabriel salmon\\documents\\revenant\u0027s-hand\\scripts\\eventsystems\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{613AE210-23A9-4B20-9F48-C5D876B5A0DF}|Revenant-s Hand.csproj|solutionrelative:scripts\\eventsystems\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{613AE210-23A9-4B20-9F48-C5D876B5A0DF}|Revenant-s Hand.csproj|c:\\users\\gabriel salmon\\documents\\revenant\u0027s-hand\\scripts\\combat\\combatant.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{613AE210-23A9-4B20-9F48-C5D876B5A0DF}|Revenant-s Hand.csproj|solutionrelative:scripts\\combat\\combatant.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{613AE210-23A9-4B20-9F48-C5D876B5A0DF}|Revenant-s Hand.csproj|c:\\users\\gabriel salmon\\documents\\revenant\u0027s-hand\\scripts\\combat\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{613AE210-23A9-4B20-9F48-C5D876B5A0DF}|Revenant-s Hand.csproj|solutionrelative:scripts\\combat\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{613AE210-23A9-4B20-9F48-C5D876B5A0DF}|Revenant-s Hand.csproj|c:\\users\\gabriel salmon\\documents\\revenant\u0027s-hand\\scripts\\cards\\card.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{613AE210-23A9-4B20-9F48-C5D876B5A0DF}|Revenant-s Hand.csproj|solutionrelative:scripts\\cards\\card.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{613AE210-23A9-4B20-9F48-C5D876B5A0DF}|Revenant-s Hand.csproj|c:\\users\\gabriel salmon\\documents\\revenant\u0027s-hand\\scripts\\cards\\rerollcard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -54,24 +78,101 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 16,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "SlashFx.cs",
-              "DocumentMoniker": "C:\\Users\\Gabriel Salmon\\Documents\\revenant\u0027s-hand\\Scripts\\Polish\\SlashFx.cs",
-              "RelativeDocumentMoniker": "Scripts\\Polish\\SlashFx.cs",
-              "ToolTip": "C:\\Users\\Gabriel Salmon\\Documents\\revenant\u0027s-hand\\Scripts\\Polish\\SlashFx.cs",
-              "RelativeToolTip": "Scripts\\Polish\\SlashFx.cs",
-              "ViewState": "AgIAAA8AAAAAAAAAAAAcwCcAAABPAAAAAAAAAA==",
+              "DocumentIndex": 3,
+              "Title": "LifeStakesCard.cs",
+              "DocumentMoniker": "C:\\Users\\Gabriel Salmon\\Documents\\revenant\u0027s-hand\\Scripts\\Cards\\LifeStakesCard.cs",
+              "RelativeDocumentMoniker": "Scripts\\Cards\\LifeStakesCard.cs",
+              "ToolTip": "C:\\Users\\Gabriel Salmon\\Documents\\revenant\u0027s-hand\\Scripts\\Cards\\LifeStakesCard.cs",
+              "RelativeToolTip": "Scripts\\Cards\\LifeStakesCard.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAoAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-11T04:01:58.396Z",
+              "WhenOpened": "2026-10-11T05:30:27.417Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "Embrace.cs",
+              "DocumentMoniker": "C:\\Users\\Gabriel Salmon\\Documents\\revenant\u0027s-hand\\Scripts\\Cards\\EnemyCards\\Embrace.cs",
+              "RelativeDocumentMoniker": "Scripts\\Cards\\EnemyCards\\Embrace.cs",
+              "ToolTip": "C:\\Users\\Gabriel Salmon\\Documents\\revenant\u0027s-hand\\Scripts\\Cards\\EnemyCards\\Embrace.cs",
+              "RelativeToolTip": "Scripts\\Cards\\EnemyCards\\Embrace.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-11T05:22:46.896Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Mesmerize.cs",
+              "DocumentMoniker": "C:\\Users\\Gabriel Salmon\\Documents\\revenant\u0027s-hand\\Scripts\\Cards\\EnemyCards\\Mesmerize.cs",
+              "RelativeDocumentMoniker": "Scripts\\Cards\\EnemyCards\\Mesmerize.cs",
+              "ToolTip": "C:\\Users\\Gabriel Salmon\\Documents\\revenant\u0027s-hand\\Scripts\\Cards\\EnemyCards\\Mesmerize.cs",
+              "RelativeToolTip": "Scripts\\Cards\\EnemyCards\\Mesmerize.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-11T05:22:34.008Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "JustATouch.cs",
+              "DocumentMoniker": "C:\\Users\\Gabriel Salmon\\Documents\\revenant\u0027s-hand\\Scripts\\Cards\\EnemyCards\\JustATouch.cs",
+              "RelativeDocumentMoniker": "Scripts\\Cards\\EnemyCards\\JustATouch.cs",
+              "ToolTip": "C:\\Users\\Gabriel Salmon\\Documents\\revenant\u0027s-hand\\Scripts\\Cards\\EnemyCards\\JustATouch.cs",
+              "RelativeToolTip": "Scripts\\Cards\\EnemyCards\\JustATouch.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAA5AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-11T05:21:31.012Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "StatLabel.cs",
+              "DocumentMoniker": "C:\\Users\\Gabriel Salmon\\Documents\\revenant\u0027s-hand\\Scripts\\UIElements\\StatLabel.cs",
+              "RelativeDocumentMoniker": "Scripts\\UIElements\\StatLabel.cs",
+              "ToolTip": "C:\\Users\\Gabriel Salmon\\Documents\\revenant\u0027s-hand\\Scripts\\UIElements\\StatLabel.cs",
+              "RelativeToolTip": "Scripts\\UIElements\\StatLabel.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAA1wD0AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-11T05:09:03.169Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Hands.cs",
+              "DocumentMoniker": "C:\\Users\\Gabriel Salmon\\Documents\\revenant\u0027s-hand\\Scripts\\Combat\\Hands.cs",
+              "RelativeDocumentMoniker": "Scripts\\Combat\\Hands.cs",
+              "ToolTip": "C:\\Users\\Gabriel Salmon\\Documents\\revenant\u0027s-hand\\Scripts\\Combat\\Hands.cs",
+              "RelativeToolTip": "Scripts\\Combat\\Hands.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-11T05:02:10.113Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "SlashFx.cs",
+              "DocumentMoniker": "C:\\Users\\Gabriel Salmon\\Documents\\revenant\u0027s-hand\\Scripts\\Polish\\SlashFx.cs",
+              "RelativeDocumentMoniker": "Scripts\\Polish\\SlashFx.cs",
+              "ToolTip": "C:\\Users\\Gabriel Salmon\\Documents\\revenant\u0027s-hand\\Scripts\\Polish\\SlashFx.cs",
+              "RelativeToolTip": "Scripts\\Polish\\SlashFx.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAcwCcAAABPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-11T04:01:58.396Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
               "Title": "AttackCard.cs",
               "DocumentMoniker": "C:\\Users\\Gabriel Salmon\\Documents\\revenant\u0027s-hand\\Scripts\\Cards\\AttackCard.cs",
               "RelativeDocumentMoniker": "Scripts\\Cards\\AttackCard.cs",
@@ -83,19 +184,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "Combatant.cs",
               "DocumentMoniker": "C:\\Users\\Gabriel Salmon\\Documents\\revenant\u0027s-hand\\Scripts\\Combat\\Combatant.cs",
               "RelativeDocumentMoniker": "Scripts\\Combat\\Combatant.cs",
               "ToolTip": "C:\\Users\\Gabriel Salmon\\Documents\\revenant\u0027s-hand\\Scripts\\Combat\\Combatant.cs",
               "RelativeToolTip": "Scripts\\Combat\\Combatant.cs",
-              "ViewState": "AgIAACIAAAAAAAAAAAAIwEgAAABFAAAAAAAAAA==",
+              "ViewState": "AgIAADMAAAAAAAAAAIA1wE4AAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-11T01:49:41.838Z"
+              "WhenOpened": "2026-10-11T01:49:41.838Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 13,
               "Title": "RerollCard.cs",
               "DocumentMoniker": "C:\\Users\\Gabriel Salmon\\Documents\\revenant\u0027s-hand\\Scripts\\Cards\\RerollCard.cs",
               "RelativeDocumentMoniker": "Scripts\\Cards\\RerollCard.cs",
@@ -107,7 +209,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 15,
               "Title": "DiceController.cs",
               "DocumentMoniker": "C:\\Users\\Gabriel Salmon\\Documents\\revenant\u0027s-hand\\Scripts\\Dice\\DiceController.cs",
               "RelativeDocumentMoniker": "Scripts\\Dice\\DiceController.cs",
@@ -119,7 +221,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 11,
               "Title": "ThrashCard.cs",
               "DocumentMoniker": "C:\\Users\\Gabriel Salmon\\Documents\\revenant\u0027s-hand\\Scripts\\Cards\\ThrashCard.cs",
               "RelativeDocumentMoniker": "Scripts\\Cards\\ThrashCard.cs",
@@ -131,7 +233,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 14,
               "Title": "Dice.cs",
               "DocumentMoniker": "C:\\Users\\Gabriel Salmon\\Documents\\revenant\u0027s-hand\\Scripts\\Dice\\Dice.cs",
               "RelativeDocumentMoniker": "Scripts\\Dice\\Dice.cs",
@@ -143,19 +245,19 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 9,
               "Title": "Player.cs",
               "DocumentMoniker": "C:\\Users\\Gabriel Salmon\\Documents\\revenant\u0027s-hand\\Scripts\\Combat\\Player.cs",
               "RelativeDocumentMoniker": "Scripts\\Combat\\Player.cs",
               "ToolTip": "C:\\Users\\Gabriel Salmon\\Documents\\revenant\u0027s-hand\\Scripts\\Combat\\Player.cs",
               "RelativeToolTip": "Scripts\\Combat\\Player.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAA6wAAAAAAiAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-10-10T22:19:48.813Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 16,
               "Title": "Enemy.cs",
               "DocumentMoniker": "C:\\Users\\Gabriel Salmon\\Documents\\revenant\u0027s-hand\\Scripts\\Combat\\Enemy.cs",
               "RelativeDocumentMoniker": "Scripts\\Combat\\Enemy.cs",
@@ -167,27 +269,29 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 6,
               "Title": "GameManager.cs",
               "DocumentMoniker": "C:\\Users\\Gabriel Salmon\\Documents\\revenant\u0027s-hand\\Scripts\\EventSystems\\GameManager.cs",
               "RelativeDocumentMoniker": "Scripts\\EventSystems\\GameManager.cs",
               "ToolTip": "C:\\Users\\Gabriel Salmon\\Documents\\revenant\u0027s-hand\\Scripts\\EventSystems\\GameManager.cs",
               "RelativeToolTip": "Scripts\\EventSystems\\GameManager.cs",
-              "ViewState": "AgIAADQAAAAAAAAAAAAIwFMAAAAKAAAAAAAAAA==",
+              "ViewState": "AgIAAPwAAAAAAAAAAAA3wAUBAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-10T20:04:42.809Z"
+              "WhenOpened": "2026-10-10T20:04:42.809Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 0,
               "Title": "Card.cs",
               "DocumentMoniker": "C:\\Users\\Gabriel Salmon\\Documents\\revenant\u0027s-hand\\Scripts\\Cards\\Card.cs",
               "RelativeDocumentMoniker": "Scripts\\Cards\\Card.cs",
               "ToolTip": "C:\\Users\\Gabriel Salmon\\Documents\\revenant\u0027s-hand\\Scripts\\Cards\\Card.cs",
               "RelativeToolTip": "Scripts\\Cards\\Card.cs",
-              "ViewState": "AgIAAEwAAAAAAAAAAAAkwFUAAAAFAAAAAAAAAA==",
+              "ViewState": "AgIAAEYAAAAAAAAAAAA3wFUAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-10T20:02:00.255Z"
+              "WhenOpened": "2026-10-10T20:02:00.255Z",
+              "EditorCaption": ""
             }
           ]
         }

@@ -8,7 +8,7 @@ public static class Run
 {
     public const string CombatScenePath = "res://Scenes/BigScenes/Main.tscn";
     public const string RewardScenePath = "res://Scenes/BigScenes/RewardsEncounter.tscn";
-    public const string StartMenuScenePath = "res://Scenes/StartMenu.tscn";
+    public const string StartMenuScenePath = "res://Scenes/BigScenes/StartMenu.tscn";
     public const string CardFolder = "res://Scenes/Cards";
 
     // ---- Run setup ----

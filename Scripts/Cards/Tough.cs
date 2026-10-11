@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 
 public partial class Tough : Card
 {
+    
     public override void PlaceDie(DiceToken token)
     {
         if (!CanAccept(token) || disabled) return;
@@ -20,4 +21,5 @@ public partial class Tough : Card
         GD.Print($"This should never happen! A reroll can't resolve!");
         return Task.CompletedTask;
     }
+
 }

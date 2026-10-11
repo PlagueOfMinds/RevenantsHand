@@ -63,6 +63,20 @@ public partial class Card : Control
         SetHover(false);
     }
 
+    public override void _Process(double delta)
+    {
+        if (gameManager != null && turnCount != gameManager.Turn)
+        {
+            turnCount = gameManager.Turn;
+            if (disabled)
+            {
+                flipInputBlocking();
+                disabled = false;
+            }
+        }
+
+    }
+
     // Player cards take dice that meet their value condition
     public bool CanAccept(DiceToken token) => IsPlayerCard && AcceptsValue(token.Value);
 
@@ -105,7 +119,7 @@ public partial class Card : Control
         }
     }
 
-    private void flipInputBlocking()
+    public virtual void flipInputBlocking()
     {
         MouseFilterEnum targetFilter = disabled ? MouseFilterEnum.Ignore : MouseFilterEnum.Stop;
         SetMouseFilterRecursive(this, targetFilter);
@@ -119,4 +133,6 @@ public partial class Card : Control
         foreach (Node child in parent.GetChildren())
             SetMouseFilterRecursive(child, filter);
     }
+
+
 }

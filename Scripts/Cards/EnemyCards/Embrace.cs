@@ -6,7 +6,7 @@ public partial class Embrace : Card
 {
 	public override CardEffect Effect => CardEffect.Poison;
 	public override bool AcceptsValue(int dieValue) => dieValue == 3;
-	public override int GetAmount(int dieValue) => 3;
+	public override int GetAmount(int dieValue) => 2;
 
 	public override Task Resolve(Combatant user, Combatant opponent, int value)
 	{
