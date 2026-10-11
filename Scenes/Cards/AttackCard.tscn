@@ -50,3 +50,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=407682042]
+layout_mode = 0
+offset_right = 160.0
+offset_bottom = 218.0
+expand_mode = 1
