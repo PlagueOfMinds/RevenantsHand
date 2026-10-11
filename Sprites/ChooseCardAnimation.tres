@@ -1,0 +1,25 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://crcmuaah0i5kl"]
+
+[ext_resource type="Texture2D" uid="uid://8rfa5ymdl87g" path="res://Sprites/ChooseCardTextSpriteSheet.png" id="1_ue25w"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c3xfw"]
+atlas = ExtResource("1_ue25w")
+region = Rect2(0, 0, 2400, 600)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sbm4m"]
+atlas = ExtResource("1_ue25w")
+region = Rect2(2400, 0, 2400, 600)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c3xfw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sbm4m")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 2.5
+}]

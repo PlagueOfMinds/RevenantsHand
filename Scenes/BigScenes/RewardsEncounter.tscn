@@ -2,7 +2,49 @@
 
 [ext_resource type="PackedScene" uid="uid://cwuac8qcnqbfv" path="res://Scenes/EnemiesAnim/Revenant.tscn" id="1_5qrl0"]
 [ext_resource type="Script" uid="uid://dxp8yvjq6j2hb" path="res://Scripts/EventSystems/RewardsEncounter.cs" id="1_vjf65"]
-[ext_resource type="Texture2D" uid="uid://cvby2cxerjisp" path="res://Tabur/Sprites/BrownBoard.png" id="6_2ssg0"]
+[ext_resource type="Shader" uid="uid://b65s5eivjdd25" path="res://Tabur/Misc/bloom_vignette.gdshader" id="3_oc25q"]
+[ext_resource type="Texture2D" uid="uid://j7njhwtvck15" path="res://Sprites/AlternativeBlackBoard.png" id="4_oc25q"]
+[ext_resource type="PackedScene" uid="uid://b1qvdpbfyhm46" path="res://Scenes/Background.tscn" id="5_c5kbt"]
+[ext_resource type="FontFile" uid="uid://cj28xwhxpcnst" path="res://Font/Imprint MT Std Shadow.otf" id="5_gerey"]
+[ext_resource type="Texture2D" uid="uid://8rfa5ymdl87g" path="res://Sprites/ChooseCardTextSpriteSheet.png" id="6_gerey"]
+[ext_resource type="SpriteFrames" uid="uid://6lg2q40xfoga" path="res://Sprites/OfferGiftAnim.tres" id="7_gerey"]
+[ext_resource type="SpriteFrames" uid="uid://crcmuaah0i5kl" path="res://Sprites/ChooseCardAnimation.tres" id="8_rumrc"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gerey"]
+shader = ExtResource("3_oc25q")
+shader_parameter/bloom_threshold = 0.10000000475
+shader_parameter/bloom_soft_knee = 0.5
+shader_parameter/bloom_intensity = 0.70000003325
+shader_parameter/bloom_radius = 1.0
+shader_parameter/bloom_lod = 0.0
+shader_parameter/bloom_tint = Color(1, 1, 1, 1)
+shader_parameter/vignette_intensity = 0.800000038
+shader_parameter/vignette_radius = 0.866000041135
+shader_parameter/vignette_softness = 0.7790000363039801
+shader_parameter/vignette_roundness = 1.0
+shader_parameter/vignette_color = Color(0, 0, 0, 1)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_7tgik"]
+particle_flag_disable_z = true
+angle_min = 1.0728835e-05
+angle_max = 360.00003
+gravity = Vector3(500, 0, 0)
+color = Color(0.09872841, 0.09872835, 0.09872835, 0.15686275)
+hue_variation_min = -2.2351742e-08
+hue_variation_max = 0.049999975
+turbulence_enabled = true
+turbulence_noise_strength = 0.2
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_rumrc"]
+particle_flag_disable_z = true
+angle_min = 1.0728835e-05
+angle_max = 360.00003
+gravity = Vector3(-500, 0, 0)
+color = Color(0.17880967, 0.17880964, 0.17880964, 0.15686275)
+hue_variation_min = -2.2351742e-08
+hue_variation_max = 0.049999975
+turbulence_enabled = true
+turbulence_noise_strength = 0.2
 
 [node name="RewardsEncounter" type="Node2D" unique_id=833023829 node_paths=PackedStringArray("pairRow", "skipButton", "promptLabel")]
 script = ExtResource("1_vjf65")
@@ -15,36 +57,81 @@ position = Vector2(604, 401)
 zoom = Vector2(0.5, 0.5)
 
 [node name="Revenant" parent="." unique_id=1548354051 instance=ExtResource("1_5qrl0")]
-position = Vector2(950, 258)
+position = Vector2(904.99994, 328)
 
 [node name="UILayer" type="CanvasLayer" parent="." unique_id=1790950463]
 layer = 2
 
+[node name="BloomAndVignette" type="ColorRect" parent="UILayer" unique_id=1672945197]
+z_index = 500
+material = SubResource("ShaderMaterial_gerey")
+offset_left = -643.0
+offset_top = -418.0
+offset_right = 1838.0
+offset_bottom = 1226.0
+mouse_filter = 2
+
 [node name="CardTable" type="TextureRect" parent="UILayer" unique_id=892101798]
 z_index = -10
 offset_left = -15.0
-offset_top = 381.0
+offset_top = 456.0
 offset_right = 1199.0
-offset_bottom = 803.0
+offset_bottom = 864.0
 mouse_filter = 2
-texture = ExtResource("6_2ssg0")
+texture = ExtResource("4_oc25q")
 expand_mode = 1
 
 [node name="PairRow" type="HBoxContainer" parent="UILayer" unique_id=846992242]
-offset_left = 40.0
-offset_top = 450.0
+z_index = 501
+offset_top = 518.0
 offset_right = 1160.0
 offset_bottom = 750.0
 alignment = 1
 
 [node name="PromptLabel" type="Label" parent="UILayer" unique_id=1216073898]
-offset_left = 440.0
-offset_top = 40.0
-offset_right = 1160.0
-offset_bottom = 80.0
+offset_left = 1246.0
+offset_top = 431.0
+offset_right = 2394.0
+offset_bottom = 480.0
+theme_override_colors/font_color = Color(0.9843137, 0.23137255, 0.007843138, 0)
+theme_override_fonts/font = ExtResource("5_gerey")
+theme_override_font_sizes/font_size = 48
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 3
 
 [node name="SkipButton" type="Button" parent="UILayer" unique_id=750840964]
 offset_right = 8.0
 offset_bottom = 8.0
+
+[node name="Background" parent="." unique_id=2110014799 instance=ExtResource("5_c5kbt")]
+position = Vector2(-615, -392)
+scale = Vector2(1.01, 1)
+
+[node name="FogParticle3" parent="Background" index="3" unique_id=1507680156]
+process_material = SubResource("ParticleProcessMaterial_7tgik")
+
+[node name="FogParticle4" parent="Background" index="4" unique_id=529869307]
+process_material = SubResource("ParticleProcessMaterial_rumrc")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2006319362]
+z_index = 499
+position = Vector2(202.99997, -214)
+rotation = -0.17473158
+sprite_frames = ExtResource("7_gerey")
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="." unique_id=753637524]
+z_index = 499
+position = Vector2(1104, 468)
+rotation = 0.097900055
+sprite_frames = ExtResource("8_rumrc")
+autoplay = "default"
+
+[node name="ChooseCardTextSpriteSheet" type="Sprite2D" parent="." unique_id=253811363]
+visible = false
+z_index = 501
+position = Vector2(2339, 535)
+rotation = 0.11233108
+texture = ExtResource("6_gerey")
+
+[editable path="Background"]
