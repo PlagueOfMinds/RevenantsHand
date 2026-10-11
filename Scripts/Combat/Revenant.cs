@@ -18,8 +18,8 @@ public partial class Revenant : Enemy
 	);
 	public override string[] CardScenePaths => new[]
     {
-        "res://Scenes/Cards/Enemy/DontBite.tscn",
-        "res://Scenes/Cards/Enemy/HandThatFeeds.tscn",
-        "res://Scenes/Cards/Enemy/QuietNight.tscn",
+        "res://Scenes/Cards/EnemyCards/DontBite.tscn",
+        "res://Scenes/Cards/EnemyCards/HandThatFeeds.tscn",
+        "res://Scenes/Cards/EnemyCards/QuietNight.tscn",
     };
 }

@@ -15,8 +15,8 @@ public partial class Hands : Enemy
 	
 	public override string[] CardScenePaths => new[]
     {
-        "res://Scenes/Cards/Enemy/JustATouch.tscn",
-        "res://Scenes/Cards/Enemy/Mesmerize.tscn",
-        "res://Scenes/Cards/Enemy/Embrace.tscn",
+        "res://Scenes/Cards/EnemyCards/JustATouch.tscn",
+        "res://Scenes/Cards/EnemyCards/Mesmerize.tscn",
+        "res://Scenes/Cards/EnemyCards/Embrace.tscn",
     };
 }
