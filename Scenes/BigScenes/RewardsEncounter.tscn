@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://b1qvdpbfyhm46" path="res://Scenes/Background.tscn" id="5_c5kbt"]
 [ext_resource type="FontFile" uid="uid://cj28xwhxpcnst" path="res://Font/Imprint MT Std Shadow.otf" id="5_gerey"]
 [ext_resource type="Texture2D" uid="uid://8rfa5ymdl87g" path="res://Sprites/ChooseCardTextSpriteSheet.png" id="6_gerey"]
+[ext_resource type="Texture2D" uid="uid://i04xok7dowcg" path="res://Sprites/SkipOffer.png" id="6_mrc8p"]
 [ext_resource type="SpriteFrames" uid="uid://6lg2q40xfoga" path="res://Sprites/OfferGiftAnim.tres" id="7_gerey"]
 [ext_resource type="SpriteFrames" uid="uid://crcmuaah0i5kl" path="res://Sprites/ChooseCardAnimation.tres" id="8_rumrc"]
 
@@ -101,8 +102,15 @@ vertical_alignment = 1
 autowrap_mode = 3
 
 [node name="SkipButton" type="Button" parent="UILayer" unique_id=750840964]
-offset_right = 8.0
-offset_bottom = 8.0
+z_index = 501
+offset_left = 1056.0
+offset_top = 4.0
+offset_right = 1313.0
+offset_bottom = 203.0
+rotation = 0.13931075
+scale = Vector2(0.5, 0.5)
+icon = ExtResource("6_mrc8p")
+flat = true
 
 [node name="Background" parent="." unique_id=2110014799 instance=ExtResource("5_c5kbt")]
 position = Vector2(-615, -392)

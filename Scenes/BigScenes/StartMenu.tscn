@@ -1,6 +1,49 @@
 [gd_scene format=3 uid="uid://0ugumpri77vx"]
 
 [ext_resource type="Script" uid="uid://otr7yrnc5ehh" path="res://Scripts/EventSystems/StartMenu.cs" id="1_kco5m"]
+[ext_resource type="FontFile" uid="uid://cj28xwhxpcnst" path="res://Font/Imprint MT Std Shadow.otf" id="2_wfdpw"]
+[ext_resource type="PackedScene" uid="uid://b1qvdpbfyhm46" path="res://Scenes/Background.tscn" id="3_tqctw"]
+[ext_resource type="Shader" uid="uid://b65s5eivjdd25" path="res://Tabur/Misc/bloom_vignette.gdshader" id="3_xxgpp"]
+[ext_resource type="Texture2D" uid="uid://dl36l12neq3bg" path="res://Sprites/Start.png" id="5_w3nm0"]
+[ext_resource type="Texture2D" uid="uid://c23jyooh0cuif" path="res://Sprites/Quite.png" id="6_dwcjn"]
+[ext_resource type="PackedScene" uid="uid://cwuac8qcnqbfv" path="res://Scenes/EnemiesAnim/Revenant.tscn" id="7_4ml3w"]
+[ext_resource type="Texture2D" uid="uid://byvwxlibysgsj" path="res://Sprites/TitleText.png" id="7_dwcjn"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_xxgpp"]
+particle_flag_disable_z = true
+angle_min = 1.0728835e-05
+angle_max = 360.00003
+gravity = Vector3(500, 0, 0)
+color = Color(0.09872841, 0.09872835, 0.09872835, 0.15686275)
+hue_variation_min = -2.2351742e-08
+hue_variation_max = 0.049999975
+turbulence_enabled = true
+turbulence_noise_strength = 0.2
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_w3nm0"]
+particle_flag_disable_z = true
+angle_min = 1.0728835e-05
+angle_max = 360.00003
+gravity = Vector3(-500, 0, 0)
+color = Color(0.17880967, 0.17880964, 0.17880964, 0.15686275)
+hue_variation_min = -2.2351742e-08
+hue_variation_max = 0.049999975
+turbulence_enabled = true
+turbulence_noise_strength = 0.2
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xxgpp"]
+shader = ExtResource("3_xxgpp")
+shader_parameter/bloom_threshold = 0.10000000475
+shader_parameter/bloom_soft_knee = 0.290000013775
+shader_parameter/bloom_intensity = 0.2000000095
+shader_parameter/bloom_radius = 3.6810001273475
+shader_parameter/bloom_lod = 1.8270000867825
+shader_parameter/bloom_tint = Color(1, 1, 1, 1)
+shader_parameter/vignette_intensity = 0.53600002546
+shader_parameter/vignette_radius = 0.0450000021375
+shader_parameter/vignette_softness = 1.19700005615898
+shader_parameter/vignette_roundness = 0.2490000118275
+shader_parameter/vignette_color = Color(0, 0, 0, 1)
 
 [node name="StartMenu" type="Control" unique_id=436922654 node_paths=PackedStringArray("startButton")]
 layout_mode = 3
@@ -10,25 +53,98 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_kco5m")
-startButton = NodePath("StartButton")
+startButton = NodePath("UILayer/StartButton")
 
-[node name="Background" type="TextureRect" parent="." unique_id=722592994]
-layout_mode = 1
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1068376505]
+position = Vector2(604, 401)
+zoom = Vector2(0.5, 0.5)
+
+[node name="TitleText" type="Sprite2D" parent="." unique_id=1302539397]
+z_index = 501
+position = Vector2(636, 177)
+texture = ExtResource("7_dwcjn")
+
+[node name="Revenant" parent="." unique_id=1548354051 instance=ExtResource("7_4ml3w")]
+position = Vector2(1116, 888)
+rotation = -0.27742133
+scale = Vector2(0.99999994, 0.99999994)
+
+[node name="Background2" parent="." unique_id=2110014799 instance=ExtResource("3_tqctw")]
+position = Vector2(-615, -392)
+scale = Vector2(1.01, 1)
+
+[node name="Background" parent="Background2" index="0" unique_id=502720059]
+position = Vector2(1194.0596, 793)
+scale = Vector2(1.0646236, 1.0092187)
+
+[node name="FogParticle" parent="Background2" index="1" unique_id=438821775]
+visible = false
+position = Vector2(-233.6634, 1395)
+
+[node name="FogParticle2" parent="Background2" index="2" unique_id=1887850826]
+visible = false
+position = Vector2(2507.3367, 1395)
+
+[node name="FogParticle3" parent="Background2" index="3" unique_id=1507680156]
+visible = false
+position = Vector2(-233.6634, 1499)
+process_material = SubResource("ParticleProcessMaterial_xxgpp")
+
+[node name="FogParticle4" parent="Background2" index="4" unique_id=529869307]
+visible = false
+position = Vector2(2507.3367, 1499)
+process_material = SubResource("ParticleProcessMaterial_w3nm0")
+
+[node name="UILayer" type="CanvasLayer" parent="." unique_id=383337156]
+layer = 2
+
+[node name="BloomAndVignette" type="ColorRect" parent="UILayer" unique_id=1068620572]
+z_index = 500
+material = SubResource("ShaderMaterial_xxgpp")
+offset_left = -643.0
+offset_top = -418.0
+offset_right = 1838.0
+offset_bottom = 1226.0
+mouse_filter = 2
+
+[node name="Background" type="TextureRect" parent="UILayer" unique_id=722592994]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Title" type="Label" parent="." unique_id=1263753772]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+[node name="Title" type="Label" parent="UILayer" unique_id=1263753772]
+visible = false
+offset_left = 62.0
+offset_top = 39.0
+offset_right = 1148.0
+offset_bottom = 300.0
+theme_override_colors/font_color = Color(0.8156863, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_wfdpw")
+theme_override_font_sizes/font_size = 128
+text = "REVENANT'S
+HAND"
+horizontal_alignment = 1
 
-[node name="StartButton" type="Button" parent="." unique_id=243456056]
-layout_mode = 0
-offset_left = 462.00003
-offset_top = 364.0
-offset_right = 470.00003
-offset_bottom = 372.0
-scale = Vector2(34.793, 12.481755)
+[node name="StartButton" type="Button" parent="UILayer" unique_id=243456056]
+z_index = 501
+offset_left = -9.0
+offset_top = 563.0
+offset_right = 248.00003
+offset_bottom = 762.0
+rotation = -0.8133801
+icon = ExtResource("5_w3nm0")
+flat = true
+
+[node name="QuiteButton" type="Button" parent="UILayer" unique_id=1508121022]
+z_index = 501
+offset_left = 97.00001
+offset_top = 592.00006
+offset_right = 354.00003
+offset_bottom = 791.00006
+rotation = -0.29718402
+icon = ExtResource("6_dwcjn")
+flat = true
+
+[editable path="Background2"]
