@@ -39,7 +39,7 @@ public partial class SlashFx : CanvasLayer
         slash.AddChild(MakeBlade(length + outline * 2f, width + outline * 2f,
                                  color ?? new Color(1f, 0.15f, 0.15f), curve));
         // White body on top
-        slash.AddChild(MakeBlade(length, width, Colors.White, curve));
+        slash.AddChild(MakeBlade(length, width, Colors.Black, curve));
         AddChild(slash);
 
         float hold = DebugHold ? 2f : 0.05f;
