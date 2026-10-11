@@ -6,9 +6,9 @@ using System.Linq;
 // Everything about the current run that has to survive scene changes
 public static class Run
 {
-    // ---- Scenes (use right-click > Copy Path in the FileSystem dock) ----
     public const string CombatScenePath = "res://Scenes/BigScenes/Main.tscn";
     public const string RewardScenePath = "res://Scenes/BigScenes/RewardsEncounter.tscn";
+    public const string StartMenuScenePath = "res://Scenes/StartMenu.tscn";
     public const string CardFolder = "res://Scenes/Cards";
 
     // ---- Run setup ----
@@ -16,6 +16,9 @@ public static class Run
     public const int OfferCount = 3;
 
     // The player's starting cards, left to right
+
+    public static Enemy CreateCurrentEnemy() => Encounters[EncounterIndex]();
+
     private static readonly string[] StartingDeck =
     {
         "res://Scenes/Cards/AttackCard.tscn",
@@ -62,6 +65,13 @@ public static class Run
 
     private static readonly Random rng = new();
 
+    public const string BossTransitionScenePath = "res://Scenes/Transitions/RevenantTransition.tscn";
+
+    public static bool IsFinalEncounter => EncounterIndex == Encounters.Length - 1;
+
+    public static void BeginCurrentEncounter() =>
+        Encounter.Begin(Encounters[EncounterIndex], IsFinalEncounter ? BossTransitionScenePath : null);
+
     public static void StartNewRun()
     {
         IsActive = true;
@@ -70,8 +80,6 @@ public static class Run
         Deck = new List<string>(StartingDeck);
         EncounterIndex = 0;
     }
-
-    public static void BeginCurrentEncounter() => Encounter.Begin(Encounters[EncounterIndex]);
 
     // Called by GameManager when the enemy dies
     public static void BattleWon(int playerHealthLeft)
@@ -105,11 +113,16 @@ public static class Run
     // The new card takes the old card's slot, so left-to-right order is kept
     public static void SwapCard(int deckIndex, string newCardPath) => Deck[deckIndex] = newCardPath;
 
+    // Start a fresh run from the menu: the Revenant's offer first, then fight 1
+    public static void BeginRun()
+    {
+        StartNewRun();                                   // fresh health, starting deck, encounter 0
+        SceneTransition.Instance.GoTo(RewardScenePath); // Revenant's offer before the first fight
+    }
     private static void EndRun(bool won)
     {
         GD.Print(won ? "Run won!" : "Run lost.");
-        // No menu yet: start a fresh run. Later, send this to your title/menu scene instead.
-        StartNewRun();
-        BeginCurrentEncounter();
+        IsActive = false;
+        SceneTransition.Instance.GoTo(StartMenuScenePath);
     }
 }
