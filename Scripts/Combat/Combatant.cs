@@ -19,6 +19,8 @@ public partial class Combatant : Node2D
     public int Block { get; private set; }
     public bool IsDead => Health <= 0;
     public int poisonCount = 0;
+    public int damageTakenSinceLastTurn;
+    public int damageTakenSinceLastTurnT;
 
     // This turn's dice, plus a record of every turn's dice
     public int[] Dice { get; private set; } = Array.Empty<int>();
@@ -44,6 +46,7 @@ public partial class Combatant : Node2D
         Block -= blocked;
         int dealt = amount - blocked;
         Health = Math.Max(0, Health - dealt);
+        damageTakenSinceLastTurnT += amount;
 
         Changed?.Invoke(this);
         if (IsDead) Died?.Invoke(this);
@@ -75,6 +78,8 @@ public partial class Combatant : Node2D
         {
             poisonCount--;
         }
+        damageTakenSinceLastTurn = damageTakenSinceLastTurnT;
+        damageTakenSinceLastTurnT = 0;
         
     }
     public void SetHealth(int value)
