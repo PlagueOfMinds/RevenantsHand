@@ -5,6 +5,7 @@
 [node name="Hands" type="Node2D" unique_id=1548354051]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2034757483]
+z_index = 25
 position = Vector2(-389, -185)
 scale = Vector2(0.8, 0.8)
 sprite_frames = ExtResource("1_rk3la")

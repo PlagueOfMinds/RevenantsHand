@@ -3,10 +3,26 @@
 [ext_resource type="Script" uid="uid://vf1rfunok51o" path="res://Scripts/EventSystems/GameManager.cs" id="1_c7w63"]
 [ext_resource type="Script" uid="uid://bjwv1qxhm4gqq" path="res://Scripts/Cards/CardTableToggle.cs" id="2_65qb0"]
 [ext_resource type="PackedScene" uid="uid://ddsp2bxsew3wd" path="res://Scenes/Dice/DiceTray.tscn" id="3_8vdos"]
+[ext_resource type="PackedScene" uid="uid://b1qvdpbfyhm46" path="res://Scenes/Background.tscn" id="3_65qb0"]
 [ext_resource type="Script" uid="uid://cg0fph5qdu50j" path="res://Scripts/Dice/DiceTokenLayer.cs" id="4_52gy2"]
 [ext_resource type="Texture2D" uid="uid://cvby2cxerjisp" path="res://Tabur/Sprites/BrownBoard.png" id="4_c7w63"]
 
 [node name="Combat" type="Node2D" unique_id=328123032]
+
+[node name="Background" parent="." unique_id=1080136300 instance=ExtResource("3_65qb0")]
+position = Vector2(-600, -400)
+
+[node name="FogParticle" parent="Background" index="2" unique_id=438821775]
+position = Vector2(-220, 989)
+
+[node name="FogParticle2" parent="Background" index="3" unique_id=1887850826]
+position = Vector2(2521, 989)
+
+[node name="FogParticle3" parent="Background" index="4" unique_id=1507680156]
+position = Vector2(-220, 1093)
+
+[node name="FogParticle4" parent="Background" index="5" unique_id=529869307]
+position = Vector2(2521, 1093)
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=542988287]
 position = Vector2(604, 401)
@@ -177,5 +193,6 @@ offset_left = -2.0
 offset_right = 38.0
 offset_bottom = 40.0
 
+[editable path="Background"]
 [editable path="UILayer/PlayerDiceCorner/SubViewportContainer/SubViewport/DiceView"]
 [editable path="UILayer/EnemyDiceCorner/SubViewportContainer/SubViewport/DiceView"]
