@@ -15,8 +15,8 @@ public partial class Goat : Enemy
 	
 	public override string[] CardScenePaths => new[]
     {
-        "res://Scenes/Cards/EnemyCards/Bahh.tscn",
+        "res://Scenes/Cards/EnemyCards/BAHH.tscn",
         "res://Scenes/Cards/EnemyCards/Rage.tscn",
-        "res://Scenes/Cards/EnemyCards/Bahh.tscn",
+        "res://Scenes/Cards/EnemyCards/BAHH.tscn",
     };
 }
